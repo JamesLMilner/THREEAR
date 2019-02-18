@@ -1,0 +1,13 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "indent": [true, "tabs"],
+        "object-literal-sort-keys": false,
+        "trailing-comma": false,
+        "no-console": [true, "log", "error"],
+        "ordered-imports": false,
+        "no-bitwise": false,
+        "variable-name": false,
+        "prefer-for-of": false
+    }
+}
