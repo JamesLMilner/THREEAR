@@ -46,12 +46,6 @@ export class ARMarkerControls extends ARBaseControls {
 
 		if (this.context.parameters.trackingBackend === "artoolkit" ) {
 			this._initArtoolkit();
-		} else if (this.context.parameters.trackingBackend === "aruco" ) {
-			// TODO create a ._initAruco
-			// put aruco second
-			// this._arucoPosit = new POS.Posit(this.parameters.size, this.context.arucoContext.canvas.width)
-		} else if (this.context.parameters.trackingBackend === "tango") {
-			this._initTango();
 		} else {
 			console.assert(false);
 		}

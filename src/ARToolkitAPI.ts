@@ -1,4 +1,4 @@
-import Module from "./vendor/artoolkitx";
+import Module = require("./vendor/arjs.artoolkit.debug");
 
 export class ARToolkit {
 	public static AR_TEMPLATE_MATCHING_COLOR: any;

@@ -4,6 +4,7 @@
   "description": "A AR library for the web",
   "main": "dist/THREEAR.js",
   "scripts": {
+    "serve": "live-server",
     "build": "webpack --mode=production --config webpack.config.js",
     "build:dev": "webpack --mode=development --config webpack.config.js",
     "build:watch": "webpack --mode=development --config webpack.config.js --watch",
@@ -15,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/three": "^0.93.21",
+    "live-server": "^1.2.1",
     "three": "^0.101.1",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3"
