@@ -15,7 +15,6 @@ export class ARMarkerControls extends ARBaseControls {
 		changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix"
 		minConfidence: number;
 	};
-	private _arucoPosit: any;
 
 	constructor(context: ARContext, object3d, parameters) {
 		super(object3d);
@@ -45,11 +44,7 @@ export class ARMarkerControls extends ARBaseControls {
 
 		context.addMarker(this);
 
-		if (this.context.parameters.trackingBackend === "artoolkit" ) {
-			this._initArtoolkit();
-		} else {
-			console.assert(false);
-		}
+		this._initArtoolkit();
 	}
 
 	public setParameters(parameters) {
@@ -95,16 +90,12 @@ export class ARMarkerControls extends ARBaseControls {
 		// mark object as visible
 		markerObject3D.visible = true;
 
-		if ( this.context.parameters.trackingBackend === "artoolkit" ) {
-			// apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
-			const transformMatrix = this.context._artoolkitProjectionAxisTransformMatrix;
-			const tmpMatrix = new THREE.Matrix4().copy(transformMatrix);
-			tmpMatrix.multiply(modelViewMatrix);
+		// apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
+		const transformMatrix = this.context._artoolkitProjectionAxisTransformMatrix;
+		const tmpMatrix = new THREE.Matrix4().copy(transformMatrix);
+		tmpMatrix.multiply(modelViewMatrix);
 
-			modelViewMatrix.copy(tmpMatrix);
-		} else {
-			console.assert(false);
-		}
+		modelViewMatrix.copy(tmpMatrix);
 
 		// change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
 		const markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI / 2);

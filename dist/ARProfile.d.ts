@@ -16,14 +16,12 @@ export declare class ARProfile {
      */
     reset(baseURL: string): this;
     performance(label: string): this;
-    defaultMarker(trackingBackend: any): this;
+    defaultMarker(): this;
     sourceWebcam(): this;
     sourceVideo(url: string): this;
     sourceImage(url: string): this;
-    trackingBackend(trackingBackend: any): this;
     changeMatrixMode(changeMatrixMode: any): this;
     trackingMethod(trackingMethod: any): this;
-    checkIfValid(): this;
     private _guessPerformanceLabel;
 }
 export default ARProfile;

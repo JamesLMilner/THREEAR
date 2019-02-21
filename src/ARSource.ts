@@ -381,30 +381,25 @@ export class ARSource {
 			return this.onResizeElement.apply(this, arguments);
 		}
 
-		const trackingBackend = arToolkitContext.parameters.trackingBackend;
+		// Resize DOMElement
+		
+		this.onResizeElement();
 
-		// RESIZE DOMELEMENT
-		if (trackingBackend === "artoolkit") {
-
-			this.onResizeElement();
-
-			const isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
-			if (isAframe === false) {
-				this.copyElementSizeTo(renderer.domElement);
-			}
-
-			if (arToolkitContext.arController !== null) {
-				this.copyElementSizeTo(arToolkitContext.arController.canvas);
-			}
-
+		const isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
+		if (isAframe === false) {
+			this.copyElementSizeTo(renderer.domElement);
 		}
 
-		// UPDATE CAMERA
-		if (trackingBackend === "artoolkit") {
-			if (arToolkitContext.arController !== null) {
-				camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-			}
+		if (arToolkitContext.arController !== null) {
+			this.copyElementSizeTo(arToolkitContext.arController.canvas);
 		}
+
+		// Update Camera
+
+		if (arToolkitContext.arController !== null) {
+			camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+		}
+	
 
 	}
 

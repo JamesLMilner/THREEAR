@@ -3,36 +3,14 @@ import * as THREE from "three";
 export class ARUtils {
 
 	/**
-	 * Create a default rendering camera for this trackingBackend.
+	 * Create a default rendering camera
 	 * They may be modified later. to fit physical camera parameters
 	 *
-	 * @param {string} trackingBackend - the tracking to user
 	 * @return {THREE.Camera} the created camera
 	 */
-	public static createDefaultCamera(trackingMethod) {
-		const trackingBackend = this.parseTrackingMethod(trackingMethod).trackingBackend;
-
-		let camera;
-
+	public static createDefaultCamera() {
 		// Create a camera
-		if (trackingBackend === "artoolkit" ) {
-			camera = new THREE.Camera();
-		} else {
-			throw Error("unknown trackingBackend: " + trackingBackend);
-		}
-
-		return camera;
-	}
-
-	/**
-	 * test if the code is running on tango
-	 *
-	 * @return {boolean} - true if running on tango, false otherwise
-	 */
-	public static isTango() {
-		// FIXME: this test is super bad
-		const isTango = navigator.userAgent.match("Chrome/57.0.2987.5") !== null ? true : false;
-		return isTango;
+		return new THREE.Camera();
 	}
 
 	/**
@@ -44,7 +22,7 @@ export class ARUtils {
 	public static parseTrackingMethod(trackingMethod) {
 
 		if (trackingMethod === "best") {
-			trackingMethod = ARUtils.isTango() ? "tango" : "area-artoolkit";
+			trackingMethod = "area-artoolkit";
 		}
 
 		if (trackingMethod.startsWith("area-")) {
