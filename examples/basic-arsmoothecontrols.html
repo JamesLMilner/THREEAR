@@ -3,7 +3,7 @@
 	<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
 	<script src="../dist/THREEAR.js"></script>
-	<title>THREE AR Basic Demo</title>
+	<title>THREE AR Basic Demo - Smoothed Controls</title>
 	<!-- Bind window error for error handling -->
 	<script>
 		// window.addEventListener('error', function(event) {
@@ -13,13 +13,10 @@
 </head>
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 <script>
-	//////////////////////////////////////////////////////////////////////////////////
-	//		Init
-	//////////////////////////////////////////////////////////////////////////////////
 
 	// init renderer
-	var renderer	= new THREE.WebGLRenderer({
-		// antialias	: true,
+	var renderer = new THREE.WebGLRenderer({
+		// antialias : true,
 		alpha: true
 	});
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
@@ -36,17 +33,10 @@
 	// init scene and camera
 	var scene	= new THREE.Scene();
 	
-	//////////////////////////////////////////////////////////////////////////////////
-	//		Initialize a basic camera
-	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
 	var camera = new THREE.Camera();
 	scene.add(camera);
-
-	////////////////////////////////////////////////////////////////////////////////
-	//          handle arToolkitSource
-	////////////////////////////////////////////////////////////////////////////////
 
 	var arToolkitSource = new THREEAR.ARSource({
 		// to read from the webcam 
@@ -76,10 +66,6 @@
 			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)	
 		}	
 	}
-	////////////////////////////////////////////////////////////////////////////////
-	//          initialize arToolkitContext
-	////////////////////////////////////////////////////////////////////////////////
-	
 
 	// create atToolkitContext
 	var arToolkitContext = new THREEAR.ARContext({
@@ -102,11 +88,6 @@
 		arToolkitContext.update( arToolkitSource.domElement )
 	})
 	
-	
-	////////////////////////////////////////////////////////////////////////////////
-	//          Create a ArMarkerControls
-	////////////////////////////////////////////////////////////////////////////////
-	
 	var markerRoot = new THREE.Group
 	scene.add(markerRoot)
 	var artoolkitMarker = new THREEAR.ARMarkerControls(arToolkitContext, markerRoot, {
@@ -126,9 +107,6 @@
 	onRenderFcts.push(function(delta){
 		smoothedControls.update(markerRoot)
 	})
-	//////////////////////////////////////////////////////////////////////////////////
-	//		add an object in the scene
-	//////////////////////////////////////////////////////////////////////////////////
 
 	var arWorldRoot = smoothedRoot
 
@@ -153,29 +131,23 @@
 		mesh.rotation.x += 0.1
 	})
 
-	//////////////////////////////////////////////////////////////////////////////////
-	//		render the whole thing on the page
-	//////////////////////////////////////////////////////////////////////////////////
-	// var stats = new Stats();
-	// document.body.appendChild( stats.dom );
-	// render the scene
 	onRenderFcts.push(function(){
 		renderer.render( scene, camera );
 		// stats.update();
 	})
 
 	// run the rendering loop
-	var lastTimeMsec= null
-	requestAnimationFrame(function animate(nowMsec){
+	var lastTimeMsec = null;
+	requestAnimationFrame(function animate(nowMsec) {
 		// keep looping
 		requestAnimationFrame( animate );
 		// measure time
-		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
-		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
-		lastTimeMsec	= nowMsec
+		lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60;
+		var deltaMsec = Math.min(200, nowMsec - lastTimeMsec);
+		lastTimeMsec = nowMsec;
 		// call each update function
-		onRenderFcts.forEach(function(onRenderFct){
-			onRenderFct(deltaMsec/1000, nowMsec/1000)
-		})
-	})
+		onRenderFcts.forEach(function(onRenderFct) {
+			onRenderFct(deltaMsec/1000, nowMsec/1000);
+		});
+	});
 </script></body>
