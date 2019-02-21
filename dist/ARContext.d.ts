@@ -7,6 +7,7 @@ export declare class ARContext extends THREE.EventDispatcher {
     private initialized;
     private _artoolkitProjectionAxisTransformMatrix;
     constructor(parameters: any);
+    setParameters(parameters: any): void;
     init(onCompleted: () => void): void;
     update(srcElement: any): boolean;
     addMarker(arMarkerControls: any): void;

@@ -13,7 +13,7 @@
  *
  * The camera parameters argument can be either an ARCameraParam or an URL to a camera definition file.
  * If the camera argument is an URL, it is loaded into a new ARCameraParam, and the ARController dispatches
- * a 'load' event and calls the onload method if it is defined.
+ * a "load" event and calls the onload method if it is defined.
  *
  * @exports ARController
  * @constructor
@@ -24,8 +24,8 @@
  * ARCameraParam definition file, calling ARController#onload on success.
  */
 export declare class ARController {
-    ctx: any;
-    canvas: any;
+    ctx: CanvasRenderingContext2D;
+    canvas: HTMLCanvasElement;
     private framepointer;
     private id;
     private orientation;
@@ -49,7 +49,7 @@ export declare class ARController {
     /**
      * Destroys the ARController instance and frees all associated resources.
      * After calling dispose, the ARController can't be used any longer. Make a new one if you need one.
-     * Calling this avoids leaking Emscripten memory, which may be important if you're
+     * Calling this avoids leaking Emscripten memory, which may be important if you"re
      * using multiple ARControllers.
      */
     dispose(): void;
@@ -61,18 +61,18 @@ export declare class ARController {
      * finally, getMultiMarker is dispatched for every found multimarker
      * followed by getMultiMarkerSub events
      * dispatched for each of the markers in the multimarker.
-     * arController.addEventListener('markerNum', function(ev) {
+     * arController.addEventListener("markerNum", function(ev) {
      * console.log("Detected " + ev.data + " markers.")
      * });
-     * arController.addEventListener('getMarker', function(ev) {
+     * arController.addEventListener("getMarker", function(ev) {
      * console.log("Detected marker with ids:", ev.data.marker.id, ev.data.marker.idPatt, ev.data.marker.idMatrix);
      * console.log("Marker data", ev.data.marker);
-     * console.log("Marker transform matrix:", [].join.call(ev.data.matrix, ', '));
+     * console.log("Marker transform matrix:", [].join.call(ev.data.matrix, ", "));
      * });
-     * arController.addEventListener('getMultiMarker', function(ev) {
+     * arController.addEventListener("getMultiMarker", function(ev) {
      * console.log("Detected multimarker with id:", ev.data.multiMarkerId);
      * });
-     * arController.addEventListener('getMultiMarkerSub', function(ev) {
+     * arController.addEventListener("getMultiMarkerSub", function(ev) {
      * console.log("Submarker for " + ev.data.multiMarkerId, ev.data.markerIndex, ev.data.marker);
      * });
      * arController.process(image);
@@ -96,7 +96,7 @@ export declare class ARController {
      * Adds the given barcode marker ID to the index of tracked IDs.
      * Sets the markerWidth for the pattern marker to markerWidth.
      * Used by process() to implement continuous tracking,
-     * keeping track of the marker's transformation matrix
+     * keeping track of the marker"s transformation matrix
      * and customizable marker widths.
      * @param {number} id ID of the barcode marker to track.
      * @param {number} [markerWidth] The width of the marker to track.

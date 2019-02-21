@@ -7,6 +7,7 @@ import ARProfile from "./ARProfile";
 import ARSource from "./ARSource";
 import ARToolkitAPI from "./ARToolkitAPI";
 import ARUtils from "./ARUtils";
+import ARSmoothedControls from "./ARSmoothedControls";
 
 export {
 	ARBaseControls,
@@ -16,5 +17,6 @@ export {
 	ARProfile,
 	ARSource,
 	ARToolkitAPI,
-	ARUtils
+	ARUtils,
+	ARSmoothedControls
 };
