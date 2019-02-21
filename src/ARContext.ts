@@ -17,8 +17,6 @@ export class ARContext extends THREE.EventDispatcher {
 		super();
 		// handle default parameters
 		this.parameters = {
-			// AR backend - ['artoolkit', 'aruco', 'tango']
-			trackingBackend: "artoolkit",
 			// debug - true if one should display artoolkit debug canvas, false otherwise
 			debug: false,
 			// the mode of detection - ['color', 'color_and_matrix', 'mono', 'mono_and_matrix']
@@ -93,18 +91,14 @@ export class ARContext extends THREE.EventDispatcher {
 			}
 		};
 
-		if ( this.parameters.trackingBackend === "artoolkit" ) {
-			this._initArtoolkit(done);
-		} else {
-			console.assert(false);
-		}
+		this._initArtoolkit(done);
 
 	}
 
 	public update(srcElement) {
 
 		// be sure arController is fully initialized
-		if (this.parameters.trackingBackend === "artoolkit" && this.arController === null) {
+		if (this.arController === null) {
 			return false;
 		}
 
@@ -124,11 +118,7 @@ export class ARContext extends THREE.EventDispatcher {
 		});
 
 		// process this frame
-		if (this.parameters.trackingBackend === "artoolkit") {
 			this._updateArtoolkit(srcElement);
-		} else {
-			console.assert(false);
-		}
 
 		// dispatch event
 		this.dispatchEvent({
@@ -231,11 +221,7 @@ export class ARContext extends THREE.EventDispatcher {
 	}
 
 	public getProjectionMatrix(srcElement) {
-
-		// FIXME rename this function to say it is artoolkit specific - getArtoolkitProjectMatrix
-		// keep a backward compatibility with a console.warn
-
-		console.assert( this.parameters.trackingBackend === "artoolkit" );
+		
 		console.assert(this.arController, "arController MUST be initialized to call this function");
 		// get projectionMatrixArr from artoolkit
 		const projectionMatrixArr = this.arController.getCameraMatrix();

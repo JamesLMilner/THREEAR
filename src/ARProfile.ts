@@ -74,24 +74,10 @@ export class ARProfile {
 		return this;
 	}
 
-	public defaultMarker(trackingBackend) {
-		trackingBackend = trackingBackend || this.contextParameters.trackingBackend;
-
-		if ( trackingBackend === "artoolkit" ) {
-			this.contextParameters.detectionMode = "mono";
-			this.defaultMarkerParameters.type = "pattern";
-			this.defaultMarkerParameters.patternUrl = this.parameters.baseURL + "../data/patt.hiro";
-		} else if ( trackingBackend === "aruco" ) {
-			this.contextParameters.detectionMode = "mono";
-			this.defaultMarkerParameters.type = "barcode";
-			this.defaultMarkerParameters.barcodeValue = 1001;
-		} else if ( trackingBackend === "tango" ) {
-			// FIXME temporary placeholder - to reevaluate later
-			this.defaultMarkerParameters.type = "barcode";
-			this.defaultMarkerParameters.barcodeValue = 1001;
-		} else {
-			console.assert(false);
-		}
+	public defaultMarker() {
+		this.contextParameters.detectionMode = "mono";
+		this.defaultMarkerParameters.type = "pattern";
+		this.defaultMarkerParameters.patternUrl = this.parameters.baseURL + "../data/patt.hiro";
 
 		return this;
 	}
@@ -114,12 +100,6 @@ export class ARProfile {
 		return this;
 	}
 
-	public trackingBackend(trackingBackend: any) {
-		console.warn("stop profile.trackingBackend() obsolete function. use .trackingMethod instead");
-		this.contextParameters.trackingBackend = trackingBackend;
-		return this;
-	}
-
 	public changeMatrixMode(changeMatrixMode) {
 		this.defaultMarkerParameters.changeMatrixMode = changeMatrixMode;
 		return this;
@@ -128,14 +108,6 @@ export class ARProfile {
 	public trackingMethod(trackingMethod) {
 		const data = ARUtils.parseTrackingMethod(trackingMethod);
 		this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled;
-		this.contextParameters.trackingBackend = data.trackingBackend;
-		return this;
-	}
-
-	public checkIfValid() {
-		if ( this.contextParameters.trackingBackend === "tango" ) {
-			this.sourceImage(this.parameters.baseURL + "../data/images/img.jpg");
-		}
 		return this;
 	}
 

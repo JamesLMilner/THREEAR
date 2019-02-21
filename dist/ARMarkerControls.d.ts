@@ -3,7 +3,6 @@ import { ARContext } from "./THREEAR";
 export declare class ARMarkerControls extends ARBaseControls {
     private context;
     private parameters;
-    private _arucoPosit;
     constructor(context: ARContext, object3d: any, parameters: any);
     setParameters(parameters: any): void;
     dispose(): void;
