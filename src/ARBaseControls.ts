@@ -14,7 +14,7 @@ export class ARBaseControls extends EventDispatcher {
 		this.object3d.visible = false;
 	}
 
-	public update() {
+	public update(targetObject3d?: any) {
 		throw Error("update(): you need to implement your own update ");
 	}
 

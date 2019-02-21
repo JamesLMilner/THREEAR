@@ -4,7 +4,7 @@ export declare class ARBaseControls extends EventDispatcher {
     protected id: number;
     protected object3d: any;
     constructor(object3d: any);
-    update(): void;
+    update(targetObject3d?: any): void;
     name(): void;
 }
 export default ARBaseControls;

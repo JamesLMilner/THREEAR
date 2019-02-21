@@ -7,4 +7,5 @@ import ARProfile from "./ARProfile";
 import ARSource from "./ARSource";
 import ARToolkitAPI from "./ARToolkitAPI";
 import ARUtils from "./ARUtils";
-export { ARBaseControls, ARCameraParam, ARContext, ARController, ARMarkerControls, ARProfile, ARSource, ARToolkitAPI, ARUtils };
+import ARSmoothedControls from "./ARSmoothedControls";
+export { ARBaseControls, ARCameraParam, ARContext, ARController, ARMarkerControls, ARProfile, ARSource, ARToolkitAPI, ARUtils, ARSmoothedControls };

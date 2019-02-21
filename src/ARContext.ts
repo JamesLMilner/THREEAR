@@ -41,14 +41,41 @@ export class ARContext extends THREE.EventDispatcher {
 
 			// enable image smoothing or not for canvas copy - default to true
 			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
-			imageSmoothingEnabled : false,
+			imageSmoothingEnabled : false
 		};
 
 		this.initialized = false;
 		this.arController = null;
 		this._updatedAt = null;
 		this._arMarkerControls = [];
+		this.setParameters(parameters);
+	}
 
+	public setParameters(parameters) {
+
+		if (!parameters) {
+			return;
+		}
+
+		for (const key in parameters) {
+			if (key) {
+				const newValue = parameters[ key ];
+
+				if (newValue === undefined) {
+					console.warn( "THREEx.ArToolkitContext: '" + key + "' parameter is undefined." );
+					continue;
+				}
+
+				const currentValue = this.parameters[key];
+
+				if (currentValue === undefined) {
+					console.warn( "THREEx.ArToolkitContext: '" + key + "' is not a property of this material." );
+					continue;
+				}
+
+				this.parameters[ key ] = newValue;
+			}
+		}
 	}
 
 	public init(onCompleted: () => void) {
@@ -136,16 +163,16 @@ export class ARContext extends THREE.EventDispatcher {
 
 				// init controller
 				const arController = new ARController(
-						this.parameters.canvasWidth,
-						this.parameters.canvasHeight,
-						cameraParameters
+					this.parameters.canvasWidth,
+					this.parameters.canvasHeight,
+					cameraParameters
 				);
 				this.arController = arController;
 
 				// honor this.parameters.imageSmoothingEnabled
-				arController.ctx.mozImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-				arController.ctx.webkitImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-				arController.ctx.msImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
+				(arController.ctx as any).mozImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
+				(arController.ctx as any).webkitImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
+				(arController.ctx as any).msImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
 				arController.ctx.imageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
 
 				// honor this.parameters.debug

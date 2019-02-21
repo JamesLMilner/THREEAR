@@ -2,6 +2,7 @@ import { ARBaseControls } from "./ARBaseControls";
 import * as THREE from "three";
 import ARToolkit from "./ARToolkitAPI";
 import ARController from "./ARController";
+import { ARContext } from "./THREEAR";
 
 export class ARMarkerControls extends ARBaseControls {
 
@@ -16,7 +17,7 @@ export class ARMarkerControls extends ARBaseControls {
 	};
 	private _arucoPosit: any;
 
-	constructor(context, object3d, parameters) {
+	constructor(context: ARContext, object3d, parameters) {
 		super(object3d);
 		this.context = context;
 		// handle default parameters
@@ -96,24 +97,18 @@ export class ARMarkerControls extends ARBaseControls {
 
 		if ( this.context.parameters.trackingBackend === "artoolkit" ) {
 			// apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
-			const tmpMatrix = new THREE.Matrix4().copy(this.context._artoolkitProjectionAxisTransformMatrix);
+			const transformMatrix = this.context._artoolkitProjectionAxisTransformMatrix;
+			const tmpMatrix = new THREE.Matrix4().copy(transformMatrix);
 			tmpMatrix.multiply(modelViewMatrix);
 
 			modelViewMatrix.copy(tmpMatrix);
-		} else if ( this.context.parameters.trackingBackend === "aruco" ) {
-			// ...
-		} else if ( this.context.parameters.trackingBackend === "tango" ) {
-			// ...
 		} else {
 			console.assert(false);
 		}
 
-		if (this.context.parameters.trackingBackend !== "tango") {
-
-			// change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
-			const markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI / 2);
-			modelViewMatrix.multiply(markerAxisTransformMatrix);
-		}
+		// change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
+		const markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI / 2);
+		modelViewMatrix.multiply(markerAxisTransformMatrix);
 
 		// change markerObject3D.matrix based on parameters.changeMatrixMode
 		if (this.parameters.changeMatrixMode === "modelViewMatrix") {
@@ -125,7 +120,11 @@ export class ARMarkerControls extends ARBaseControls {
 		}
 
 		// decompose - the matrix into .position, .quaternion, .scale
-		markerObject3D.matrix.decompose(markerObject3D.position, markerObject3D.quaternion, markerObject3D.scale);
+		markerObject3D.matrix.decompose(
+			markerObject3D.position,
+			markerObject3D.quaternion,
+			markerObject3D.scale
+		);
 
 		// dispatchEvent
 		this.dispatchEvent( { type: "markerFound" } );

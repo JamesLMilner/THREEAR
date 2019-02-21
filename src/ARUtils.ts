@@ -17,11 +17,7 @@ export class ARUtils {
 		// Create a camera
 		if (trackingBackend === "artoolkit" ) {
 			camera = new THREE.Camera();
-		} else if (trackingBackend === "aruco") {
-			camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 100);
-		} else if (trackingBackend === "tango") {
-			camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 100);
-		} else  {
+		} else {
 			throw Error("unknown trackingBackend: " + trackingBackend);
 		}
 

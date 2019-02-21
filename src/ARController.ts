@@ -16,7 +16,7 @@ import ARCameraParam from "./ARCameraParam";
  *
  * The camera parameters argument can be either an ARCameraParam or an URL to a camera definition file.
  * If the camera argument is an URL, it is loaded into a new ARCameraParam, and the ARController dispatches
- * a 'load' event and calls the onload method if it is defined.
+ * a "load" event and calls the onload method if it is defined.
  *
  * @exports ARController
  * @constructor
@@ -28,8 +28,8 @@ import ARCameraParam from "./ARCameraParam";
  */
 export class ARController {
 
-	public ctx: any;
-	public canvas: any;
+	public ctx: CanvasRenderingContext2D;
+	public canvas: HTMLCanvasElement;
 
 	private framepointer: any;
 	private id: number;
@@ -100,8 +100,8 @@ export class ARController {
 
 	/**
 	 * Destroys the ARController instance and frees all associated resources.
-	 * After calling dispose, the ARController can't be used any longer. Make a new one if you need one.
-	 * Calling this avoids leaking Emscripten memory, which may be important if you're
+	 * After calling dispose, the ARController can"t be used any longer. Make a new one if you need one.
+	 * Calling this avoids leaking Emscripten memory, which may be important if you"re
 	 * using multiple ARControllers.
 	 */
 	public dispose() {
@@ -122,18 +122,18 @@ export class ARController {
 	 * finally, getMultiMarker is dispatched for every found multimarker
 	 * followed by getMultiMarkerSub events
 	 * dispatched for each of the markers in the multimarker.
-	 * arController.addEventListener('markerNum', function(ev) {
+	 * arController.addEventListener("markerNum", function(ev) {
 	 * console.log("Detected " + ev.data + " markers.")
 	 * });
-	 * arController.addEventListener('getMarker', function(ev) {
+	 * arController.addEventListener("getMarker", function(ev) {
 	 * console.log("Detected marker with ids:", ev.data.marker.id, ev.data.marker.idPatt, ev.data.marker.idMatrix);
 	 * console.log("Marker data", ev.data.marker);
-	 * console.log("Marker transform matrix:", [].join.call(ev.data.matrix, ', '));
+	 * console.log("Marker transform matrix:", [].join.call(ev.data.matrix, ", "));
 	 * });
-	 * arController.addEventListener('getMultiMarker', function(ev) {
+	 * arController.addEventListener("getMultiMarker", function(ev) {
 	 * console.log("Detected multimarker with id:", ev.data.multiMarkerId);
 	 * });
-	 * arController.addEventListener('getMultiMarkerSub', function(ev) {
+	 * arController.addEventListener("getMultiMarkerSub", function(ev) {
 	 * console.log("Submarker for " + ev.data.multiMarkerId, ev.data.markerIndex, ev.data.marker);
 	 * });
 	 * arController.process(image);
@@ -145,7 +145,6 @@ export class ARController {
 
 		this.detectMarker(image);
 
-		// TODO: Figure out why this always returns 0?
 		const markerNum = this.getMarkerNum();
 
 		let k;
@@ -267,7 +266,7 @@ export class ARController {
 	 * Adds the given pattern marker ID to the index of tracked IDs.
 	 * Sets the markerWidth for the pattern marker to markerWidth.
 	 * Used by process() to implement continuous tracking,
-	 * keeping track of the marker's transformation matrix
+	 * keeping track of the marker"s transformation matrix
 	 * and customizable marker widths.
 	 * @param {number} id ID of the pattern marker to track.
 	 * @param {number} [markerWidth] The width of the marker to track.
@@ -293,7 +292,7 @@ export class ARController {
 	 * Adds the given barcode marker ID to the index of tracked IDs.
 	 * Sets the markerWidth for the pattern marker to markerWidth.
 	 * Used by process() to implement continuous tracking,
-	 * keeping track of the marker's transformation matrix
+	 * keeping track of the marker"s transformation matrix
 	 * and customizable marker widths.
 	 * @param {number} id ID of the barcode marker to track.
 	 * @param {number} [markerWidth] The width of the marker to track.
@@ -883,7 +882,7 @@ export class ARController {
 	/**
 	 * Select between detection of black markers and white markers.
 	 *
-	 * ARToolKit's labelling algorithm can work with both black-bordered
+	 * ARToolKit"s labelling algorithm can work with both black-bordered
 	 * markers on a white background (AR_LABELING_BLACK_REGION) or
 	 * white-bordered markers on a black background (AR_LABELING_WHITE_REGION).
 	 * This function allows you to specify the type of markers to look for.
@@ -995,7 +994,7 @@ export class ARController {
 	//  * 		width : number | {min: number, ideal: number, max: number},
 	//  * 		height : number | {min: number, ideal: number, max: number},
 	//  *
-	//  * 		facingMode : 'environment' | 'user' | 'left' | 'right' | { exact: 'environment' | ... }
+	//  * 		facingMode : "environment" | "user" | "left" | "right" | { exact: "environment" | ... }
 	//  * 	}
 	//  * See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia for more information about the
 	//  * width, height and facingMode attributes.
@@ -1117,25 +1116,25 @@ export class ARController {
 	// 	// 				facingDir = facing.exact;
 	// 	// 			}
 	// 	// 			for (var i=0; i<sources.length; i++) {
-	// 	// 				if (sources[i].kind === 'video' && sources[i].facing === facingDir) {
+	// 	// 				if (sources[i].kind === "video" && sources[i].facing === facingDir) {
 	// 	// 					hdConstraints.video.mandatory.sourceId = sources[i].id;
 	// 	// 					break;
 	// 	// 				}
 	// 	// 			}
 	// 	// 			if (facing && facing.exact && !hdConstraints.video.mandatory.sourceId) {
-	// 	// 				onError('Failed to get camera facing the wanted direction');
+	// 	// 				onError("Failed to get camera facing the wanted direction");
 	// 	// 			} else {
 	// 	// 				if (navigator.getUserMedia) {
 	// 	// 					navigator.getUserMedia(hdConstraints, success, onError);
 	// 	// 				} else {
-	// 	// 					onError('navigator.getUserMedia is not supported on your browser');
+	// 	// 					onError("navigator.getUserMedia is not supported on your browser");
 	// 	// 				}
 	// 	// 			}
 	// 	// 		});
 	// 	// 	}
 	// 	// } else {
 	// 	if (navigator.getUserMedia) {
-	// 		// TODO: This interface doesn't seem to match up?
+	// 		// TODO: This interface doesn"t seem to match up?
 	// 		navigator.getUserMedia((hdConstraints as any), success, onError);
 	// 	} else {
 	// 		onError("navigator.getUserMedia is not supported on your browser");
@@ -1151,7 +1150,7 @@ export class ARController {
 	//  * To use ARController.getUserMediaARController, call it with an object with the cameraParam attribute set to
 	//  * a camera parameter file URL, and the onSuccess attribute set to a callback function.
 	//  * 	ARController.getUserMediaARController({
-	//  * 		cameraParam: 'Data/camera_para.dat',
+	//  * 		cameraParam: "Data/camera_para.dat",
 	//  * 		onSuccess: function(arController, arCameraParam) {
 	//  * 			console.log("Got ARController", arController);
 	//  * 			console.log("Got ARCameraParam", arCameraParam);
@@ -1170,14 +1169,14 @@ export class ARController {
 	//  * 		width : number | {min: number, ideal: number, max: number},
 	//  * 		height : number | {min: number, ideal: number, max: number}
 	//  *
-	//  * 		facingMode : 'environment' | 'user' | 'left' | 'right' | { exact: 'environment' | ... }
+	//  * 		facingMode : "environment" | "user" | "left" | "right" | { exact: "environment" | ... }
 	//  * 	}
 	//  *
 	//  * See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia for more information about the
 	//  * width, height and facingMode attributes.
 	//  *
 	//  * The orientation attribute of the returned ARController is set to "portrait" if the userMedia video has larger
-	//  * height than width. Otherwise it's set to "landscape". The videoWidth and videoHeight attributes of the arController
+	//  * height than width. Otherwise it"s set to "landscape". The videoWidth and videoHeight attributes of the arController
 	//  * are set to be always in landscape configuration so that width is larger than height.
 	//  *
 	//  * @param {object} configuration The configuration object.
@@ -1271,22 +1270,26 @@ export class ARController {
 	 * @returns {boolean}
 	 * @private
 	 */
-	private _copyImageToHeap(image) {
+	private _copyImageToHeap(image: HTMLImageElement | HTMLVideoElement) {
 		if (!image) {
 			image = this.image;
 		}
 
-		this.ctx.save();
-
-		if (this.orientation === "portrait") {
-			this.ctx.translate(this.canvas.width, 0);
-			this.ctx.rotate(Math.PI / 2);
-			this.ctx.drawImage(image, 0, 0, this.canvas.height, this.canvas.width); // draw video
-		} else {
+		if (
+			(image instanceof HTMLImageElement && image.width > image.height ) ||
+			(image instanceof HTMLVideoElement && image.videoWidth > image.videoHeight)
+		) {
+			// if landscape
 			this.ctx.drawImage(image, 0, 0, this.canvas.width, this.canvas.height); // draw video
+		} else {
+			// if portrait
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			const scale = this.canvas.height / this.canvas.width;
+			const scaledHeight = this.canvas.width * scale;
+			const scaledWidth = this.canvas.height * scale;
+			const marginLeft = ( this.canvas.width - scaledWidth) / 2;
+			this.ctx.drawImage(image, marginLeft, 0, scaledWidth, scaledHeight); // draw video
 		}
-
-		this.ctx.restore();
 
 		const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
 		const data = imageData.data;
@@ -1295,7 +1298,9 @@ export class ARController {
 			this.dataHeap.set( data );
 			return true;
 		}
+
 		return false;
+
 	}
 
 	/**

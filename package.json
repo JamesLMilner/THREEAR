@@ -4,7 +4,7 @@
   "description": "A AR library for the web",
   "main": "dist/THREEAR.js",
   "scripts": {
-    "serve": "live-server",
+    "serve": "live-server --cors",
     "build": "webpack --mode=production --config webpack.config.js",
     "build:dev": "webpack --mode=development --config webpack.config.js",
     "build:watch": "webpack --mode=development --config webpack.config.js --watch",
