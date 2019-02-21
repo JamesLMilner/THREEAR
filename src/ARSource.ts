@@ -335,8 +335,6 @@ export class ARSource {
 		// compute screenAspect
 		const screenAspect = screenWidth / screenHeight;
 
-		// console.log(screenAspect, sourceAspect)
-
 		// if screenAspect < sourceAspect, then change the width, else change the height
 		if ( screenAspect < sourceAspect ) {
 			// compute newWidth and set .width/.marginLeft

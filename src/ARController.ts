@@ -100,7 +100,7 @@ export class ARController {
 
 	/**
 	 * Destroys the ARController instance and frees all associated resources.
-	 * After calling dispose, the ARController can"t be used any longer. Make a new one if you need one.
+	 * After calling dispose, the ARController can't be used any longer. Make a new one if you need one.
 	 * Calling this avoids leaking Emscripten memory, which may be important if you"re
 	 * using multiple ARControllers.
 	 */
@@ -266,7 +266,7 @@ export class ARController {
 	 * Adds the given pattern marker ID to the index of tracked IDs.
 	 * Sets the markerWidth for the pattern marker to markerWidth.
 	 * Used by process() to implement continuous tracking,
-	 * keeping track of the marker"s transformation matrix
+	 * keeping track of the marker's transformation matrix
 	 * and customizable marker widths.
 	 * @param {number} id ID of the pattern marker to track.
 	 * @param {number} [markerWidth] The width of the marker to track.
@@ -882,7 +882,7 @@ export class ARController {
 	/**
 	 * Select between detection of black markers and white markers.
 	 *
-	 * ARToolKit"s labelling algorithm can work with both black-bordered
+	 * ARToolKit's labelling algorithm can work with both black-bordered
 	 * markers on a white background (AR_LABELING_BLACK_REGION) or
 	 * white-bordered markers on a black background (AR_LABELING_WHITE_REGION).
 	 * This function allows you to specify the type of markers to look for.
