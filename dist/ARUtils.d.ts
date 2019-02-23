@@ -1,11 +1,12 @@
+import * as THREE from "three";
 export declare class ARUtils {
     /**
-     * Create a default rendering camera for this trackingBackend.
+     * Create a default rendering camera
      * They may be modified later. to fit physical camera parameters
      *
      * @return {THREE.Camera} the created camera
      */
-    static createDefaultCamera(trackingMethod: any): any;
+    static createDefaultCamera(): THREE.Camera;
     /**
      * parse tracking method
      *
