@@ -1,4 +1,4 @@
-import Module = require("./vendor/arjs.artoolkit.debug");
+import Module = require("./vendor/arjs.artoolkit.debug.js");
 
 export class ARToolkit {
 	public static AR_TEMPLATE_MATCHING_COLOR: any;
@@ -25,13 +25,13 @@ export class ARToolkit {
 	public static setupAR2: () => any;
 	public static setLogLevel: (mode: any) => any;
 	public static getLogLevel: () => any;
-	public static setDebugMode: (id: number, mode: boolean) => any;
+	public static setDebugMode: (id: number, mode: number) => any;
 	public static getDebugMode: (id: number) => any;
 	public static getProcessingImage: (id: number) => any;
 	public static setMarkerInfoDir: (id: number, markerIndex: number, dir: any) => any;
 	public static setMarkerInfoVertex: (id: number, markerIndex: number) => any;
 	public static getTransMatSquare: (id: number, markerUID: number, markerWidth: number) => any;
-	public static getTransMatSquareCont: (id: any, markerUID: number, markerWidth) => any;
+	public static getTransMatSquareCont: (id: any, markerUID: number, markerWidth: number) => any;
 	public static getTransMatMultiSquare: (id: any, markerUID: number) => any;
 	public static getTransMatMultiSquareRobust: (id: number, i: number) => any;
 	public static getMultiMarkerNum: (id: number, multiId: number) => any;
@@ -136,7 +136,7 @@ export class ARToolkit {
 		// TODO: This was never implemented
 	}
 
-	public static loadCamera(url, callback, onerror) {
+	public static loadCamera(url: string, callback: (id: number) => any, onerror: (err: any) => any) {
 		const filename = "/camera_param_" + ARToolkit.cameraCount++;
 		const writeCallback = () => {
 			const id = Module._loadCamera(filename);
@@ -159,19 +159,19 @@ export class ARToolkit {
 
 	public static runtimeLoad() {
 		ARToolkit.FUNCTIONS.forEach((n) => {
-			ARToolkit[n] = Module[n];
+			(ARToolkit as any)[n] = Module[n];
 		});
 
 		ARToolkit.HEAPU8 = Module.HEAPU8;
 
 		for (const m in Module) {
 			if (m.match(/^AR/)) {
-				ARToolkit[m] = Module[m];
+				(ARToolkit as any)[m] = Module[m];
 			}
 		}
 	}
 
-	public static addMarker(arId, url, callback, onError) {
+	public static addMarker(arId: number, url: string, callback: (id: number) => any, onError: (err: any) => any) {
 		const filename = "/marker_" + ARToolkit.markerCount++;
 		ARToolkit.ajax(url, filename, () => {
 			const id = Module._addMarker(arId, filename);
@@ -181,7 +181,7 @@ export class ARToolkit {
 		});
 	}
 
-	public static addNFTMarker(arId, url, callback) {
+	public static addNFTMarker(arId: number, url: string, callback: (id: number) => any, onError: () => any) {
 		const mId = ARToolkit.markerCount++;
 		const prefix = "/markerNFT_" + mId;
 		const filename1 = prefix + ".fset";
@@ -197,19 +197,18 @@ export class ARToolkit {
 		});
 	}
 
-	public static bytesToString(array) {
+	public static bytesToString(array: Uint8Array) {
 		return String.fromCharCode.apply(String, array);
 	}
 
-	public static parseMultiFile(bytes) {
+	public static parseMultiFile(bytes: Uint8Array) {
 		const str = this.bytesToString(bytes);
 		const lines = str.split("\n");
-		const files = [];
+		const files: any[] = [];
 
 		let state = 0; // 0 - read,
-		let markers = 0;
 
-		lines.forEach((line) => {
+		lines.forEach((line: string) => {
 			line = line.trim();
 			if (!line || line.startsWith("#")) {
 				return;
@@ -217,7 +216,6 @@ export class ARToolkit {
 
 			switch (state) {
 				case 0:
-					markers = +line;
 					state = 1;
 					return;
 				case 1: // filename or barcode
@@ -238,9 +236,14 @@ export class ARToolkit {
 		return files;
 	}
 
-	public static addMultiMarker(arId, url, callback, onError) {
+	public static addMultiMarker(
+		arId: number,
+		url: string,
+		callback: (id: number, markerNum: any) => any,
+		onError: () => any
+	) {
 		const filename = "/multi_marker_" + ARToolkit.multiMarkerCount++;
-		ARToolkit.ajax(url, filename, (bytes) => {
+		ARToolkit.ajax(url, filename, (bytes: Uint8Array) => {
 			let files = this.parseMultiFile(bytes);
 
 			const ok = () => {
@@ -265,24 +268,23 @@ export class ARToolkit {
 	}
 
 	// transfer image
-	public static writeStringToFS(target, string, callback) {
+	public static writeStringToFS(filename: string, string: string, callback: () => any) {
 		const byteArray = new Uint8Array(string.length);
 		for (let i = 0; i < byteArray.length; i++) {
 			byteArray[i] = string.charCodeAt(i) & 0xff;
 		}
-		ARToolkit.writeByteArrayToFS(target, byteArray, callback);
+		ARToolkit.writeByteArrayToFS(filename, byteArray, callback);
 	}
 
-	public static writeByteArrayToFS(target, byteArray, callback) {
-		Module.FS.writeFile(target, byteArray, { encoding: "binary" });
+	public static writeByteArrayToFS(filename: string, byteArray: Uint8Array, callback: (byteArray: Uint8Array) => any) {
+		Module.FS.writeFile(filename, byteArray, { encoding: "binary" });
 		callback(byteArray);
 	}
 
 	// Eg.
 	// 	ajax('../bin/Data2/markers.dat', '/Data2/markers.dat', callback);
 	// 	ajax('../bin/Data/patt.hiro', '/patt.hiro', callback);
-
-	public static ajax(url, target, callback) {
+	public static ajax(url: string, filename: string, callback: (bytes: Uint8Array) => any) {
 		const oReq = new XMLHttpRequest();
 		oReq.open("GET", url, true);
 		oReq.responseType = "arraybuffer"; // blob arraybuffer
@@ -290,13 +292,13 @@ export class ARToolkit {
 		oReq.onload = () => {
 			const arrayBuffer = oReq.response;
 			const byteArray = new Uint8Array(arrayBuffer);
-			ARToolkit.writeByteArrayToFS(target, byteArray, callback);
+			ARToolkit.writeByteArrayToFS(filename, byteArray, callback);
 		};
 
 		oReq.send();
 	}
 
-	public static ajaxDependencies(files, callback) {
+	public static ajaxDependencies(files: any[], callback: () => any) {
 		const next = files.pop();
 		if (next) {
 			ARToolkit.ajax(next[0], next[1], () => {

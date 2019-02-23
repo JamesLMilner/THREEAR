@@ -17,13 +17,13 @@ import ARToolkit from "./ARToolkitAPI";
  */
 export class ARCameraParam {
 
+	public complete: boolean;
 	private id: number;
 	private _src: string;
-	private complete: boolean;
-	private onload: () => void;
-	private onerror: (error: Error) => void;
+	private onload: () => any;
+	private onerror: (error: Error) => any;
 
-	constructor(src, onload, onerror) {
+	constructor(src: string, onload: () => any, onerror: (error: any) => any) {
 		this.id = -1;
 		this._src = "";
 		this.complete = false;
@@ -39,7 +39,7 @@ export class ARCameraParam {
 	 * Can only be called on an unloaded ARCameraParam instance.
 	 * @param {string} src URL to load.
 	 */
-	public load(src) {
+	public load(src: string) {
 		if (this._src !== "") {
 			throw new Error(("ARCameraParam: Trying to load camera parameters twice."));
 		}

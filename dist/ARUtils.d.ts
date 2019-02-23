@@ -13,8 +13,8 @@ export declare class ARUtils {
      * @param {String} trackingMethod - the tracking method to parse
      * @return {Object} - various field of the tracking method
      */
-    static parseTrackingMethod(trackingMethod: any): {
-        trackingBackend: any;
+    static parseTrackingMethod(trackingMethod: string): {
+        trackingBackend: string;
         markersAreaEnabled: boolean;
     };
 }

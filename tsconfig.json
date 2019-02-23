@@ -1,5 +1,12 @@
 {
     "compilerOptions": {
+      "noUnusedLocals": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": true,
       "module": "commonjs",
       "target": "es5",
       "lib": ["es2016","dom"],

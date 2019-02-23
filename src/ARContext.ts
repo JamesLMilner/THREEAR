@@ -4,14 +4,28 @@ import { ARMarkerControls } from "./ARMarkerControls";
 import ARCameraParam from "./ARCameraParam";
 import { ARController } from "./ARController";
 
+interface ARContextParameters {
+	debug: boolean;
+	detectionMode: "color" | "color_and_matrix" | "mono" |"mono_and_matrix";
+	matrixCodeType: string;
+	cameraParametersUrl: "../data/camera_para.dat";
+	maxDetectionRate: number;
+	canvasWidth: number;
+	canvasHeight: number;
+	patternRatio: number;
+	imageSmoothingEnabled: boolean;
+	[key: string]: any;
+}
+
 export class ARContext extends THREE.EventDispatcher {
 
-	private parameters: any;
+	public initialized: boolean;
+	private parameters: ARContextParameters;
 	private arController: any;
 	private _arMarkerControls: any;
 	private _updatedAt: any;
-	private initialized: boolean;
 	private _artoolkitProjectionAxisTransformMatrix: any;
+	private contextError = "Canvas 2D Context was not available";
 
 	constructor(parameters: any) {
 		super();
@@ -49,7 +63,7 @@ export class ARContext extends THREE.EventDispatcher {
 		this.setParameters(parameters);
 	}
 
-	public setParameters(parameters) {
+	public setParameters(parameters: any) {
 
 		if (!parameters) {
 			return;
@@ -71,7 +85,7 @@ export class ARContext extends THREE.EventDispatcher {
 					continue;
 				}
 
-				this.parameters[ key ] = newValue;
+				this.parameters[key] = newValue;
 			}
 		}
 	}
@@ -95,7 +109,7 @@ export class ARContext extends THREE.EventDispatcher {
 
 	}
 
-	public update(srcElement) {
+	public update(srcElement: any) {
 
 		// be sure arController is fully initialized
 		if (this.arController === null) {
@@ -113,7 +127,7 @@ export class ARContext extends THREE.EventDispatcher {
 		this._updatedAt = present;
 
 		// mark all markers to invisible before processing this frame
-		this._arMarkerControls.forEach((markerControls) => {
+		this._arMarkerControls.forEach((markerControls: any) => {
 			markerControls.object3d.visible = false;
 		});
 
@@ -129,18 +143,16 @@ export class ARContext extends THREE.EventDispatcher {
 		return true;
 	}
 
-	public addMarker(arMarkerControls) {
-		console.assert(arMarkerControls instanceof ARMarkerControls);
+	public addMarker(arMarkerControls: ARMarkerControls) {
 		this._arMarkerControls.push(arMarkerControls);
 	}
 
-	public removeMarker(arMarkerControls) {
-		console.assert(arMarkerControls instanceof ARMarkerControls);
+	public removeMarker(arMarkerControls: ARMarkerControls) {
 		const index = this._arMarkerControls.indexOf(arMarkerControls);
 		this._arMarkerControls.splice(index, 1);
 	}
 
-	public _initArtoolkit(onCompleted) {
+	public _initArtoolkit(onCompleted: () => any) {
 		// set this._artoolkitProjectionAxisTransformMatrix to change artoolkit
 		// projection matrix axis to match usual` webgl one
 		this._artoolkitProjectionAxisTransformMatrix = new THREE.Matrix4();
@@ -158,6 +170,10 @@ export class ARContext extends THREE.EventDispatcher {
 					cameraParameters
 				);
 				this.arController = arController;
+
+				if (arController.ctx === null) {
+					throw Error(this.contextError);
+				}
 
 				// honor this.parameters.imageSmoothingEnabled
 				(arController.ctx as any).mozImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
@@ -186,7 +202,7 @@ export class ARContext extends THREE.EventDispatcher {
 				arController.setPatternDetectionMode(detectionMode);
 
 				// setMatrixCodeType
-				const matrixCodeTypes = {
+				const matrixCodeTypes: any = {
 					"3x3" : ARToolkit.AR_MATRIX_CODE_3x3,
 					"3x3_HAMMING63" : ARToolkit.AR_MATRIX_CODE_3x3_HAMMING63,
 					"3x3_PARITY65" : ARToolkit.AR_MATRIX_CODE_3x3_PARITY65,
@@ -210,7 +226,7 @@ export class ARContext extends THREE.EventDispatcher {
 				// notify
 				onCompleted();
 			},
-			(err) => {
+			(err: any) => {
 				throw err;
 				// onerror
 			}
@@ -220,7 +236,7 @@ export class ARContext extends THREE.EventDispatcher {
 
 	}
 
-	public getProjectionMatrix(srcElement) {
+	public getProjectionMatrix(srcElement: any) {
 
 		console.assert(this.arController, "arController MUST be initialized to call this function");
 		// get projectionMatrixArr from artoolkit
@@ -235,7 +251,7 @@ export class ARContext extends THREE.EventDispatcher {
 
 	}
 
-	private _updateArtoolkit(srcElement) {
+	private _updateArtoolkit(srcElement: any) {
 		this.arController.process(srcElement);
 	}
 

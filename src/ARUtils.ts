@@ -19,7 +19,7 @@ export class ARUtils {
 	 * @param {String} trackingMethod - the tracking method to parse
 	 * @return {Object} - various field of the tracking method
 	 */
-	public static parseTrackingMethod(trackingMethod) {
+	public static parseTrackingMethod(trackingMethod: string) {
 
 		if (trackingMethod === "best") {
 			trackingMethod = "area-artoolkit";

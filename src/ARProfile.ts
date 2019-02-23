@@ -100,12 +100,12 @@ export class ARProfile {
 		return this;
 	}
 
-	public changeMatrixMode(changeMatrixMode) {
+	public changeMatrixMode(changeMatrixMode: any) {
 		this.defaultMarkerParameters.changeMatrixMode = changeMatrixMode;
 		return this;
 	}
 
-	public trackingMethod(trackingMethod) {
+	public trackingMethod(trackingMethod: any) {
 		const data = ARUtils.parseTrackingMethod(trackingMethod);
 		this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled;
 		return this;

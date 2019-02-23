@@ -1,4 +1,4 @@
-import { EventDispatcher } from "three";
+import { EventDispatcher, Object3D } from "three";
 
 export class ARBaseControls extends EventDispatcher {
 
@@ -6,7 +6,7 @@ export class ARBaseControls extends EventDispatcher {
 	protected id: number;
 	protected object3d: any;
 
-	constructor(object3d) {
+	constructor(object3d: Object3D) {
 		super();
 		this.id = ARBaseControls.id++;
 		this.object3d = object3d;
