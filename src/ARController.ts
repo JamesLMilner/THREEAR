@@ -375,7 +375,7 @@ export class ARController {
 				listeners[i].call(this, event);
 			}
 		}
-	};
+	}
 
 	/**
 	 * Sets up a debug canvas for the AR detection. Draws a red marker on top of each detected square in the image.
@@ -645,7 +645,7 @@ export class ARController {
 	 */
 	public getCameraMatrix() {
 		return this.cameraMat;
-	};
+	}
 
 	/**
 	 * Returns the shared ARToolKit 3x4 marker transformation matrix, used for passing and receiving
@@ -1176,7 +1176,8 @@ export class ARController {
 	//  * width, height and facingMode attributes.
 	//  *
 	//  * The orientation attribute of the returned ARController is set to "portrait" if the userMedia video has larger
-	//  * height than width. Otherwise it"s set to "landscape". The videoWidth and videoHeight attributes of the arController
+	//  * height than width. Otherwise it"s set to "landscape".
+	//  * The videoWidth and videoHeight attributes of the arController
 	//  * are set to be always in landscape configuration so that width is larger than height.
 	//  *
 	//  * @param {object} configuration The configuration object.

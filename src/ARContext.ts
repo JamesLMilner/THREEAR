@@ -118,7 +118,7 @@ export class ARContext extends THREE.EventDispatcher {
 		});
 
 		// process this frame
-			this._updateArtoolkit(srcElement);
+		this._updateArtoolkit(srcElement);
 
 		// dispatch event
 		this.dispatchEvent({
@@ -221,7 +221,7 @@ export class ARContext extends THREE.EventDispatcher {
 	}
 
 	public getProjectionMatrix(srcElement) {
-		
+
 		console.assert(this.arController, "arController MUST be initialized to call this function");
 		// get projectionMatrixArr from artoolkit
 		const projectionMatrixArr = this.arController.getCameraMatrix();

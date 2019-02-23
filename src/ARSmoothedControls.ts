@@ -25,7 +25,7 @@ export class ARSmoothedControls extends ARBaseControls {
 		this._unvisibleStartedAt = null;
 
 		// handle default parameters
-		parameters = parameters || {}
+		parameters = parameters || {};
 		this.parameters = {
 			// lerp coeficient for the position - between [0,1] - default to 1
 			lerpPosition: 0.8,
@@ -84,9 +84,9 @@ export class ARSmoothedControls extends ARBaseControls {
 		};
 
 		const applyOneSlerpStep = () => {
-			this.object3d.position.lerp(targetObject3d.position, parameters.lerpPosition)
-			this.object3d.quaternion.slerp(targetObject3d.quaternion, parameters.lerpQuaternion)
-			this.object3d.scale.lerp(targetObject3d.scale, parameters.lerpScale)
+			this.object3d.position.lerp(targetObject3d.position, parameters.lerpPosition);
+			this.object3d.quaternion.slerp(targetObject3d.quaternion, parameters.lerpQuaternion);
+			this.object3d.scale.lerp(targetObject3d.scale, parameters.lerpScale);
 		};
 
 		// handle object3d.visible with minVisibleDelay/minUnvisibleDelay
@@ -109,7 +109,7 @@ export class ARSmoothedControls extends ARBaseControls {
 
 		if (wasVisible === false && targetObject3d.visible === true) {
 			const visibleFor = present - this._visibleStartedAt;
-			if ( visibleFor >= this.parameters.minVisibleDelay ){
+			if ( visibleFor >= this.parameters.minVisibleDelay ) {
 				this.object3d.visible = true;
 				snapDirectlyToTarget();
 			}
@@ -130,7 +130,7 @@ export class ARSmoothedControls extends ARBaseControls {
 			applyOneSlerpStep();
 			this._lastLerpStepAt = present;
 		} else {
-			const nStepsToDo = Math.floor( (present - this._lastLerpStepAt) / this.parameters.lerpStepDelay )
+			const nStepsToDo = Math.floor( (present - this._lastLerpStepAt) / this.parameters.lerpStepDelay );
 			for (let i = 0; i < nStepsToDo; i++) {
 				applyOneSlerpStep();
 				this._lastLerpStepAt += this.parameters.lerpStepDelay;

@@ -382,7 +382,7 @@ export class ARSource {
 		}
 
 		// Resize DOMElement
-		
+
 		this.onResizeElement();
 
 		const isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
@@ -399,7 +399,6 @@ export class ARSource {
 		if (arToolkitContext.arController !== null) {
 			camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
 		}
-	
 
 	}
 
