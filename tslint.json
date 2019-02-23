@@ -8,6 +8,7 @@
         "ordered-imports": false,
         "no-bitwise": false,
         "variable-name": false,
-        "prefer-for-of": false
+        "prefer-for-of": false,
+        "interface-name": false
     }
 }

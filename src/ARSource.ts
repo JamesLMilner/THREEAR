@@ -1,14 +1,22 @@
-import ARToolkit from "./ARToolkitAPI";
-import * as THREE from "three";
+interface ARSourceParameters {
+	sourceType: "webcam" | "image" | "video";
+	sourceUrl: null | string;
+	deviceId: any;
+	sourceWidth: number;
+	sourceHeight: number;
+	displayWidth: number;
+	displayHeight: number;
+	[key: string]: any;
+}
 
 export class ARSource {
 
-	private ready: boolean;
+	public ready: boolean;
 	private domElement: any;
 	private parameters: any;
 	private currentTorchStatus: any;
 
-	constructor(parameters: any) {
+	constructor(parameters: ARSourceParameters) {
 		this.ready = false;
 		this.domElement = null;
 
@@ -33,7 +41,7 @@ export class ARSource {
 		this.setParameters(parameters);
 	}
 
-	public setParameters(parameters) {
+	public setParameters(parameters: ARSourceParameters) {
 
 		if (!parameters) {
 			return;
@@ -60,7 +68,7 @@ export class ARSource {
 		}
 	}
 
-	public init(onReady, onError) {
+	public init(onReady: () => any, onError: () => any) {
 
 		const onSourceReady = () => {
 			document.body.appendChild(this.domElement);
@@ -92,7 +100,7 @@ export class ARSource {
 
 	}
 
-	public _initSourceImage(onReady) {
+	public _initSourceImage(onReady: () => any) {
 		const domElement = document.createElement("img");
 		domElement.src = this.parameters.sourceUrl;
 
@@ -113,7 +121,7 @@ export class ARSource {
 		return domElement;
 	}
 
-	public _initSourceVideo(onReady) {
+	public _initSourceVideo(onReady: () => any) {
 		// TODO make it static
 		const domElement = document.createElement("video");
 		domElement.src = this.parameters.sourceUrl;
@@ -149,10 +157,10 @@ export class ARSource {
 
 	}
 
-	public _initSourceWebcam(onReady, onError) {
+	public _initSourceWebcam(onReady: () => any, onError: (err: any) => any) {
 
 		// init default value
-		const fallbackError = (error) => {
+		const fallbackError = (error: any) => {
 			alert("Webcam Error\nName: " + error.name + "\nMessage: " + error.message);
 		};
 		onError = onError || fallbackError;
@@ -247,7 +255,7 @@ export class ARSource {
 		return domElement;
 	}
 
-	public hasMobileTorch(domElement) {
+	public hasMobileTorch(domElement: any) {
 		const stream = domElement.srcObject;
 		if ( stream instanceof MediaStream === false ) {	return false; }
 
@@ -269,7 +277,7 @@ export class ARSource {
 	 * toggle the flash/torch of the mobile fun if applicable.
 	 * Great post about it https://www.oberhofer.co/mediastreamtrack-and-its-capabilities/
 	 */
-	public toggleMobileTorch(domElement) {
+	public toggleMobileTorch(domElement: any) {
 
 		// sanity check
 		if (!this.hasMobileTorch(domElement) === true) {
@@ -300,7 +308,7 @@ export class ARSource {
 			advanced: [{
 				torch: this.currentTorchStatus
 			}]
-		}).catch((error) => {
+		}).catch((error: any) => {
 			throw error;
 		});
 	}
@@ -357,7 +365,7 @@ export class ARSource {
 		}
 	}
 
-	public copyElementSizeTo(otherElement) {
+	public copyElementSizeTo(otherElement: any) {
 
 		if (window.innerWidth > window.innerHeight) {
 			// landscape
@@ -375,7 +383,7 @@ export class ARSource {
 
 	}
 
-	public onResize(arToolkitContext, renderer, camera) {
+	public onResize(arToolkitContext: any, renderer: any, camera: any) {
 		if ( arguments.length !== 3 ) {
 			console.warn("obsolete function ARSource.onResize. Use arToolkitSource.onResizeElement" );
 			return this.onResizeElement.apply(this, arguments);

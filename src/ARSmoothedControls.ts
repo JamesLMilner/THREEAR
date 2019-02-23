@@ -1,5 +1,15 @@
 import ARBaseControls from "./ARBaseControls";
+import { Object3D } from "three";
 
+interface ARSmoothedControlsParameters {
+	lerpPosition?: number;
+	lerpQuaternion?: number;
+	lerpScale?: number;
+	lerpStepDelay?: number;
+	minVisibleDelay?: number;
+	minUnvisibleDelay?: number;
+	[key: string]: number | undefined;
+}
 export class ARSmoothedControls extends ARBaseControls {
 
 	private parameters: any;
@@ -14,7 +24,7 @@ export class ARSmoothedControls extends ARBaseControls {
 	 * @param {[type]} object3d   [description]
 	 * @param {[type]} parameters [description]
 	 */
-	constructor(object3d, parameters) {
+	constructor(object3d: Object3D, parameters?: ARSmoothedControlsParameters) {
 		super(object3d);
 
 		// copy parameters
@@ -44,7 +54,7 @@ export class ARSmoothedControls extends ARBaseControls {
 		this.setParameters(parameters);
 	}
 
-	public setParameters(parameters) {
+	public setParameters(parameters: ARSmoothedControlsParameters) {
 
 		if (!parameters) {
 			return;
@@ -71,7 +81,7 @@ export class ARSmoothedControls extends ARBaseControls {
 		}
 	}
 
-	public update(targetObject3d) {
+	public update(targetObject3d: Object3D) {
 
 		const parameters = this.parameters;
 		const wasVisible = this.object3d.visible;
@@ -108,7 +118,7 @@ export class ARSmoothedControls extends ARBaseControls {
 		}
 
 		if (wasVisible === false && targetObject3d.visible === true) {
-			const visibleFor = present - this._visibleStartedAt;
+			const visibleFor = present - (this._visibleStartedAt as number);
 			if ( visibleFor >= this.parameters.minVisibleDelay ) {
 				this.object3d.visible = true;
 				snapDirectlyToTarget();
@@ -116,7 +126,7 @@ export class ARSmoothedControls extends ARBaseControls {
 		}
 
 		if (wasVisible === true && targetObject3d.visible === false) {
-			const unvisibleFor = present - this._unvisibleStartedAt;
+			const unvisibleFor = present - (this._unvisibleStartedAt as number);
 
 			if ( unvisibleFor >= this.parameters.minUnvisibleDelay ) {
 				this.object3d.visible = false;

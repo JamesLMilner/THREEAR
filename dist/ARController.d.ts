@@ -24,20 +24,19 @@
  * ARCameraParam definition file, calling ARController#onload on success.
  */
 export declare class ARController {
-    ctx: CanvasRenderingContext2D;
+    ctx: CanvasRenderingContext2D | null;
     canvas: HTMLCanvasElement;
+    videoWidth: any;
+    videoHeight: any;
+    orientation: string;
     private framepointer;
     private id;
-    private orientation;
     private listeners;
     private image;
-    private defaultMarkerWidget;
     private patternMarkers;
     private barcodeMarkers;
     private transformMat;
     private defaultMarkerWidth;
-    private videoWidth;
-    private videoHeight;
     private cameraParam;
     private markerTransformMat;
     private _bwpointer;
@@ -45,6 +44,7 @@ export declare class ARController {
     private dataHeap;
     private cameraMat;
     private onload;
+    private contextError;
     constructor(width: any, height: any, camera: any);
     /**
      * Destroys the ARController instance and frees all associated resources.
@@ -80,7 +80,7 @@ export declare class ARController {
      * If the debugSetup has been called, draws debug markers on the debug canvas.
      * @param {HTMLImageElement|HTMLVideoElement} [image] The image to process [optional].
      */
-    process(image: any): void;
+    process(image: HTMLImageElement | HTMLVideoElement): void;
     /**
      * Adds the given pattern marker ID to the index of tracked IDs.
      * Sets the markerWidth for the pattern marker to markerWidth.
@@ -113,7 +113,7 @@ export declare class ARController {
      * @param {number} multiMarkerId The id number of the multimarker to access. Given by loadMultiMarker.
      * @return {number} Number of markers in the multimarker. Negative value indicates failure to find the multimarker.
      */
-    getMultiMarkerPatternCount(multiMarkerId: any): any;
+    getMultiMarkerPatternCount(multiMarkerId: number): any;
     /**
      * Add an event listener on this ARController for the named event, calling the callback function
      * whenever that event is dispatched.
@@ -126,13 +126,13 @@ export declare class ARController {
      *  @param {string} name Name of the event to listen to.
      * @param {function} callback Callback function to call when an event with the given name is dispatched.
      */
-    addEventListener(name: any, callback: any): void;
+    addEventListener(name: string, callback: (event: any) => any): void;
     /**
      * Remove an event listener from the named event.
      * @param {string} name Name of the event to stop listening to.
      * @param {function} callback Callback function to remove from the listeners of the named event.
      */
-    removeEventListener(name: any, callback: any): void;
+    removeEventListener(name: string, callback: () => any): void;
     /**
      * Dispatches the given event to all registered listeners on event.name.
      * @param {Object} event Event to dispatch.
@@ -150,7 +150,7 @@ export declare class ARController {
      * @param {function} onSuccess - The success callback. Called with the id of the loaded marker on a successful load.
      * @param {function} onError - The error callback. Called with the encountered error if the load fails.
      */
-    loadMarker(markerURL: any, onSuccess: any, onError: any): void;
+    loadMarker(markerURL: string, onSuccess: (id: number) => any, onError: (err: any) => any): void;
     /**
      * Loads a multimarker from the given URL and calls the onSuccess callback with the UID of the marker.
      * arController.loadMultiMarker(markerURL, onSuccess, onError);
@@ -159,7 +159,7 @@ export declare class ARController {
      * number of sub-markers of the loaded marker on a successful load.
      * @param {function} onError - The error callback. Called with the encountered error if the load fails.
      */
-    loadMultiMarker(markerURL: any, onSuccess: any, onError: any): void;
+    loadMultiMarker(markerURL: string, onSuccess: () => any, onError: () => any): void;
     /**
      * Populates the provided float array with the current transformation for the specified marker. After
      * a call to detectMarker, all marker information will be current. Marker transformations can then be
@@ -169,7 +169,7 @@ export declare class ARController {
      * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
      * @return	{Float64Array} The dst array.
      */
-    getTransMatSquare(markerUID: any, markerWidth: any, dst: any): any;
+    getTransMatSquare(markerUID: number, markerWidth: number, dst: Float64Array): Float64Array;
     /**
      * Populates the provided float array with the current transformation for the specified marker, using
      * previousMarkerTransform as the previously detected transformation. After
@@ -182,7 +182,7 @@ export declare class ARController {
      * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
      * @return	{Float64Array} The dst array.
      */
-    getTransMatSquareCont(markerUID: any, markerWidth: any, previousMarkerTransform: any, dst: any): any;
+    getTransMatSquareCont(markerUID: number, markerWidth: number, previousMarkerTransform: Float64Array, dst: Float64Array): Float64Array;
     /**
      * Populates the provided float array with the current transformation for the specified multimarker. After
      * a call to detectMarker, all marker information will be current. Marker transformations can then be
@@ -192,7 +192,7 @@ export declare class ARController {
      * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
      * @return	{Float64Array} The dst array.
      */
-    getTransMatMultiSquare(markerUID: any, dst: any): any;
+    getTransMatMultiSquare(markerUID: number, dst: Float64Array): Float64Array;
     /**
      * Populates the provided float array with the current robust transformation for the specified multimarker. After
      * a call to detectMarker, all marker information will be current. Marker transformations can then be
@@ -201,7 +201,7 @@ export declare class ARController {
      * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
      * @return	{Float64Array} The dst array.
      */
-    getTransMatMultiSquareRobust(markerUID: any, dst: any): any;
+    getTransMatMultiSquareRobust(markerUID: number, dst: Float64Array): Float64Array;
     /**
      * Converts the given 3x4 marker transformation matrix in the 12-element transMat array
      * into a 4x4 WebGL matrix and writes the result into the 16-element glMat array.
@@ -224,7 +224,7 @@ export declare class ARController {
      * @return {number}     0 if the function proceeded without error, or a value less than 0 in case of error.
      * A result of 0 does not however, imply any markers were detected.
      */
-    detectMarker(image: any): any;
+    detectMarker(imageElement: HTMLImageElement | HTMLVideoElement): any;
     /**
      * Get the number of markers detected in a video frame.
      * @return {number}     The number of detected markers in the most recent image passed to arDetectMarker.
@@ -272,7 +272,7 @@ export declare class ARController {
      * @param {number} markerIndex The index of the marker to query.
      * @returns {Object} The markerInfo struct.
      */
-    getMarker(markerIndex: any): any;
+    getMarker(markerIndex: number): any;
     /**
      * Set marker vertices to the given vertexData[4][2] array.
      * Sets the marker pos to the center of the vertices.
@@ -281,7 +281,7 @@ export declare class ARController {
      * @param {number} markerIndex The index of the marker to edit.
      * @param {*} vertexData
      */
-    setMarkerInfoVertex(markerIndex: any, vertexData: any): any;
+    setMarkerInfoVertex(markerIndex: number, vertexData: any): any;
     /**
      * Makes a deep copy of the given marker info.
      * @param {Object} markerInfo The marker info object to copy.
@@ -303,7 +303,7 @@ export declare class ARController {
      * @param {number} markerIndex The index of the marker to query.
      * @returns {Object} The markerInfo struct.
      */
-    getMultiEachMarker(multiMarkerId: any, markerIndex: any): any;
+    getMultiEachMarker(multiMarkerId: number, markerIndex: number): any;
     /**
      * Returns the 16-element WebGL transformation matrix used by ARController.process to
      * pass marker WebGL matrices to event listeners.
@@ -316,13 +316,13 @@ export declare class ARController {
      *
      * @return {Float64Array} The 16-element WebGL camera matrix for the ARController camera parameters.
      */
-    getCameraMatrix(): any;
+    getCameraMatrix(): Float64Array;
     /**
      * Returns the shared ARToolKit 3x4 marker transformation matrix, used for passing and receiving
      * marker transforms to/from the Emscripten side.
      * @return {Float64Array} The 12-element 3x4 row-major marker transformation matrix used by ARToolKit.
      */
-    getMarkerTransformationMatrix(): any;
+    getMarkerTransformationMatrix(): Float64Array;
     /**
      * Enables or disables debug mode in the tracker. When enabled, a black and white debug
      * image is generated during marker detection. The debug image is useful for visualising
@@ -330,7 +330,7 @@ export declare class ARController {
      * @param {boolean} mode		true to enable debug mode, false to disable debug mode
      * @see				getDebugMode()
      */
-    setDebugMode(mode: any): any;
+    setDebugMode(mode: number): any;
     /**
      * Returns whether debug mode is currently enabled.
      * @return {boolean}	true when debug mode is enabled, false when debug mode is disabled
@@ -361,7 +361,7 @@ export declare class ARController {
      * @param dir
      * @returns {*}
      */
-    setMarkerInfoDir(markerIndex: any, dir: any): any;
+    setMarkerInfoDir(markerIndex: number, dir: any): any;
     /**
      * //TODOC
      * @param value
@@ -421,7 +421,7 @@ export declare class ARController {
      *
      * @param {number}     threshold An integer in the range [0,255] (inclusive).
      */
-    setThreshold(threshold: any): any;
+    setThreshold(threshold: number): any;
     /**
      * Get the current labeling threshold.
      *
@@ -459,7 +459,7 @@ export declare class ARController {
      * 	AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
      * 	The default mode is AR_TEMPLATE_MATCHING_COLOR.
      */
-    setPatternDetectionMode(mode: any): any;
+    setPatternDetectionMode(mode: number): any;
     /**
      * Returns the current pattern detection mode.
      * @return {number} The current pattern detection mode.
@@ -520,12 +520,12 @@ export declare class ARController {
      * If compatibility with ARToolKit verions 1.0 through 4.4 is required, this value
      * must be 0.5.
      */
-    setPattRatio(pattRatio: any): any;
+    setPattRatio(pattRatio: number): any;
     /**
      * Returns the current ratio of the marker pattern to the total marker size.
      * @return {number} The current pattern ratio.
      */
-    getPattRatio(): any;
+    getPattRatio(): number;
     /**
      * Set the image processing mode.
      *

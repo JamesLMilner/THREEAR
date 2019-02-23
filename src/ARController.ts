@@ -28,21 +28,20 @@ import ARCameraParam from "./ARCameraParam";
  */
 export class ARController {
 
-	public ctx: CanvasRenderingContext2D;
+	public ctx: CanvasRenderingContext2D | null;
 	public canvas: HTMLCanvasElement;
+	public videoWidth: any;
+	public videoHeight: any;
+	public orientation: string;
 
 	private framepointer: any;
 	private id: number;
-	private orientation: string;
 	private listeners: any;
 	private image: any;
-	private defaultMarkerWidget: number;
 	private patternMarkers: any;
 	private barcodeMarkers: any;
 	private transformMat: any;
 	private defaultMarkerWidth: number;
-	private videoWidth: any;
-	private videoHeight: any;
 	private cameraParam: any;
 	private markerTransformMat: any;
 	private _bwpointer: any;
@@ -50,8 +49,9 @@ export class ARController {
 	private dataHeap: any;
 	private cameraMat: any;
 	private onload: any;
+	private contextError = "Canvas 2D Context was not available";
 
-	constructor(width, height, camera)  {
+	constructor(width: any, height: any, camera: any)  {
 
 		let w = width;
 		let h = height;
@@ -60,6 +60,7 @@ export class ARController {
 
 		this.listeners = {};
 
+		// TODO: What is going on will all these types?
 		if (typeof width !== "number") {
 			const image = width;
 			camera = height;
@@ -78,14 +79,19 @@ export class ARController {
 		this.canvas.height = h;
 		this.ctx = this.canvas.getContext("2d");
 
+		if (this.ctx === null) {
+			throw Error("Could not get 2D Context for canvas element");
+		}
+
 		this.videoWidth = w;
 		this.videoHeight = h;
+		this.id = -1; // TODO: Quick solution to keep TSC happy
 
 		if (typeof camera === "string") {
 
 			this.cameraParam = new ARCameraParam(camera, () => {
 				this._initialize();
-			}, (err) => {
+			}, (err: any) => {
 				throw Error("ARController: Failed to load ARCameraParam " + err);
 			});
 
@@ -107,9 +113,9 @@ export class ARController {
 	public dispose() {
 		ARToolkit.teardown(this.id);
 
-		for (const t in this) {
-			if (t) {
-				this[t] = null;
+		for (const key in this) {
+			if (key) {
+				delete this[key];
 			}
 		}
 	}
@@ -141,7 +147,7 @@ export class ARController {
 	 * If the debugSetup has been called, draws debug markers on the debug canvas.
 	 * @param {HTMLImageElement|HTMLVideoElement} [image] The image to process [optional].
 	 */
-	public process(image) {
+	public process(image: HTMLImageElement | HTMLVideoElement) {
 
 		this.detectMarker(image);
 
@@ -327,7 +333,7 @@ export class ARController {
 	 * @param {number} multiMarkerId The id number of the multimarker to access. Given by loadMultiMarker.
 	 * @return {number} Number of markers in the multimarker. Negative value indicates failure to find the multimarker.
 	 */
-	public getMultiMarkerPatternCount(multiMarkerId) {
+	public getMultiMarkerPatternCount(multiMarkerId: number) {
 		return ARToolkit.getMultiMarkerNum(this.id, multiMarkerId);
 	}
 
@@ -343,7 +349,7 @@ export class ARController {
 	 *  @param {string} name Name of the event to listen to.
 	 * @param {function} callback Callback function to call when an event with the given name is dispatched.
 	 */
-	public addEventListener(name, callback) {
+	public addEventListener(name: string, callback: (event: any) => any) {
 		if (!this.listeners[name]) {
 			this.listeners[name] = [];
 		}
@@ -355,7 +361,7 @@ export class ARController {
 	 * @param {string} name Name of the event to stop listening to.
 	 * @param {function} callback Callback function to remove from the listeners of the named event.
 	 */
-	public removeEventListener(name, callback) {
+	public removeEventListener(name: string, callback: () => any) {
 		if (this.listeners[name]) {
 			const index = this.listeners[name].indexOf(callback);
 			if (index > -1) {
@@ -368,7 +374,7 @@ export class ARController {
 	 * Dispatches the given event to all registered listeners on event.name.
 	 * @param {Object} event Event to dispatch.
 	 */
-	public dispatchEvent(event) {
+	public dispatchEvent(event: any) {
 		const listeners = this.listeners[event.name];
 		if (listeners) {
 			for (let i = 0; i < listeners.length; i++) {
@@ -394,7 +400,7 @@ export class ARController {
 	 * @param {function} onSuccess - The success callback. Called with the id of the loaded marker on a successful load.
 	 * @param {function} onError - The error callback. Called with the encountered error if the load fails.
 	 */
-	public loadMarker(markerURL, onSuccess, onError) {
+	public loadMarker(markerURL: string, onSuccess: (id: number) => any, onError: (err: any) => any) {
 		return ARToolkit.addMarker(this.id, markerURL, onSuccess, onError);
 	}
 
@@ -406,7 +412,7 @@ export class ARController {
 	 * number of sub-markers of the loaded marker on a successful load.
 	 * @param {function} onError - The error callback. Called with the encountered error if the load fails.
 	 */
-	public loadMultiMarker(markerURL, onSuccess, onError) {
+	public loadMultiMarker(markerURL: string, onSuccess: () => any, onError: () => any) {
 		return ARToolkit.addMultiMarker(this.id, markerURL, onSuccess, onError);
 	}
 
@@ -419,7 +425,7 @@ export class ARController {
 	 * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
 	 * @return	{Float64Array} The dst array.
 	 */
-	public getTransMatSquare(markerUID, markerWidth, dst) {
+	public getTransMatSquare(markerUID: number, markerWidth: number, dst: Float64Array) {
 		ARToolkit.getTransMatSquare(this.id, markerUID, markerWidth);
 		dst.set(this.markerTransformMat);
 		return dst;
@@ -437,7 +443,12 @@ export class ARController {
 	 * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
 	 * @return	{Float64Array} The dst array.
 	 */
-	public getTransMatSquareCont(markerUID, markerWidth, previousMarkerTransform, dst) {
+	public getTransMatSquareCont(
+		markerUID: number,
+		markerWidth: number,
+		previousMarkerTransform: Float64Array,
+		dst: Float64Array
+	) {
 		this.markerTransformMat.set(previousMarkerTransform);
 		ARToolkit.getTransMatSquareCont(this.id, markerUID, markerWidth);
 		dst.set(this.markerTransformMat);
@@ -453,7 +464,7 @@ export class ARController {
 	 * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
 	 * @return	{Float64Array} The dst array.
 	 */
-	public getTransMatMultiSquare(markerUID, dst) {
+	public getTransMatMultiSquare(markerUID: number, dst: Float64Array) {
 		ARToolkit.getTransMatMultiSquare(this.id, markerUID);
 		dst.set(this.markerTransformMat);
 		return dst;
@@ -467,7 +478,7 @@ export class ARController {
 	 * @param {Float64Array} dst	The float array to populate with the 3x4 marker transformation matrix
 	 * @return	{Float64Array} The dst array.
 	 */
-	public getTransMatMultiSquareRobust(markerUID, dst) {
+	public getTransMatMultiSquareRobust(markerUID: number, dst: Float64Array) {
 		ARToolkit.getTransMatMultiSquare(this.id, markerUID);
 		dst.set(this.markerTransformMat);
 		return dst;
@@ -519,8 +530,8 @@ export class ARController {
 	 * @return {number}     0 if the function proceeded without error, or a value less than 0 in case of error.
 	 * A result of 0 does not however, imply any markers were detected.
 	 */
-	public detectMarker(image) {
-		if (this._copyImageToHeap(image)) {
+	public detectMarker(imageElement: HTMLImageElement | HTMLVideoElement) {
+		if (this._copyImageToHeap(imageElement)) {
 			return ARToolkit.detectMarker(this.id);
 		}
 		return -99;
@@ -576,7 +587,7 @@ export class ARController {
 	 * @param {number} markerIndex The index of the marker to query.
 	 * @returns {Object} The markerInfo struct.
 	 */
-	public getMarker(markerIndex) {
+	public getMarker(markerIndex: number) {
 		if (0 === ARToolkit.getMarker(this.id, markerIndex)) {
 			return ARToolkit.getMarkerInfo();
 		}
@@ -590,7 +601,7 @@ export class ARController {
 	 * @param {number} markerIndex The index of the marker to edit.
 	 * @param {*} vertexData
 	 */
-	public setMarkerInfoVertex(markerIndex, vertexData) {
+	public setMarkerInfoVertex(markerIndex: number, vertexData: any) {
 		for (let i = 0; i < vertexData.length; i++) {
 			this.markerTransformMat[i * 2 + 0] = vertexData[i][0];
 			this.markerTransformMat[i * 2 + 1] = vertexData[i][1];
@@ -603,7 +614,7 @@ export class ARController {
 	 * @param {Object} markerInfo The marker info object to copy.
 	 * @return {Object} The new copy of the marker info.
 	 */
-	public cloneMarkerInfo(markerInfo) {
+	public cloneMarkerInfo(markerInfo: any) {
 		return JSON.parse(JSON.stringify(markerInfo));
 	}
 
@@ -622,7 +633,7 @@ export class ARController {
 	 * @param {number} markerIndex The index of the marker to query.
 	 * @returns {Object} The markerInfo struct.
 	 */
-	public getMultiEachMarker(multiMarkerId, markerIndex) {
+	public getMultiEachMarker(multiMarkerId: number, markerIndex: number) {
 		if (0 === ARToolkit.getMultiEachMarker(this.id, multiMarkerId, markerIndex)) {
 			return ARToolkit.multiEachMarkerInfo;
 		}
@@ -643,7 +654,7 @@ export class ARController {
 	 *
 	 * @return {Float64Array} The 16-element WebGL camera matrix for the ARController camera parameters.
 	 */
-	public getCameraMatrix() {
+	public getCameraMatrix(): Float64Array {
 		return this.cameraMat;
 	}
 
@@ -652,7 +663,7 @@ export class ARController {
 	 * marker transforms to/from the Emscripten side.
 	 * @return {Float64Array} The 12-element 3x4 row-major marker transformation matrix used by ARToolKit.
 	 */
-	public getMarkerTransformationMatrix() {
+	public getMarkerTransformationMatrix(): Float64Array {
 		return this.markerTransformMat;
 	}
 
@@ -665,7 +676,7 @@ export class ARController {
 	 * @param {boolean} mode		true to enable debug mode, false to disable debug mode
 	 * @see				getDebugMode()
 	 */
-	public setDebugMode(mode) {
+	public setDebugMode(mode: number) {
 		return ARToolkit.setDebugMode(this.id, mode);
 	}
 
@@ -693,7 +704,7 @@ export class ARController {
 	 * //TODOC
 	 * @param mode
 	 */
-	public setLogLevel(mode) {
+	public setLogLevel(mode: any) {
 		return ARToolkit.setLogLevel(mode);
 	}
 
@@ -711,7 +722,7 @@ export class ARController {
 	 * @param dir
 	 * @returns {*}
 	 */
-	public setMarkerInfoDir(markerIndex, dir) {
+	public setMarkerInfoDir(markerIndex: number, dir: any) {
 		return ARToolkit.setMarkerInfoDir(this.id, markerIndex, dir);
 	}
 
@@ -720,7 +731,7 @@ export class ARController {
 	 * @param value
 	 * @returns {*}
 	 */
-	public setProjectionNearPlane(value) {
+	public setProjectionNearPlane(value: any) {
 		return ARToolkit.setProjectionNearPlane(this.id, value);
 	}
 
@@ -737,7 +748,7 @@ export class ARController {
 	 * @param value
 	 * @returns {*}
 	 */
-	public setProjectionFarPlane(value) {
+	public setProjectionFarPlane(value: any) {
 		return ARToolkit.setProjectionFarPlane(this.id, value);
 	}
 
@@ -758,7 +769,7 @@ export class ARController {
 	 * AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE,
 	 * AR_LABELING_THRESH_MODE_AUTO_BRACKETING
 	 */
-	public setThresholdMode(mode) {
+	public setThresholdMode(mode: any) {
 		return ARToolkit.setThresholdMode(this.id, mode);
 	}
 
@@ -792,7 +803,7 @@ export class ARController {
 	 *
 	 * @param {number}     threshold An integer in the range [0,255] (inclusive).
 	 */
-	public setThreshold(threshold) {
+	public setThreshold(threshold: number) {
 		return ARToolkit.setThreshold(this.id, threshold);
 	}
 
@@ -836,7 +847,7 @@ export class ARController {
 	 * 	AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
 	 * 	The default mode is AR_TEMPLATE_MATCHING_COLOR.
 	 */
-	public setPatternDetectionMode(mode) {
+	public setPatternDetectionMode(mode: number) {
 		return ARToolkit.setPatternDetectionMode(this.id, mode);
 	}
 
@@ -867,7 +878,7 @@ export class ARController {
 	 * 	AR_MATRIX_CODE_4x4_BCH_13_5_5
 	 * 	The default mode is AR_MATRIX_CODE_3x3.
 	 */
-	public setMatrixCodeType(type) {
+	public setMatrixCodeType(type: any) {
 		return ARToolkit.setMatrixCodeType(this.id, type);
 	}
 
@@ -895,7 +906,7 @@ export class ARController {
 	 * AR_LABELING_BLACK_REGION
 	 * The default mode is AR_LABELING_BLACK_REGION.
 	 */
-	public setLabelingMode(mode) {
+	public setLabelingMode(mode: any) {
 		return ARToolkit.setLabelingMode(this.id, mode);
 	}
 
@@ -915,7 +926,7 @@ export class ARController {
 	 * If compatibility with ARToolKit verions 1.0 through 4.4 is required, this value
 	 * must be 0.5.
 	 */
-	public setPattRatio(pattRatio) {
+	public setPattRatio(pattRatio: number) {
 		return ARToolkit.setPattRatio(this.id, pattRatio);
 	}
 
@@ -923,7 +934,7 @@ export class ARController {
 	 * Returns the current ratio of the marker pattern to the total marker size.
 	 * @return {number} The current pattern ratio.
 	 */
-	public getPattRatio() {
+	public getPattRatio(): number {
 		return ARToolkit.getPattRatio(this.id);
 	}
 
@@ -948,7 +959,7 @@ export class ARController {
 	 * 	AR_IMAGE_PROC_FIELD_IMAGE
 	 * 	The default mode is AR_IMAGE_PROC_FRAME_IMAGE.
 	 */
-	public setImageProcMode(mode) {
+	public setImageProcMode(mode: any) {
 		return ARToolkit.setImageProcMode(this.id, mode);
 	}
 
@@ -968,8 +979,11 @@ export class ARController {
 	public debugDraw() {
 		const debugBuffer = new Uint8ClampedArray(ARToolkit.HEAPU8.buffer, this._bwpointer, this.framesize);
 		const id = new ImageData(debugBuffer, this.canvas.width, this.canvas.height);
-		this.ctx.putImageData(id, 0, 0);
-
+		if (this.ctx) {
+			this.ctx.putImageData(id, 0, 0);
+		} else {
+			throw Error(this.contextError);
+		}
 		const marker_num = this.getMarkerNum();
 		for (let i = 0; i < marker_num; i++) {
 			this._debugMarker(this.getMarker(i));
@@ -1176,8 +1190,8 @@ export class ARController {
 	//  * width, height and facingMode attributes.
 	//  *
 	//  * The orientation attribute of the returned ARController is set to "portrait" if the userMedia video has larger
-	//  * height than width. Otherwise it"s set to "landscape".
-	//  * The videoWidth and videoHeight attributes of the arController
+	//  * height than width. Otherwise it"s set to "landscape". The videoWidth and
+	//  * videoHeight attributes of the arController
 	//  * are set to be always in landscape configuration so that width is larger than height.
 	//  *
 	//  * @param {object} configuration The configuration object.
@@ -1237,7 +1251,11 @@ export class ARController {
 	 */
 	private _initialize() {
 
-		this.id = ARToolkit.setup(this.canvas.width, this.canvas.height, this.cameraParam.id);
+		this.id = ARToolkit.setup(
+			this.canvas.width,
+			this.canvas.height,
+			this.cameraParam.id
+		);
 
 		const params = ARToolkit.getFrameMalloc();
 		if (params) {
@@ -1272,6 +1290,9 @@ export class ARController {
 	 * @private
 	 */
 	private _copyImageToHeap(image: HTMLImageElement | HTMLVideoElement) {
+		if (this.ctx === null) {
+			throw Error(this.contextError);
+		}
 		if (!image) {
 			image = this.image;
 		}
@@ -1310,7 +1331,11 @@ export class ARController {
 	 * @param marker
 	 * @private
 	 */
-	private _debugMarker(marker) {
+	private _debugMarker(marker: any) {
+
+		if (this.ctx === null) {
+			throw Error(this.contextError);
+		}
 		let vertex;
 		let pos;
 		vertex = marker.vertex;

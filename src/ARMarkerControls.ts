@@ -3,20 +3,24 @@ import * as THREE from "three";
 import ARToolkit from "./ARToolkitAPI";
 import ARController from "./ARController";
 import { ARContext } from "./THREEAR";
+import { Object3D } from "three";
+
+interface ARMarkerControlsParameters {
+		size: number;
+		type: "pattern" | "barcode" | "unknown";
+		patternUrl: null | string;
+		barcodeValue: null | number;
+		changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
+		minConfidence: number;
+		[key: string]: any;
+}
 
 export class ARMarkerControls extends ARBaseControls {
 
 	private context: any;
-	private parameters: {
-		size: number;
-		type: "pattern" | "barcode" | "unknown"
-		patternUrl: null | string;
-		barcodeValue: null | string;
-		changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix"
-		minConfidence: number;
-	};
+	private parameters: ARMarkerControlsParameters;
 
-	constructor(context: ARContext, object3d, parameters) {
+	constructor(context: ARContext, object3d: Object3D, parameters: ARMarkerControlsParameters) {
 		super(object3d);
 		this.context = context;
 		// handle default parameters
@@ -47,7 +51,7 @@ export class ARMarkerControls extends ARBaseControls {
 		this._initArtoolkit();
 	}
 
-	public setParameters(parameters) {
+	public setParameters(parameters: ARMarkerControlsParameters) {
 
 		if (!parameters) {
 			return;
@@ -84,7 +88,7 @@ export class ARMarkerControls extends ARBaseControls {
 	 * When you actually got a new modelViewMatrix, you need to perfom a whole bunch
 	 * of things. it is done here.
 	 */
-	public updateWithModelViewMatrix(modelViewMatrix) {
+	public updateWithModelViewMatrix(modelViewMatrix: any) {
 		const markerObject3D = this.object3d;
 
 		// mark object as visible
@@ -130,7 +134,7 @@ export class ARMarkerControls extends ARBaseControls {
 		let name = "";
 		name += this.parameters.type;
 		if ( this.parameters.type === "pattern" ) {
-			const url = this.parameters.patternUrl;
+			const url = this.parameters.patternUrl || "";
 			const basename = url.replace(/^.*\//g, "");
 			name += " - " + basename;
 		} else if (this.parameters.type === "barcode") {
@@ -143,8 +147,8 @@ export class ARMarkerControls extends ARBaseControls {
 
 	public _initArtoolkit() {
 
-		let artoolkitMarkerId = null;
-		let delayedInitTimerId = setInterval(() => {
+		let artoolkitMarkerId: null | number = null;
+		const delayedInitTimerId = setInterval(() => {
 
 			// check if arController is init
 			if (this.context.arController === null)	{
@@ -152,7 +156,6 @@ export class ARMarkerControls extends ARBaseControls {
 			}
 			// stop looping if it is init
 			clearInterval(delayedInitTimerId);
-			delayedInitTimerId = null;
 			// launch the _postInitArtoolkit
 			postInit();
 		}, 1000 / 50);
@@ -165,20 +168,28 @@ export class ARMarkerControls extends ARBaseControls {
 
 			// start tracking this pattern
 			if (this.parameters.type === "pattern" ) {
-				const onSuccess = (markerId) => {
+				const onSuccess = (markerId: number) => {
 					artoolkitMarkerId = markerId;
 					arController.trackPatternMarkerId(
 						artoolkitMarkerId,
 						this.parameters.size
 					);
 				};
-				const onError = (err) => {
+				const onError = (err: any) => {
 					throw Error(err);
 				};
-				arController.loadMarker(this.parameters.patternUrl, onSuccess, onError);
+				if (this.parameters.patternUrl) {
+					arController.loadMarker(this.parameters.patternUrl, onSuccess, onError);
+				} else {
+					throw Error("No patternUrl defined in parameters");
+				}
 			} else if ( this.parameters.type === "barcode" ) {
 				artoolkitMarkerId = this.parameters.barcodeValue;
-				arController.trackBarcodeMarkerId(artoolkitMarkerId, this.parameters.size);
+				if (artoolkitMarkerId) {
+					arController.trackBarcodeMarkerId(artoolkitMarkerId, this.parameters.size);
+				} else {
+					throw Error("No barcodeValue defined in parameters");
+				}
 			} else if ( this.parameters.type === "unknown" ) {
 				artoolkitMarkerId = null;
 			} else {
@@ -186,7 +197,7 @@ export class ARMarkerControls extends ARBaseControls {
 			}
 
 			// listen to the event
-			arController.addEventListener("getMarker", (event) => {
+			arController.addEventListener("getMarker", (event: any) => {
 
 				if (
 					event.data.type === ARToolkit.PATTERN_MARKER &&
@@ -220,7 +231,7 @@ export class ARMarkerControls extends ARBaseControls {
 
 		};
 
-		const onMarkerFound = (event) => {
+		const onMarkerFound = (event: any) => {
 
 			// honor his.parameters.minConfidence
 			if (event.data.type === ARToolkit.PATTERN_MARKER && event.data.marker.cfPatt < this.parameters.minConfidence )	{

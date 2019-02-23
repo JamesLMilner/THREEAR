@@ -14,18 +14,18 @@
  * @param {string} onerror Error callback to called when things don't work out.
  */
 export declare class ARCameraParam {
+    complete: boolean;
     private id;
     private _src;
-    private complete;
     private onload;
     private onerror;
-    constructor(src: any, onload: any, onerror: any);
+    constructor(src: string, onload: () => any, onerror: (error: any) => any);
     /**
      * Loads the given URL as camera parameters definition file into this ARCameraParam.
      * Can only be called on an unloaded ARCameraParam instance.
      * @param {string} src URL to load.
      */
-    load(src: any): void;
+    load(src: string): void;
     src: string;
     /**
      * Destroys the camera parameter and frees associated Emscripten resources.
