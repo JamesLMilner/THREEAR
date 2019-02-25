@@ -181,7 +181,6 @@ export class ARMarkerControls extends ARBaseControls {
 		// dispatchEvent
 		this.dispatchEvent( { type: "markerFound" } );
 
-		console.log(renderRequired);
 		return renderRequired;
 	}
 
