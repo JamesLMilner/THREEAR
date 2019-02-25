@@ -12,12 +12,14 @@ interface ARMarkerControlsParameters {
 		barcodeValue: null | number;
 		changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 		minConfidence: number;
+
 		[key: string]: any;
 }
 
 export class ARMarkerControls extends ARBaseControls {
 
 	private context: any;
+	private smoothMatrices: any[];
 	private parameters: ARMarkerControlsParameters;
 
 	constructor(context: ARContext, object3d: Object3D, parameters: ARMarkerControlsParameters) {
@@ -37,6 +39,14 @@ export class ARMarkerControls extends ARBaseControls {
 			changeMatrixMode : "modelViewMatrix",
 			// minimal confidence in the marke recognition - between [0, 1] - default to 1
 			minConfidence: 0.6,
+			// turn on/off camera smoothing
+			smooth: true,
+			// number of matrices to smooth tracking over, more = smoother but slower follow
+			smoothCount: 5,
+			// distance tolerance for smoothing, if smoothThreshold # of matrices are under tolerance, tracking will stay still
+			smoothTolerance: 0.01,
+			// threshold for smoothing, will keep still unless enough matrices are over tolerance
+			smoothThreshold: 2
 		};
 
 		this.setParameters(parameters);
@@ -45,6 +55,8 @@ export class ARMarkerControls extends ARBaseControls {
 		this.object3d = object3d;
 		this.object3d.matrixAutoUpdate = false;
 		this.object3d.visible = false;
+
+		this.smoothMatrices = []; // last DEBOUNCE_COUNT modelViewMatrix
 
 		context.addMarker(this);
 
@@ -88,7 +100,7 @@ export class ARMarkerControls extends ARBaseControls {
 	 * When you actually got a new modelViewMatrix, you need to perfom a whole bunch
 	 * of things. it is done here.
 	 */
-	public updateWithModelViewMatrix(modelViewMatrix: any) {
+	public updateWithModelViewMatrix(modelViewMatrix: THREE.Matrix4): boolean {
 		const markerObject3D = this.object3d;
 
 		// mark object as visible
@@ -101,13 +113,58 @@ export class ARMarkerControls extends ARBaseControls {
 
 		modelViewMatrix.copy(tmpMatrix);
 
+		let renderRequired = false;
+
 		// change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
 		const markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI / 2);
 		modelViewMatrix.multiply(markerAxisTransformMatrix);
 
 		// change markerObject3D.matrix based on parameters.changeMatrixMode
 		if (this.parameters.changeMatrixMode === "modelViewMatrix") {
-			markerObject3D.matrix.copy(modelViewMatrix);
+			if (this.parameters.smooth) {
+
+				let averages: any[] = []; // average values for matrix over last smoothCount
+				let exceedsAverageTolerance = 0;
+
+				this.smoothMatrices.push(modelViewMatrix.elements.slice()); // add latest
+
+				if (this.smoothMatrices.length < (this.parameters.smoothCount + 1)) {
+					markerObject3D.matrix.copy(modelViewMatrix); // not enough for average
+				} else {
+					this.smoothMatrices.shift(); // remove oldest entry
+					averages = [];
+
+					// loop over entries in matrix
+					for (let i = 0; i < modelViewMatrix.elements.length; i++) {
+						let sum = 0;
+
+						// calculate average for this entry
+						for (let j = 0; j < this.smoothMatrices.length; j++) {
+							sum += this.smoothMatrices[j][i];
+						}
+						averages[i] = sum / this.parameters.smoothCount;
+						// check how many elements vary from the average by at least AVERAGE_MATRIX_TOLERANCE
+						const vary = Math.abs(averages[i] - modelViewMatrix.elements[i]);
+						if (vary >= this.parameters.smoothTolerance) {
+							exceedsAverageTolerance++;
+						}
+					}
+
+					// if moving (i.e. at least AVERAGE_MATRIX_THRESHOLD
+					// entries are over AVERAGE_MATRIX_TOLERANCE
+					if (exceedsAverageTolerance >= this.parameters.smoothThreshold) {
+						// then update matrix values to average, otherwise, don't render to minimize jitter
+						for (let i = 0; i < modelViewMatrix.elements.length; i++) {
+							modelViewMatrix.elements[i] = averages[i];
+						}
+						markerObject3D.matrix.copy(modelViewMatrix);
+						renderRequired = true; // render required in animation loop
+					}
+				}
+			} else {
+				markerObject3D.matrix.copy(modelViewMatrix);
+			}
+			// markerObject3D.matrix.copy(modelViewMatrix);
 		} else if (this.parameters.changeMatrixMode === "cameraTransformMatrix") {
 			markerObject3D.matrix.getInverse(modelViewMatrix);
 		} else {
@@ -123,6 +180,9 @@ export class ARMarkerControls extends ARBaseControls {
 
 		// dispatchEvent
 		this.dispatchEvent( { type: "markerFound" } );
+
+		console.log(renderRequired);
+		return renderRequired;
 	}
 
 	/**
