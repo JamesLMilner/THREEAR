@@ -3,7 +3,7 @@
 	<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
 	<script src="../dist/THREEAR.js"></script>
-	<title>THREE AR Basic Demo - Smoothed Controls</title>
+	<title>THREE AR Basic Demo - Smoothed Positioning</title>
 	<!-- Bind window error for error handling -->
 	<script>
 		// window.addEventListener('error', function(event) {
@@ -38,17 +38,17 @@
 	var camera = new THREE.Camera();
 	scene.add(camera);
 
-	var arToolkitSource = new THREEAR.ARSource({
+	var arToolkitSource = new THREEAR.Source({
 		// to read from the webcam 
 		sourceType : 'webcam',
 
 		// to read from an image
 		// sourceType : 'image',
-		// sourceUrl : THREEAR.ARContext.baseURL + '../data/images/img.jpg',		
+		// sourceUrl : THREEAR.Context.baseURL + '../data/images/img.jpg',		
 
 		// to read from a video
 		// sourceType : 'video',
-		// sourceUrl : THREEAR.ARContext.baseURL + '../data/videos/headtracking.mp4',		
+		// sourceUrl : THREEAR.Context.baseURL + '../data/videos/headtracking.mp4',		
 	})
 
 	arToolkitSource.init(function onReady(){
@@ -68,7 +68,7 @@
 	}
 
 	// create atToolkitContext
-	var arToolkitContext = new THREEAR.ARContext({
+	var arToolkitContext = new THREEAR.Context({
 		cameraParametersUrl: '../data/camera_para.dat',
 		detectionMode: 'mono',
 		maxDetectionRate: 30,
@@ -90,22 +90,22 @@
 	
 	var markerRoot = new THREE.Group
 	scene.add(markerRoot)
-	var artoolkitMarker = new THREEAR.ARMarkerControls(arToolkitContext, markerRoot, {
+	var artoolkitMarker = new THREEAR.MarkerPositioning(arToolkitContext, markerRoot, {
 		type : 'pattern',
 		patternUrl : '../data/patt.hiro'
-		// patternUrl : THREEAR.ARContext.baseURL + '../data/data/patt.kanji'
+		// patternUrl : THREEAR.Context.baseURL + '../data/data/patt.kanji'
 	})
 
-	// build a smoothedControls
+	// build a smoothedPositioning
 	var smoothedRoot = new THREE.Group()
 	scene.add(smoothedRoot)
-	var smoothedControls = new THREEAR.ARSmoothedControls(smoothedRoot, {
+	var smoothedPositioning = new THREEAR.MarkerSmoothedPositioning(smoothedRoot, {
 		lerpPosition: 0.4,
 		lerpQuaternion: 0.3,
 		lerpScale: 1,
 	})
 	onRenderFcts.push(function(delta){
-		smoothedControls.update(markerRoot)
+		smoothedPositioning.update(markerRoot)
 	})
 
 	var arWorldRoot = smoothedRoot

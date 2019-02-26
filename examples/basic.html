@@ -37,10 +37,10 @@
 			var camera = new THREE.Camera();
 			scene.add(camera);
 		
-			var artoolkitProfile = new THREEAR.ARProfile({ baseURL: "./" })
+			var artoolkitProfile = new THREEAR.Profile({ baseURL: "./" })
 			artoolkitProfile.sourceWebcam()
 
-			var arToolkitSource = new THREEAR.ARSource(artoolkitProfile.sourceParameters)
+			var arToolkitSource = new THREEAR.Source(artoolkitProfile.sourceParameters)
 		
 			arToolkitSource.init(function onReady(){
 				onResize()
@@ -59,7 +59,7 @@
 			}
 		
 			// create atToolkitContext
-			var arToolkitContext = new THREEAR.ARContext(artoolkitProfile.contextParameters);
+			var arToolkitContext = new THREEAR.Context(artoolkitProfile.contextParameters);
 			// initialize it
 			arToolkitContext.init(function onCompleted(){
 				// copy projection matrix to camera
@@ -77,7 +77,7 @@
 		
 			var markerGroup = new THREE.Group
 			scene.add(markerGroup)
-			var markerControls = new THREEAR.ARMarkerControls(arToolkitContext, markerGroup, {
+			var markerPositioning = new THREEAR.MarkerPositioning(arToolkitContext, markerGroup, {
 				type : 'pattern',
 				patternUrl : '../data/patt.hiro',
 			});

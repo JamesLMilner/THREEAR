@@ -40,8 +40,8 @@ This leverages `live-server` which allows instant reloads on changes to the file
 
 You might want to remotely debug the page test these using your mobile OS and browser of choice:
 
-[Remote debugging on Chrome (Android)](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/) 
-[Remote debugging on Safari (iOS))](https://medium.com/@sarahelson81/remote-debugging-webpages-in-ios-safari-8fd9b7a79a60)
+* [Remote debugging on Chrome (Android)](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/)
+* [Remote debugging on Safari (iOS))](https://medium.com/@sarahelson81/remote-debugging-webpages-in-ios-safari-8fd9b7a79a60)
 
 ## Acknowledgements
 
@@ -50,4 +50,5 @@ You might want to remotely debug the page test these using your mobile OS and br
  
 ## License
 
-MIT
+All files within the src/artoolkit folder are licensed LGPLv3
+All other files are MIT Licensed and are adapted from the works of Jerome Etienne Copyright 2017 

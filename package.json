@@ -13,7 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Milner",
-  "license": "MIT",
+  "license": "MIT and LGPLv3",
   "dependencies": {
     "three": "^0.101.1"
   },
