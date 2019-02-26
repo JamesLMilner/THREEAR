@@ -1,11 +1,7 @@
-import ARBaseControls from "./ARBaseControls";
-import ARCameraParam from "./ARCameraParam";
-import ARContext from "./ARContext";
-import ARController from "./ARController";
-import ARMarkerControls from "./ARMarkerControls";
-import ARProfile from "./ARProfile";
-import ARSource from "./ARSource";
-import ARToolkitAPI from "./ARToolkitAPI";
-import ARUtils from "./ARUtils";
-import ARSmoothedControls from "./ARSmoothedControls";
-export { ARBaseControls, ARCameraParam, ARContext, ARController, ARMarkerControls, ARProfile, ARSource, ARToolkitAPI, ARUtils, ARSmoothedControls };
+import BasePositioning from "./BasePositioning";
+import Context from "./Context";
+import MarkerPositioning from "./MarkerPositioning";
+import Profile from "./Profile";
+import Source from "./Source";
+import MarkerSmoothedPositioning from "./MarkerSmoothedPositioning";
+export { Profile, Source, Context, BasePositioning, MarkerPositioning, MarkerSmoothedPositioning };
