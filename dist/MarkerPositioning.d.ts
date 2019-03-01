@@ -12,7 +12,15 @@ export interface MarkerPositioningParameters {
 export declare class MarkerPositioning extends EventDispatcher {
     private smoothMatrices;
     private parameters;
+<<<<<<< HEAD
     constructor(parameters: MarkerPositioningParameters);
+=======
+    constructor(
+        context: Context,
+        object3d: Object3D,
+        parameters: MarkerPositioningParameters
+    );
+>>>>>>> Stop lint and prettier from clashing, change indent to 4 spaces and add pre-commit hook
     setParameters(parameters: MarkerPositioningParameters): void;
     dispose(): void;
     /**

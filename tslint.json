@@ -1,7 +1,9 @@
 {
-    "extends": "tslint:recommended",
+    "extends": [
+        "tslint:recommended",
+        "tslint-config-prettier"
+    ],
     "rules": {
-        "indent": [true, "tabs"],
         "object-literal-sort-keys": false,
         "trailing-comma": false,
         "no-console": [true, "log", "error"],

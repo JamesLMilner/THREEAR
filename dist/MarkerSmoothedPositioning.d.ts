@@ -21,7 +21,10 @@ export declare class MarkerSmoothedPositioning extends BasePositioning {
      * @param {[type]} object3d   [description]
      * @param {[type]} parameters [description]
      */
-    constructor(object3d: Object3D, parameters?: MarkerSmoothedPositioningParameters);
+    constructor(
+        object3d: Object3D,
+        parameters?: MarkerSmoothedPositioningParameters
+    );
     setParameters(parameters: MarkerSmoothedPositioningParameters): void;
     update(targetObject3d: Object3D): void;
 }

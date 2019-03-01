@@ -22,7 +22,10 @@ export declare class Source {
     init(onReady: () => any, onError: (error: any) => any): this;
     _initSourceImage(onReady: () => any): HTMLImageElement;
     _initSourceVideo(onReady: () => any): HTMLVideoElement;
-    _initSourceWebcam(onReady: () => any, onError: (err: any) => any): HTMLVideoElement | null;
+    _initSourceWebcam(
+        onReady: () => any,
+        onError: (err: any) => any
+    ): HTMLVideoElement | null;
     hasMobileTorch(domElement: any): boolean;
     /**
      * toggle the flash/torch of the mobile fun if applicable.

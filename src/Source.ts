@@ -1,5 +1,4 @@
 interface SourceParameters {
-	renderer: THREE.WebGLRenderer | null;
 	camera: THREE.Camera | null;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
@@ -431,5 +430,3 @@ export class Source {
 	}
 
 }
-
-export default Source;
