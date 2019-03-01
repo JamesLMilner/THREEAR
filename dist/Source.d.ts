@@ -1,6 +1,8 @@
 interface SourceParameters {
+    renderer: THREE.WebGLRenderer | null;
+    camera: THREE.Camera | null;
     sourceType: "webcam" | "image" | "video";
-    sourceUrl: null | string;
+    sourceUrl: string;
     deviceId: any;
     sourceWidth: number;
     sourceHeight: number;
@@ -15,7 +17,9 @@ export declare class Source {
     private currentTorchStatus;
     constructor(parameters: SourceParameters);
     setParameters(parameters: SourceParameters): void;
-    init(onReady: () => any, onError: () => any): this;
+    readonly renderer: import("three").WebGLRenderer | null;
+    readonly camera: import("three").Camera | null;
+    init(onReady: () => any, onError: (error: any) => any): this;
     _initSourceImage(onReady: () => any): HTMLImageElement;
     _initSourceVideo(onReady: () => any): HTMLVideoElement;
     _initSourceWebcam(onReady: () => any, onError: (err: any) => any): HTMLVideoElement | null;

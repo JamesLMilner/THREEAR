@@ -1,7 +1,6 @@
-import BasePositioning from "./BasePositioning";
-import Context from "./Context";
-import MarkerPositioning from "./MarkerPositioning";
-import Profile from "./Profile";
 import Source from "./Source";
-import MarkerSmoothedPositioning from "./MarkerSmoothedPositioning";
-export { Profile, Source, Context, BasePositioning, MarkerPositioning, MarkerSmoothedPositioning };
+import PatternMarker from "./PatternMarker";
+import BarcodeMarker from "./BarcodeMarker";
+import { ControllerParameters } from "./Controller";
+declare function initialize(parameters: ControllerParameters): Promise<any>;
+export { Source, initialize, PatternMarker, BarcodeMarker };

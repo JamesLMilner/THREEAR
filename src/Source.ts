@@ -1,6 +1,8 @@
 interface SourceParameters {
+	renderer: THREE.WebGLRenderer | null;
+	camera: THREE.Camera | null;
 	sourceType: "webcam" | "image" | "video";
-	sourceUrl: null | string;
+	sourceUrl: string;
 	deviceId: any;
 	sourceWidth: number;
 	sourceHeight: number;
@@ -13,19 +15,24 @@ export class Source {
 
 	public ready: boolean;
 	private domElement: any;
-	private parameters: any;
+	private parameters: SourceParameters;
 	private currentTorchStatus: any;
 
 	constructor(parameters: SourceParameters) {
 		this.ready = false;
-		this.domElement = null;
+
+		if (!parameters.renderer) {
+			throw Error("ThreeJS Renderer is required");
+		}
 
 		// handle default parameters
 		this.parameters = {
+			renderer: null,
+			camera: null,
 			// type of source - ['webcam', 'image', 'video']
 			sourceType : "webcam",
 			// url of the source - valid if sourceType = image|video
-			sourceUrl : null,
+			sourceUrl : "",
 
 			// Device id of the camera to use (optional)
 			deviceId : null,
@@ -68,7 +75,15 @@ export class Source {
 		}
 	}
 
-	public init(onReady: () => any, onError: () => any) {
+	get renderer() {
+		return this.parameters.renderer;
+	}
+
+	get camera() {
+		return this.parameters.camera;
+	}
+
+	public init(onReady: () => any, onError: (error: any) => any) {
 
 		const onSourceReady = () => {
 			document.body.appendChild(this.domElement);
@@ -87,7 +102,7 @@ export class Source {
 		} else if ( this.parameters.sourceType === "webcam" ) {
 			this.domElement = this._initSourceWebcam(onSourceReady, onError);
 		} else {
-			console.assert(false);
+			throw Error("Source type not recognised. Try: 'image', 'video', 'webcam'");
 		}
 
 		// attach
@@ -102,6 +117,11 @@ export class Source {
 
 	public _initSourceImage(onReady: () => any) {
 		const domElement = document.createElement("img");
+
+		if (!this.parameters.srcUrl) {
+			throw Error("No source URL provided");
+		}
+
 		domElement.src = this.parameters.sourceUrl;
 
 		domElement.width = this.parameters.sourceWidth;
