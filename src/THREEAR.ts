@@ -1,15 +1,19 @@
-import BasePositioning from "./BasePositioning";
-import Context from "./Context";
-import MarkerPositioning from "./MarkerPositioning";
-import Profile from "./Profile";
 import Source from "./Source";
-import MarkerSmoothedPositioning from "./MarkerSmoothedPositioning";
+import PatternMarker from "./PatternMarker";
+import BarcodeMarker from "./BarcodeMarker";
+import { Controller, ControllerParameters } from "./Controller";
+
+let controller: Controller;
+function initialize(parameters: ControllerParameters) {
+	if (!controller) {
+		controller = new Controller(parameters);
+	}
+	return controller.ready;
+}
 
 export {
-	Profile,
 	Source,
-	Context,
-	BasePositioning,
-	MarkerPositioning,
-	MarkerSmoothedPositioning
+	initialize,
+	PatternMarker,
+	BarcodeMarker
 };

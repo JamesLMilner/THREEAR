@@ -153,19 +153,16 @@ export class ARToolKitController {
 
 		const markerNum = this.getMarkerNum();
 
-		let k;
-		let o;
-
-		for (k in this.patternMarkers) {
-			if (k) {
-				o = this.patternMarkers[k];
+		for (const k in this.patternMarkers) {
+			if (k !== undefined) {
+				const o = this.patternMarkers[k];
 				o.inPrevious = o.inCurrent;
 				o.inCurrent = false;
 			}
 		}
-		for (k in this.barcodeMarkers) {
-			if (k) {
-				o = this.barcodeMarkers[k];
+		for (const k in this.barcodeMarkers) {
+			if (k !== undefined) {
+				const o = this.barcodeMarkers[k];
 				o.inPrevious = o.inCurrent;
 				o.inCurrent = false;
 			}

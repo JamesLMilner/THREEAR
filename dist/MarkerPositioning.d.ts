@@ -1,8 +1,6 @@
-import { BasePositioning } from "./BasePositioning";
 import * as THREE from "three";
-import { Context } from "./THREEAR";
-import { Object3D } from "three";
-interface MarkerPositioningParameters {
+import { EventDispatcher } from "three";
+export interface MarkerPositioningParameters {
     size: number;
     type: "pattern" | "barcode" | "unknown";
     patternUrl: null | string;
@@ -11,11 +9,10 @@ interface MarkerPositioningParameters {
     minConfidence: number;
     [key: string]: any;
 }
-export declare class MarkerPositioning extends BasePositioning {
-    private context;
+export declare class MarkerPositioning extends EventDispatcher {
     private smoothMatrices;
     private parameters;
-    constructor(context: Context, object3d: Object3D, parameters: MarkerPositioningParameters);
+    constructor(parameters: MarkerPositioningParameters);
     setParameters(parameters: MarkerPositioningParameters): void;
     dispose(): void;
     /**
