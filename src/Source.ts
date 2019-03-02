@@ -1,5 +1,6 @@
 interface SourceParameters {
 	camera: THREE.Camera | null;
+	renderer: THREE.WebGLRenderer | null;
 	parent: HTMLElement;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
@@ -8,7 +9,6 @@ interface SourceParameters {
 	sourceHeight: number;
 	displayWidth: number;
 	displayHeight: number;
-	[key: string]: any;
 }
 
 export class Source {
@@ -22,6 +22,10 @@ export class Source {
 
 		if (!parameters.renderer) {
 			throw Error("ThreeJS Renderer is required");
+		}
+
+		if (!parameters.camera) {
+			throw Error("ThreeJS Camera is required");
 		}
 
 		// handle default parameters
@@ -55,7 +59,7 @@ export class Source {
 
 		for (const key in parameters) {
 			if (key) {
-				const newValue = parameters[key];
+				const newValue = (parameters as any)[key];
 
 				if (newValue === undefined) {
 					console.warn(
@@ -64,7 +68,7 @@ export class Source {
 					continue;
 				}
 
-				const currentValue = this.parameters[key];
+				const currentValue = (parameters as any)[key];
 
 				if (currentValue === undefined) {
 					console.warn(
@@ -75,7 +79,7 @@ export class Source {
 					continue;
 				}
 
-				this.parameters[key] = newValue;
+				(parameters as any)[key] = newValue;
 			}
 		}
 	}
@@ -124,7 +128,7 @@ export class Source {
 	public _initSourceImage(onReady: () => any) {
 		const domElement = document.createElement("img");
 
-		if (!this.parameters.srcUrl) {
+		if (!this.parameters.sourceUrl) {
 			throw Error("No source URL provided");
 		}
 
