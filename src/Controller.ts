@@ -129,20 +129,14 @@ export class Controller extends THREE.EventDispatcher {
 				const newValue = parameters[key];
 
 				if (newValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" + key + "' parameter is undefined."
-					);
+					console.warn(key + "' parameter is undefined.");
 					continue;
 				}
 
 				const currentValue = (this.parameters as any)[key];
 
 				if (currentValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" +
-							key +
-							"' is not a property of this material."
-					);
+					console.warn(key + "' is not a property of this material.");
 					continue;
 				}
 

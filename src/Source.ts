@@ -52,34 +52,28 @@ export class Source {
 		this.setParameters(parameters);
 	}
 
-	public setParameters(parameters: SourceParameters) {
+	public setParameters(parameters: any) {
 		if (!parameters) {
 			return;
 		}
 
 		for (const key in parameters) {
 			if (key) {
-				const newValue = (parameters as any)[key];
+				const newValue = parameters[key];
 
 				if (newValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" + key + "' parameter is undefined."
-					);
+					console.warn(key + "' parameter is undefined.");
 					continue;
 				}
 
-				const currentValue = (parameters as any)[key];
+				const currentValue = (this.parameters as any)[key];
 
 				if (currentValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" +
-							key +
-							"' is not a property of this material."
-					);
+					console.warn(key + "' is not a property of this material.");
 					continue;
 				}
 
-				(parameters as any)[key] = newValue;
+				(this.parameters as any)[key] = newValue;
 			}
 		}
 	}
