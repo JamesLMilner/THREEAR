@@ -1,7 +1,6 @@
 interface SourceParameters {
 	camera: THREE.Camera | null;
 	renderer: THREE.WebGLRenderer | null;
-	parent: HTMLElement;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
 	deviceId: any;
@@ -30,7 +29,6 @@ export class Source {
 
 		// handle default parameters
 		this.parameters = {
-			parent: document.body,
 			renderer: null,
 			camera: null,
 			// type of source - ['webcam', 'image', 'video']
@@ -89,7 +87,7 @@ export class Source {
 	public init(onReady: () => any, onError: (error: any) => any) {
 		const onSourceReady = () => {
 			this.onResizeElement();
-			this.parameters.parent.appendChild(this.domElement);
+			document.body.appendChild(this.domElement);
 
 			this.ready = true;
 
