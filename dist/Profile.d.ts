@@ -6,21 +6,21 @@
  * - it is made to help people to build parameters without understanding all the underlying details.
  */
 export declare class Profile {
-    private sourceParameters;
-    private contextParameters;
-    private defaultMarkerParameters;
-    private parameters;
-    constructor(parameters: any);
-    /**
-     * reset all parameters
-     */
-    reset(baseURL: string): this;
-    performance(label: string): this;
-    defaultMarker(): this;
-    sourceWebcam(): this;
-    sourceVideo(url: string): this;
-    sourceImage(url: string): this;
-    changeMatrixMode(changeMatrixMode: any): this;
-    private _guessPerformanceLabel;
+	private sourceParameters;
+	private contextParameters;
+	private defaultMarkerParameters;
+	private parameters;
+	constructor(parameters: any);
+	/**
+	 * reset all parameters
+	 */
+	reset(baseURL: string): this;
+	performance(label: string): this;
+	defaultMarker(): this;
+	sourceWebcam(): this;
+	sourceVideo(url: string): this;
+	sourceImage(url: string): this;
+	changeMatrixMode(changeMatrixMode: any): this;
+	private _guessPerformanceLabel;
 }
 export default Profile;

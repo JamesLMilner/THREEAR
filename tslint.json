@@ -11,6 +11,7 @@
         "no-bitwise": false,
         "variable-name": false,
         "prefer-for-of": false,
-        "interface-name": false
+        "interface-name": false,
+        "no-unused-expression": true
     }
 }
