@@ -1,4 +1,5 @@
 const path = require('path');
+const PrettierPlugin = require('prettier-webpack-plugin');
 
 module.exports = {
   entry: './src/THREEAR.ts',
@@ -19,5 +20,8 @@ module.exports = {
     libraryTarget: "umd",
     filename: 'THREEAR.js',
     path: __dirname + '/dist'
-  }
+  },
+  plugins: [
+    new PrettierPlugin()
+  ]
 };

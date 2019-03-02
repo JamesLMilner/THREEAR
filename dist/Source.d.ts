@@ -1,5 +1,4 @@
 interface SourceParameters {
-    renderer: THREE.WebGLRenderer | null;
     camera: THREE.Camera | null;
     sourceType: "webcam" | "image" | "video";
     sourceUrl: string;
@@ -17,12 +16,15 @@ export declare class Source {
     private currentTorchStatus;
     constructor(parameters: SourceParameters);
     setParameters(parameters: SourceParameters): void;
-    readonly renderer: import("three").WebGLRenderer | null;
+    readonly renderer: any;
     readonly camera: import("three").Camera | null;
     init(onReady: () => any, onError: (error: any) => any): this;
     _initSourceImage(onReady: () => any): HTMLImageElement;
     _initSourceVideo(onReady: () => any): HTMLVideoElement;
-    _initSourceWebcam(onReady: () => any, onError: (err: any) => any): HTMLVideoElement | null;
+    _initSourceWebcam(
+        onReady: () => any,
+        onError: (err: any) => any
+    ): HTMLVideoElement | null;
     hasMobileTorch(domElement: any): boolean;
     /**
      * toggle the flash/torch of the mobile fun if applicable.
