@@ -5,15 +5,10 @@ import { Controller, ControllerParameters } from "./Controller";
 
 let controller: Controller;
 function initialize(parameters: ControllerParameters) {
-	if (!controller) {
-		controller = new Controller(parameters);
-	}
-	return controller.ready;
+    if (!controller) {
+        controller = new Controller(parameters);
+    }
+    return controller.ready;
 }
 
-export {
-	Source,
-	initialize,
-	PatternMarker,
-	BarcodeMarker
-};
+export { Source, initialize, PatternMarker, BarcodeMarker };

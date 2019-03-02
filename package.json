@@ -32,6 +32,8 @@
     "webpack-cli": "^3.2.3"
   },
   "husky": {
-    "pre-commit": "npm run pretty"
+    "hooks": {
+      "pre-commit": "npm run pretty"
+    }
   }
 }
