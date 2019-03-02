@@ -1,4 +1,4 @@
 import { ControllerParameters } from "./Controller";
 export default function initialize(
-    parameters: ControllerParameters
+	parameters: ControllerParameters
 ): Promise<any>;

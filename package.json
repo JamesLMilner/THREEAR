@@ -8,9 +8,8 @@
     "build": "webpack --mode=production --config webpack.config.js",
     "build:dev": "webpack --mode=development --config webpack.config.js",
     "build:watch": "webpack --mode=development --config webpack.config.js --watch",
-    "lint": "tslint src/**/*.ts",
-    "lint:fix": "tslint --fix src/**/*.ts",
-    "pretty": "prettier **/*.ts --write",
+    "lint": "tslint src/**/*.ts && prettier **/*.ts --check",
+    "lint:fix": "tslint --fix src/**/*.ts && prettier **/*.ts --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Milner",
@@ -33,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pretty"
+      "pre-commit": "npm run lint:fix"
     }
   }
 }
