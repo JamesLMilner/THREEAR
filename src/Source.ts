@@ -1,5 +1,6 @@
 interface SourceParameters {
 	camera: THREE.Camera | null;
+	renderer: THREE.WebGLRenderer | null;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
 	deviceId: any;
@@ -7,7 +8,6 @@ interface SourceParameters {
 	sourceHeight: number;
 	displayWidth: number;
 	displayHeight: number;
-	[key: string]: any;
 }
 
 export class Source {
@@ -21,6 +21,10 @@ export class Source {
 
 		if (!parameters.renderer) {
 			throw Error("ThreeJS Renderer is required");
+		}
+
+		if (!parameters.camera) {
+			throw Error("ThreeJS Camera is required");
 		}
 
 		// handle default parameters
@@ -46,7 +50,7 @@ export class Source {
 		this.setParameters(parameters);
 	}
 
-	public setParameters(parameters: SourceParameters) {
+	public setParameters(parameters: any) {
 		if (!parameters) {
 			return;
 		}
@@ -56,24 +60,18 @@ export class Source {
 				const newValue = parameters[key];
 
 				if (newValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" + key + "' parameter is undefined."
-					);
+					console.warn(key + "' parameter is undefined.");
 					continue;
 				}
 
-				const currentValue = this.parameters[key];
+				const currentValue = (this.parameters as any)[key];
 
 				if (currentValue === undefined) {
-					console.warn(
-						"THREEx.ArToolkitContext: '" +
-							key +
-							"' is not a property of this material."
-					);
+					console.warn(key + "' is not a property of this material.");
 					continue;
 				}
 
-				this.parameters[key] = newValue;
+				(this.parameters as any)[key] = newValue;
 			}
 		}
 	}
@@ -88,6 +86,7 @@ export class Source {
 
 	public init(onReady: () => any, onError: (error: any) => any) {
 		const onSourceReady = () => {
+			this.onResizeElement();
 			document.body.appendChild(this.domElement);
 
 			this.ready = true;
@@ -121,7 +120,7 @@ export class Source {
 	public _initSourceImage(onReady: () => any) {
 		const domElement = document.createElement("img");
 
-		if (!this.parameters.srcUrl) {
+		if (!this.parameters.sourceUrl) {
 			throw Error("No source URL provided");
 		}
 
@@ -255,17 +254,10 @@ export class Source {
 						document.body.addEventListener("click", () => {
 							domElement.play();
 						});
-						// domElement.play();
 
-						// TODO listen to loadedmetadata instead
-						// wait until the video stream is ready
-						const interval = setInterval(() => {
-							if (!domElement.videoWidth) {
-								return;
-							}
+						domElement.addEventListener("loadedmetadata", event => {
 							onReady();
-							clearInterval(interval);
-						}, 1000 / 50);
+						});
 					})
 					.catch(error => {
 						onError({
@@ -348,14 +340,6 @@ export class Source {
 			});
 	}
 
-	public domElementWidth() {
-		return this.domElement ? parseInt(this.domElement.style.width, 10) : 0;
-	}
-
-	public domElementHeight() {
-		return this.domElement ? parseInt(this.domElement.style.height, 10) : 0;
-	}
-
 	public onResizeElement() {
 		const screenWidth = window.innerWidth;
 		const screenHeight = window.innerHeight;
@@ -415,34 +399,6 @@ export class Source {
 			otherElement.style.marginLeft =
 				(window.innerWidth - parseInt(otherElement.style.width, 10)) / 2 + "px";
 			otherElement.style.marginTop = 0;
-		}
-	}
-
-	public onResize(arToolkitContext: any, renderer: any, camera: any) {
-		if (arguments.length !== 3) {
-			console.warn(
-				"obsolete function ARSource.onResize. Use arToolkitSource.onResizeElement"
-			);
-			return this.onResizeElement.apply(this, arguments);
-		}
-
-		// Resize DOMElement
-
-		this.onResizeElement();
-
-		const isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
-		if (isAframe === false) {
-			this.copyElementSizeTo(renderer.domElement);
-		}
-
-		if (arToolkitContext.arController !== null) {
-			this.copyElementSizeTo(arToolkitContext.arController.canvas);
-		}
-
-		// Update Camera
-
-		if (arToolkitContext.arController !== null) {
-			camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
 		}
 	}
 }

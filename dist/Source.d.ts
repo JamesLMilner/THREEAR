@@ -1,5 +1,6 @@
 interface SourceParameters {
 	camera: THREE.Camera | null;
+	renderer: THREE.WebGLRenderer | null;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
 	deviceId: any;
@@ -7,7 +8,6 @@ interface SourceParameters {
 	sourceHeight: number;
 	displayWidth: number;
 	displayHeight: number;
-	[key: string]: any;
 }
 export declare class Source {
 	ready: boolean;
@@ -15,8 +15,8 @@ export declare class Source {
 	private parameters;
 	private currentTorchStatus;
 	constructor(parameters: SourceParameters);
-	setParameters(parameters: SourceParameters): void;
-	readonly renderer: any;
+	setParameters(parameters: any): void;
+	readonly renderer: import("three").WebGLRenderer | null;
 	readonly camera: import("three").Camera | null;
 	init(onReady: () => any, onError: (error: any) => any): this;
 	_initSourceImage(onReady: () => any): HTMLImageElement;
@@ -31,10 +31,7 @@ export declare class Source {
 	 * Great post about it https://www.oberhofer.co/mediastreamtrack-and-its-capabilities/
 	 */
 	toggleMobileTorch(domElement: any): void;
-	domElementWidth(): number;
-	domElementHeight(): number;
 	onResizeElement(): void;
 	copyElementSizeTo(otherElement: any): void;
-	onResize(arToolkitContext: any, renderer: any, camera: any): any;
 }
 export default Source;
