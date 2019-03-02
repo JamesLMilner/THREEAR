@@ -1,5 +1,6 @@
 interface SourceParameters {
 	camera: THREE.Camera | null;
+	parent: HTMLElement;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
 	deviceId: any;
@@ -25,6 +26,7 @@ export class Source {
 
 		// handle default parameters
 		this.parameters = {
+			parent: document.body,
 			renderer: null,
 			camera: null,
 			// type of source - ['webcam', 'image', 'video']
@@ -88,7 +90,8 @@ export class Source {
 
 	public init(onReady: () => any, onError: (error: any) => any) {
 		const onSourceReady = () => {
-			document.body.appendChild(this.domElement);
+			this.onResizeElement();
+			this.parameters.parent.appendChild(this.domElement);
 
 			this.ready = true;
 
@@ -255,17 +258,10 @@ export class Source {
 						document.body.addEventListener("click", () => {
 							domElement.play();
 						});
-						// domElement.play();
 
-						// TODO listen to loadedmetadata instead
-						// wait until the video stream is ready
-						const interval = setInterval(() => {
-							if (!domElement.videoWidth) {
-								return;
-							}
+						domElement.addEventListener("loadedmetadata", event => {
 							onReady();
-							clearInterval(interval);
-						}, 1000 / 50);
+						});
 					})
 					.catch(error => {
 						onError({
@@ -348,14 +344,6 @@ export class Source {
 			});
 	}
 
-	public domElementWidth() {
-		return this.domElement ? parseInt(this.domElement.style.width, 10) : 0;
-	}
-
-	public domElementHeight() {
-		return this.domElement ? parseInt(this.domElement.style.height, 10) : 0;
-	}
-
 	public onResizeElement() {
 		const screenWidth = window.innerWidth;
 		const screenHeight = window.innerHeight;
@@ -415,34 +403,6 @@ export class Source {
 			otherElement.style.marginLeft =
 				(window.innerWidth - parseInt(otherElement.style.width, 10)) / 2 + "px";
 			otherElement.style.marginTop = 0;
-		}
-	}
-
-	public onResize(arToolkitContext: any, renderer: any, camera: any) {
-		if (arguments.length !== 3) {
-			console.warn(
-				"obsolete function ARSource.onResize. Use arToolkitSource.onResizeElement"
-			);
-			return this.onResizeElement.apply(this, arguments);
-		}
-
-		// Resize DOMElement
-
-		this.onResizeElement();
-
-		const isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
-		if (isAframe === false) {
-			this.copyElementSizeTo(renderer.domElement);
-		}
-
-		if (arToolkitContext.arController !== null) {
-			this.copyElementSizeTo(arToolkitContext.arController.canvas);
-		}
-
-		// Update Camera
-
-		if (arToolkitContext.arController !== null) {
-			camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
 		}
 	}
 }
