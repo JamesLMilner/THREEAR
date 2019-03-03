@@ -60,7 +60,7 @@ export declare class ARToolkit {
     static cameraCount: number;
     static getMarkerInfo(): any;
     static deleteCamera(id: number): void;
-    static loadCamera(url: string, callback: (id: number) => any, onerror: (err: any) => any): void;
+    static loadCamera(url: string | Uint8Array, callback: (id: number) => any, onerror: (err: any) => any): void;
     static getFrameMalloc(): any;
     static runtimeLoad(): void;
     static addMarker(arId: number, url: string, callback: (id: number) => any, onError: (err: any) => any): void;

@@ -157,7 +157,7 @@ export class ARToolkit {
 	}
 
 	public static loadCamera(
-		url: string,
+		url: string | Uint8Array,
 		callback: (id: number) => any,
 		onerror: (err: any) => any
 	) {

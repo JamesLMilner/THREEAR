@@ -1,5 +1,4 @@
 import ARToolKit from "./ARToolKit";
-import ARToolKitCameraParam from "./ARToolKitCameraParam";
 
 /**
  * The ARController is the main object for doing AR marker detection with JSARToolKit.
@@ -85,20 +84,8 @@ export class ARToolKitController {
 		this.videoHeight = h;
 		this.id = -1; // TODO: Quick solution to keep TSC happy
 
-		if (typeof camera === "string") {
-			this.cameraParam = new ARToolKitCameraParam(
-				camera,
-				() => {
-					this._initialize();
-				},
-				(err: any) => {
-					throw Error("ARController: Failed to load ARCameraParam " + err);
-				}
-			);
-		} else {
-			this.cameraParam = camera;
-			this._initialize();
-		}
+		this.cameraParam = camera;
+		this._initialize();
 	}
 
 	/**

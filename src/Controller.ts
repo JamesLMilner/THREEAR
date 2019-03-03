@@ -6,6 +6,7 @@ import { WebGLRenderer, Object3D } from "three";
 import { Source } from "./THREEAR";
 import { PatternMarker } from "./PatternMarker";
 import { BarcodeMarker } from "./BarcodeMarker";
+import cameraParametersData from "./artoolkit/CameraParameters";
 
 export interface MarkerPositioningParameters {
 	smooth: boolean;
@@ -21,7 +22,7 @@ export interface ControllerParameters {
 	changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 	detectionMode: "color" | "color_and_matrix" | "mono" | "mono_and_matrix";
 	matrixCodeType: string;
-	cameraParametersUrl: "../data/camera_para.dat";
+	cameraParametersUrl: string | Uint8Array;
 	maxDetectionRate: number;
 	canvasWidth: number;
 	canvasHeight: number;
@@ -85,7 +86,7 @@ export class Controller extends THREE.EventDispatcher {
 			matrixCodeType: "3x3",
 
 			// url of the camera parameters
-			cameraParametersUrl: "../data/camera_para.dat",
+			cameraParametersUrl: cameraParametersData,
 
 			// tune the maximum rate of pose detection in the source image
 			maxDetectionRate: 60,
