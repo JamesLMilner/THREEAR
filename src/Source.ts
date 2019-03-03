@@ -118,12 +118,11 @@ export class Source {
 	}
 
 	public _initSourceImage(onReady: () => any) {
-		const domElement = document.createElement("img");
-
 		if (!this.parameters.sourceUrl) {
 			throw Error("No source URL provided");
 		}
 
+		const domElement = document.createElement("img");
 		domElement.src = this.parameters.sourceUrl;
 
 		domElement.width = this.parameters.sourceWidth;
@@ -131,20 +130,12 @@ export class Source {
 		domElement.style.width = this.parameters.displayWidth + "px";
 		domElement.style.height = this.parameters.displayHeight + "px";
 
-		// wait until the video stream is ready
-		const interval = setInterval(() => {
-			if (!domElement.naturalWidth) {
-				return;
-			}
-			onReady();
-			clearInterval(interval);
-		}, 1000 / 50);
+		domElement.onload = () => onReady();
 
 		return domElement;
 	}
 
 	public _initSourceVideo(onReady: () => any) {
-		// TODO make it static
 		const domElement = document.createElement("video");
 		domElement.src = this.parameters.sourceUrl;
 
@@ -168,13 +159,13 @@ export class Source {
 		domElement.style.height = this.parameters.displayHeight + "px";
 
 		// wait until the video stream is ready
-		const interval = setInterval(() => {
-			// if (!domElement.naturalWidth) {
-			// 	return;
-			// }
-			onReady();
-			clearInterval(interval);
-		}, 1000 / 50);
+		domElement.addEventListener(
+			"loadeddata",
+			() => {
+				onReady();
+			},
+			false
+		);
 		return domElement;
 	}
 
