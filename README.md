@@ -2,53 +2,55 @@
 
 ## Introduction
 
-THREE AR aims to provide a simple to use Augmented Reality API for the web, leveraging three.js's 3D capabilities.
+THREE AR aims to provide a simple to use Augmented Reality API for the web, leveraging three.js's 3D capabilities. THREE AR is written in [TypeScript](https://www.typescriptlang.org/).
+
 
 ## Aims
 
   - Provide a unified Augmented Reality API for three.js
-  - Be written in TypeScript
-  - No external libraries (except three.js), everything is bundled in the library
+  - No expected external ambient dependencies (except three.js)
   - Available on npm as a UMD module
   - Can be used with modern build tools/bundlers like Webpack, Rollup etc
   - Provide documentation and examples
 
-## Demo
 
-Got the [the basic demo](https://jamesmilneruk.github.io/THREEAR/examples/basic.html) using a mobile device and point your camera at the following marker:
+## Usage
 
-![Hiro Marker](./data/hiro.jpg "Hero Marker")
-
-## Development
-
-#### Install
-
-First you will want to clone the repo and then install the dependencies:
+THREE AR works with npm and also as a CDN. For npm you can install in the following manner:
 
 ```
-  git clone git@github.com:JamesMilnerUK/THREEAR.git
-  npm install
+npm install threear
 ```
 
-#### Local Debugging
+using a CDN you can include a script tag from unpkg like so:
 
-If you want to experiment with the examples locall you can use:
+```html
+<script src="https://unpkg.com/threear"></script>
+```
 
-```npm run serve```
+## Demo and Examples
 
-This leverages `live-server` which allows instant reloads on changes to the file system. Here if we go to `http://127.0.0.1:8080/examples/basic.html` we can see the basic example app. If you access this from a mobile device and point it at the Hiro marker above you should see a rotating cube and torus appear. 
+The examples folder features [a basic demo](https://jamesmilneruk.github.io/THREEAR/examples/basic.html), you can open it on a mobile device and point your camera at the following marker:
 
-You might want to remotely debug the page test these using your mobile OS and browser of choice:
+<p style="text-align: center">
+  <img width="400px" alt="Hiro Marker" src="./data/hiro.jpg"/>
+</p>
 
-* [Remote debugging on Chrome (Android)](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/)
-* [Remote debugging on Safari (iOS))](https://medium.com/@sarahelson81/remote-debugging-webpages-in-ios-safari-8fd9b7a79a60)
+You can see a full list of demos of the [GitHub pages page for THREE AR](https://jamesmilneruk.github.io/THREEAR/).
+
+
+## Development and Contribution
+
+Please see the [development guide](./DEVELOPMENT.md). If you are interested in contributing, it may be a good starting point to see the list of open issues on our [GitHub issues page](https://github.com/JamesMilnerUK/THREEAR/issues). Please take a moment to read the [code of conduct](./CODE_OF_CONDUCT.md).
+
 
 ## Acknowledgements
 
  - [ar.js](https://github.com/jeromeetienne/AR.js) on which this library is based
- - [jsartoolkit](https://github.com/artoolkitx/jsartoolkit5) who created the Emscripten library from the C code for artoolkit
+ - [jsartoolkit](https://github.com/artoolkitx/jsartoolkit5) the Emscripten library from the C code for artoolkit, on which this library is underpinned
  
+
 ## License
 
-All files within the src/artoolkit folder are licensed LGPLv3
-All other files are MIT Licensed and are adapted from the works of Jerome Etienne Copyright 2017 
+All files within the `src/artoolkit` folder are licensed LGPLv3
+All other files are MIT Licensed and are adapted from the [work of Jerome Etienne](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt) 
