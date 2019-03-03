@@ -7,12 +7,11 @@ THREE AR aims to provide a simple to use Augmented Reality API for the web, leve
 
 ## Aims
 
-  - Provide a unified Augmented Reality API for three.js
+  - Provide a simple Augmented Reality API for three.js
   - No expected external ambient dependencies (except three.js)
   - Available on npm as a UMD module
   - Can be used with modern build tools/bundlers like Webpack, Rollup etc
   - Provide documentation and examples
-
 
 ## Usage
 
@@ -32,7 +31,7 @@ using a CDN you can include a script tag from unpkg like so:
 
 The examples folder features [a basic demo](https://jamesmilneruk.github.io/THREEAR/examples/basic.html), you can open it on a mobile device and point your camera at the following marker:
 
-<p style="text-align: center">
+<p align="center">
   <img width="400px" alt="Hiro Marker" src="./data/hiro.jpg"/>
 </p>
 
@@ -53,4 +52,5 @@ Please see the [development guide](./DEVELOPMENT.md). If you are interested in c
 ## License
 
 All files within the `src/artoolkit` folder are licensed LGPLv3
+
 All other files are MIT Licensed and are adapted from the [work of Jerome Etienne](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt) 
