@@ -16,7 +16,7 @@ export interface ControllerParameters {
 	changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 	detectionMode: "color" | "color_and_matrix" | "mono" | "mono_and_matrix";
 	matrixCodeType: string;
-	cameraParametersUrl: "../data/camera_para.dat";
+	cameraParametersUrl: string | Uint8Array;
 	maxDetectionRate: number;
 	canvasWidth: number;
 	canvasHeight: number;

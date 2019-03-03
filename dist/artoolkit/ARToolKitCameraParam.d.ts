@@ -19,14 +19,14 @@ export declare class ARToolKitCameraParam {
     private _src;
     private onload;
     private onerror;
-    constructor(src: string, onload: () => any, onerror: (error: any) => any);
+    constructor(src: string | Uint8Array, onload: () => any, onerror: (error: any) => any);
     /**
      * Loads the given URL as camera parameters definition file into this ARCameraParam.
      * Can only be called on an unloaded ARCameraParam instance.
      * @param {string} src URL to load.
      */
-    load(src: string): void;
-    src: string;
+    load(src: string | Uint8Array): void;
+    src: string | Uint8Array;
     /**
      * Destroys the camera parameter and frees associated Emscripten resources.
      */

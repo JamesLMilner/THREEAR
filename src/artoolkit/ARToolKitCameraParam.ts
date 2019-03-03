@@ -18,11 +18,15 @@ import ARToolkit from "./ARToolKit";
 export class ARToolKitCameraParam {
 	public complete: boolean;
 	private id: number;
-	private _src: string;
+	private _src: string | Uint8Array;
 	private onload: () => any;
 	private onerror: (error: Error) => any;
 
-	constructor(src: string, onload: () => any, onerror: (error: any) => any) {
+	constructor(
+		src: string | Uint8Array,
+		onload: () => any,
+		onerror: (error: any) => any
+	) {
 		this.id = -1;
 		this._src = "";
 		this.complete = false;
@@ -38,7 +42,7 @@ export class ARToolKitCameraParam {
 	 * Can only be called on an unloaded ARCameraParam instance.
 	 * @param {string} src URL to load.
 	 */
-	public load(src: string) {
+	public load(src: string | Uint8Array) {
 		if (this._src !== "") {
 			throw new Error("ARCameraParam: Trying to load camera parameters twice.");
 		}
@@ -49,7 +53,12 @@ export class ARToolKitCameraParam {
 				id => {
 					this.id = id;
 					this.complete = true;
-					this.onload();
+
+					// TODO: This is so that the class instance can return rather than
+					// going straight into the onload callback.
+					setTimeout(() => {
+						this.onload();
+					});
 				},
 				err => {
 					this.onerror(err);
@@ -62,7 +71,7 @@ export class ARToolKitCameraParam {
 		return this._src;
 	}
 
-	set src(src: string) {
+	set src(src: string | Uint8Array) {
 		this.load(src);
 	}
 
