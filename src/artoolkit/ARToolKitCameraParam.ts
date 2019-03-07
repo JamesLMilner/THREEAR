@@ -1,4 +1,4 @@
-import ARToolkit from "./ARToolKit";
+import ARToolKit from "./ARToolKit";
 
 /**
  * ARCameraParam is used for loading AR camera parameters for use with ARController.
@@ -48,7 +48,7 @@ export class ARToolKitCameraParam {
 		}
 		this._src = src;
 		if (src) {
-			ARToolkit.loadCamera(
+			ARToolKit.loadCamera(
 				src,
 				id => {
 					this.id = id;
@@ -80,7 +80,7 @@ export class ARToolKitCameraParam {
 	 */
 	public dispose() {
 		if (this.id !== -1) {
-			ARToolkit.deleteCamera(this.id);
+			ARToolKit.deleteCamera(this.id);
 		}
 		this.id = -1;
 		this._src = "";

@@ -559,11 +559,6 @@ export declare class ARToolKitController {
      * See setDebugMode.
      */
     debugDraw(): void;
-    /**
-     * //TODOC
-     *
-     * @private
-     */
     private _initialize;
     /**
      * //TODOC
