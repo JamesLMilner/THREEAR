@@ -1,17 +1,55 @@
 import Module = require("./lib/arjs.artoolkit.debug.js");
 
-export class ARToolkit {
-	public static AR_TEMPLATE_MATCHING_COLOR: any;
-	public static AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX: any;
-	public static AR_TEMPLATE_MATCHING_MONO: any;
-	public static AR_TEMPLATE_MATCHING_MONO_AND_MATRIX: any;
-	public static AR_MATRIX_CODE_3x3: any;
-	public static AR_MATRIX_CODE_3x3_HAMMING63: any;
-	public static AR_MATRIX_CODE_3x3_PARITY65: any;
-	public static AR_MATRIX_CODE_4x4: any;
-	public static AR_MATRIX_CODE_4x4_BCH_13_9_3: any;
-	public static AR_MATRIX_CODE_4x4_BCH_13_5_5: any;
-	public static HEAPU8: any;
+export class ARToolKit {
+	public static AR_DEBUG_DISABLE: number = 0;
+	public static AR_DEBUG_ENABLE: number = 1;
+	public static AR_DEFAULT_DEBUG_MODE: number = 0;
+	public static AR_DEFAULT_IMAGE_PROC_MODE: number = 0;
+	public static AR_DEFAULT_LABELING_MODE: number = 1;
+	public static AR_DEFAULT_LABELING_THRESH: number = 100;
+	public static AR_DEFAULT_MARKER_EXTRACTION_MODE: number = 2;
+	public static AR_DEFAULT_PATTERN_DETECTION_MODE: number = 0;
+	public static AR_IMAGE_PROC_FIELD_IMAGE: number = 1;
+	public static AR_IMAGE_PROC_FRAME_IMAGE: number = 0;
+	public static AR_LABELING_BLACK_REGION: number = 1;
+	public static AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE: number = 3;
+	public static AR_LABELING_THRESH_MODE_AUTO_MEDIAN: number = 1;
+	public static AR_LABELING_THRESH_MODE_AUTO_OTSU: number = 2;
+	public static AR_LABELING_THRESH_MODE_MANUAL: number = 0;
+	public static AR_LABELING_WHITE_REGION: number = 0;
+	public static AR_LOG_LEVEL_DEBUG: number = 0;
+	public static AR_LOG_LEVEL_ERROR: number = 3;
+	public static AR_LOG_LEVEL_INFO: number = 1;
+	public static AR_LOG_LEVEL_REL_INFO: number = 4;
+	public static AR_LOG_LEVEL_WARN: number = 2;
+	public static AR_LOOP_BREAK_THRESH: number = 0;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_HEURISTIC_TROUBLESOME_MATRIX_CODES: number = 9;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_MATCH_BARCODE_EDC_FAIL: number = 5;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_MATCH_BARCODE_NOT_FOUND: number = 4;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_MATCH_CONFIDENCE: number = 6;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_MATCH_CONTRAST: number = 3;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_MATCH_GENERIC: number = 2;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_NONE: number = 0;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_PATTERN_EXTRACTION: number = 1;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_POSE_ERROR: number = 7;
+	public static AR_MARKER_INFO_CUTOFF_PHASE_POSE_ERROR_MULTI: number = 8;
+	public static AR_MATRIX_CODE_3x3: number = 3;
+	public static AR_MATRIX_CODE_3x3_HAMMING63: number = 515;
+	public static AR_MATRIX_CODE_3x3_PARITY65: number = 259;
+	public static AR_MATRIX_CODE_4x4: number = 4;
+	public static AR_MATRIX_CODE_4x4_BCH_13_5_5: number = 1028;
+	public static AR_MATRIX_CODE_4x4_BCH_13_9_3: number = 772;
+	public static AR_MATRIX_CODE_DETECTION: number = 2;
+	public static AR_MAX_LOOP_COUNT: number = 5;
+	public static AR_NOUSE_TRACKING_HISTORY: number = 1;
+	public static AR_TEMPLATE_MATCHING_COLOR: number = 0;
+	public static AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX: number = 3;
+	public static AR_TEMPLATE_MATCHING_MONO: number = 1;
+	public static AR_TEMPLATE_MATCHING_MONO_AND_MATRIX: number = 4;
+	public static AR_USE_TRACKING_HISTORY: number = 0;
+	public static AR_USE_TRACKING_HISTORY_V2: number = 2;
+
+	public static HEAPU8 = Module.HEAPU8;
 
 	public static UNKNOWN_MARKER = -1;
 	public static PATTERN_MARKER = 0;
@@ -24,124 +62,82 @@ export class ARToolkit {
 		width: number,
 		height: number,
 		cameraParamId: any
-	) => any;
-	public static teardown: (id: number) => any;
-	public static setupAR2: () => any;
-	public static setLogLevel: (mode: any) => any;
-	public static getLogLevel: () => any;
-	public static setDebugMode: (id: number, mode: number) => any;
-	public static getDebugMode: (id: number) => any;
-	public static getProcessingImage: (id: number) => any;
+	) => any = Module.setup;
+	public static teardown: (id: number) => any = Module.teardown;
+	public static setupAR2: () => any = Module.setupAR2;
+	public static setLogLevel: (mode: any) => any = Module.setLogLevel;
+	public static getLogLevel: () => any = Module.getLogLevel;
+	public static setDebugMode: (id: number, mode: number) => any =
+		Module.getLogLevel;
+	public static getDebugMode: (id: number) => any = Module.getDebugMode;
+	public static getProcessingImage: (id: number) => any =
+		Module.getProcessingImage;
 	public static setMarkerInfoDir: (
 		id: number,
 		markerIndex: number,
 		dir: any
-	) => any;
-	public static setMarkerInfoVertex: (id: number, markerIndex: number) => any;
+	) => any = Module.setMarkerInfoDir;
+	public static setMarkerInfoVertex: (id: number, markerIndex: number) => any =
+		Module.setMarkerInfoVertex;
 	public static getTransMatSquare: (
 		id: number,
 		markerUID: number,
 		markerWidth: number
-	) => any;
+	) => any = Module.getTransMatSquare;
 	public static getTransMatSquareCont: (
 		id: any,
 		markerUID: number,
 		markerWidth: number
-	) => any;
-	public static getTransMatMultiSquare: (id: any, markerUID: number) => any;
-	public static getTransMatMultiSquareRobust: (id: number, i: number) => any;
-	public static getMultiMarkerNum: (id: number, multiId: number) => any;
-	public static getMultiMarkerCount: (id: number) => any;
-	public static detectMarker: (id: number) => any;
-	public static getMarkerNum: (id: number) => any;
-	public static getMarker: (id: number, markerIndex: number) => any;
+	) => any = Module.getTransMatSquareCont;
+	public static getTransMatMultiSquare: (id: any, markerUID: number) => any =
+		Module.getTransMatMultiSquare;
+	public static getTransMatMultiSquareRobust: (id: number, i: number) => any =
+		Module.getTransMatMultiSquareRobust;
+	public static getMultiMarkerNum: (id: number, multiId: number) => any =
+		Module.getMultiMarkerNum;
+	public static getMultiMarkerCount: (id: number) => any =
+		Module.getMultiMarkerCount;
+	public static detectMarker: (id: number) => any = Module.detectMarker;
+	public static getMarkerNum: (id: number) => any = Module.getMarkerNum;
+	public static getMarker: (id: number, markerIndex: number) => any =
+		Module.getMarker;
 	public static getMultiEachMarker: (
 		id: number,
 		multiMarkerId: number,
 		markerIndex: number
-	) => any;
-	public static detectNFTMarker: (id: number) => any;
-	public static setProjectionNearPlane: (id: number, value: any) => any;
-	public static getProjectionNearPlane: (id: number) => any;
-	public static setProjectionFarPlane: (id: number, value: any) => any;
-	public static getProjectionFarPlane: (id: number) => any;
-	public static setThresholdMode: (id: number, mode: any) => any;
-	public static getThresholdMode: (id: number) => any;
-	public static setThreshold: (id: number, threshold: number) => any;
-	public static getThreshold: (id: number) => any;
-	public static setPatternDetectionMode: (id: number, mode: any) => any;
-	public static getPatternDetectionMode: (id: number) => any;
-	public static setMatrixCodeType: (id: number, type: any) => any;
-	public static getMatrixCodeType: (id: number) => any;
-	public static setLabelingMode: (id: number, mode: any) => any;
-	public static getLabelingMode: (id: number) => any;
-	public static setPattRatio: (id: number, ratio: number) => any;
-	public static getPattRatio: (id: number) => any;
-	public static setImageProcMode: (id: number, mode: any) => any;
-	public static getImageProcMode: (id: number) => any;
-
-	public static FUNCTIONS = [
-		"setup",
-		"teardown",
-
-		"setupAR2",
-
-		"setLogLevel",
-		"getLogLevel",
-
-		"setDebugMode",
-		"getDebugMode",
-
-		"getProcessingImage",
-
-		"setMarkerInfoDir",
-		"setMarkerInfoVertex",
-
-		"getTransMatSquare",
-		"getTransMatSquareCont",
-
-		"getTransMatMultiSquare",
-		"getTransMatMultiSquareRobust",
-
-		"getMultiMarkerNum",
-		"getMultiMarkerCount",
-
-		"detectMarker",
-		"getMarkerNum",
-
-		"detectNFTMarker",
-
-		"getMarker",
-		"getMultiEachMarker",
-		"getNFTMarker",
-
-		"setProjectionNearPlane",
-		"getProjectionNearPlane",
-
-		"setProjectionFarPlane",
-		"getProjectionFarPlane",
-
-		"setThresholdMode",
-		"getThresholdMode",
-
-		"setThreshold",
-		"getThreshold",
-
-		"setPatternDetectionMode",
-		"getPatternDetectionMode",
-
-		"setMatrixCodeType",
-		"getMatrixCodeType",
-
-		"setLabelingMode",
-		"getLabelingMode",
-
-		"setPattRatio",
-		"getPattRatio",
-
-		"setImageProcMode",
-		"getImageProcMode"
-	];
+	) => any = Module.getMultiEachMarker;
+	public static detectNFTMarker: (id: number) => any = Module.detectNFTMarker;
+	public static setProjectionNearPlane: (id: number, value: any) => any =
+		Module.setProjectionNearPlane;
+	public static getProjectionNearPlane: (id: number) => any =
+		Module.getProjectionNearPlane;
+	public static setProjectionFarPlane: (id: number, value: any) => any =
+		Module.setProjectionFarPlane;
+	public static getProjectionFarPlane: (id: number) => any =
+		Module.getProjectionFarPlane;
+	public static setThresholdMode: (id: number, mode: any) => any =
+		Module.setThresholdMode;
+	public static getThresholdMode: (id: number) => any = Module.getThresholdMode;
+	public static setThreshold: (id: number, threshold: number) => any =
+		Module.setThreshold;
+	public static getThreshold: (id: number) => any = Module.getThreshold;
+	public static setPatternDetectionMode: (id: number, mode: any) => any =
+		Module.setPatternDetectionMode;
+	public static getPatternDetectionMode: (id: number) => any =
+		Module.getPatternDetectionMode;
+	public static setMatrixCodeType: (id: number, type: any) => any =
+		Module.setMatrixCodeType;
+	public static getMatrixCodeType: (id: number) => any =
+		Module.getMatrixCodeType;
+	public static setLabelingMode: (id: number, mode: any) => any =
+		Module.setLabelingMode;
+	public static getLabelingMode: (id: number) => any = Module.getLabelingMode;
+	public static setPattRatio: (id: number, ratio: number) => any =
+		Module.setPattRatio;
+	public static getPattRatio: (id: number) => any = Module.getPattRatio;
+	public static setImageProcMode: (id: number, mode: any) => any =
+		Module.setImageProcMode;
+	public static getImageProcMode: (id: number) => any = Module.getImageProcMode;
 
 	public static markerCount = 0;
 	public static multiMarkerCount = 0;
@@ -161,7 +157,7 @@ export class ARToolkit {
 		callback: (id: number) => any,
 		onerror: (err: any) => any
 	) {
-		const filename = "/camera_param_" + ARToolkit.cameraCount++;
+		const filename = "/camera_param_" + ARToolKit.cameraCount++;
 		const writeCallback = () => {
 			const id = Module._loadCamera(filename);
 			if (callback) {
@@ -170,31 +166,17 @@ export class ARToolkit {
 		};
 		if (typeof url === "object") {
 			// Maybe it's a byte array
-			ARToolkit.writeByteArrayToFS(filename, url, writeCallback);
+			ARToolKit.writeByteArrayToFS(filename, url, writeCallback);
 		} else if (url.indexOf("\n") > -1) {
 			// Or a string with the camera param
-			ARToolkit.writeStringToFS(filename, url, writeCallback);
+			ARToolKit.writeStringToFS(filename, url, writeCallback);
 		} else {
-			ARToolkit.ajax(url, filename, writeCallback);
+			ARToolKit.ajax(url, filename, writeCallback);
 		}
 	}
 
 	public static getFrameMalloc() {
 		return Module.frameMalloc;
-	}
-
-	public static runtimeLoad() {
-		ARToolkit.FUNCTIONS.forEach(n => {
-			(ARToolkit as any)[n] = Module[n];
-		});
-
-		ARToolkit.HEAPU8 = Module.HEAPU8;
-
-		for (const m in Module) {
-			if (m.match(/^AR/)) {
-				(ARToolkit as any)[m] = Module[m];
-			}
-		}
 	}
 
 	public static addMarker(
@@ -203,8 +185,8 @@ export class ARToolkit {
 		callback: (id: number) => any,
 		onError: (err: any) => any
 	) {
-		const filename = "/marker_" + ARToolkit.markerCount++;
-		ARToolkit.ajax(url, filename, () => {
+		const filename = "/marker_" + ARToolKit.markerCount++;
+		ARToolKit.ajax(url, filename, () => {
 			const id = Module._addMarker(arId, filename);
 			if (callback) {
 				callback(id);
@@ -218,14 +200,14 @@ export class ARToolkit {
 		callback: (id: number) => any,
 		onError: () => any
 	) {
-		const mId = ARToolkit.markerCount++;
+		const mId = ARToolKit.markerCount++;
 		const prefix = "/markerNFT_" + mId;
 		const filename1 = prefix + ".fset";
 		const filename2 = prefix + ".iset";
 		const filename3 = prefix + ".fset3";
-		ARToolkit.ajax(url + ".fset", filename1, () => {
-			ARToolkit.ajax(url + ".iset", filename2, () => {
-				ARToolkit.ajax(url + ".fset3", filename3, () => {
+		ARToolKit.ajax(url + ".fset", filename1, () => {
+			ARToolKit.ajax(url + ".iset", filename2, () => {
+				ARToolKit.ajax(url + ".fset3", filename3, () => {
 					const id = Module._addNFTMarker(arId, prefix);
 					if (callback) {
 						callback(id);
@@ -280,8 +262,8 @@ export class ARToolkit {
 		callback: (id: number, markerNum: any) => any,
 		onError: () => any
 	) {
-		const filename = "/multi_marker_" + ARToolkit.multiMarkerCount++;
-		ARToolkit.ajax(url, filename, (bytes: Uint8Array) => {
+		const filename = "/multi_marker_" + ARToolKit.multiMarkerCount++;
+		ARToolKit.ajax(url, filename, (bytes: Uint8Array) => {
 			let files = this.parseMultiFile(bytes);
 
 			const ok = () => {
@@ -304,7 +286,7 @@ export class ARToolkit {
 				return [path + "/" + file, file];
 			});
 
-			ARToolkit.ajaxDependencies(files, ok);
+			ARToolKit.ajaxDependencies(files, ok);
 		});
 	}
 
@@ -318,7 +300,7 @@ export class ARToolkit {
 		for (let i = 0; i < byteArray.length; i++) {
 			byteArray[i] = string.charCodeAt(i) & 0xff;
 		}
-		ARToolkit.writeByteArrayToFS(filename, byteArray, callback);
+		ARToolKit.writeByteArrayToFS(filename, byteArray, callback);
 	}
 
 	public static writeByteArrayToFS(
@@ -345,7 +327,7 @@ export class ARToolkit {
 		oReq.onload = () => {
 			const arrayBuffer = oReq.response;
 			const byteArray = new Uint8Array(arrayBuffer);
-			ARToolkit.writeByteArrayToFS(filename, byteArray, callback);
+			ARToolKit.writeByteArrayToFS(filename, byteArray, callback);
 		};
 
 		oReq.send();
@@ -354,8 +336,8 @@ export class ARToolkit {
 	public static ajaxDependencies(files: any[], callback: () => any) {
 		const next = files.pop();
 		if (next) {
-			ARToolkit.ajax(next[0], next[1], () => {
-				ARToolkit.ajaxDependencies(files, callback);
+			ARToolKit.ajax(next[0], next[1], () => {
+				ARToolKit.ajaxDependencies(files, callback);
 			});
 		} else {
 			callback();
@@ -363,6 +345,4 @@ export class ARToolkit {
 	}
 }
 
-ARToolkit.runtimeLoad();
-
-export default ARToolkit;
+export default ARToolKit;

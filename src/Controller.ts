@@ -1,4 +1,4 @@
-import ARToolkit from "./artoolkit/ARToolKit";
+import ARToolKit from "./artoolkit/ARToolKit";
 import * as THREE from "three";
 import ARToolKitCameraParam from "./artoolkit/ARToolKitCameraParam";
 import { ARToolKitController } from "./artoolkit/ARToolKitController";
@@ -278,22 +278,22 @@ export class Controller extends THREE.EventDispatcher {
 
 				// setPatternDetectionMode
 				const detectionModes = {
-					color: ARToolkit.AR_TEMPLATE_MATCHING_COLOR,
-					color_and_matrix: ARToolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
-					mono: ARToolkit.AR_TEMPLATE_MATCHING_MONO,
-					mono_and_matrix: ARToolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
+					color: ARToolKit.AR_TEMPLATE_MATCHING_COLOR,
+					color_and_matrix: ARToolKit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
+					mono: ARToolKit.AR_TEMPLATE_MATCHING_MONO,
+					mono_and_matrix: ARToolKit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
 				};
 				const detectionMode = detectionModes[this.parameters.detectionMode];
 				this.arController.setPatternDetectionMode(detectionMode);
 
 				// setMatrixCodeType
 				const matrixCodeTypes: any = {
-					"3x3": ARToolkit.AR_MATRIX_CODE_3x3,
-					"3x3_HAMMING63": ARToolkit.AR_MATRIX_CODE_3x3_HAMMING63,
-					"3x3_PARITY65": ARToolkit.AR_MATRIX_CODE_3x3_PARITY65,
-					"4x4": ARToolkit.AR_MATRIX_CODE_4x4,
-					"4x4_BCH_13_9_3": ARToolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-					"4x4_BCH_13_5_5": ARToolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5
+					"3x3": ARToolKit.AR_MATRIX_CODE_3x3,
+					"3x3_HAMMING63": ARToolKit.AR_MATRIX_CODE_3x3_HAMMING63,
+					"3x3_PARITY65": ARToolKit.AR_MATRIX_CODE_3x3_PARITY65,
+					"4x4": ARToolKit.AR_MATRIX_CODE_4x4,
+					"4x4_BCH_13_9_3": ARToolKit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
+					"4x4_BCH_13_5_5": ARToolKit.AR_MATRIX_CODE_4x4_BCH_13_5_5
 				};
 				const matrixCodeType = matrixCodeTypes[this.parameters.matrixCodeType];
 				this.arController.setMatrixCodeType(matrixCodeType);
@@ -361,7 +361,7 @@ export class Controller extends THREE.EventDispatcher {
 
 		// listen to the event
 		this.arController.addEventListener("getMarker", (event: any) => {
-			if (event.data.type === ARToolkit.PATTERN_MARKER) {
+			if (event.data.type === ARToolKit.PATTERN_MARKER) {
 				if (event.data.marker.idPatt === patternMarkerId) {
 					this.onMarkerFound(event, marker.minConfidence, marker.markerObject);
 				}
@@ -387,7 +387,7 @@ export class Controller extends THREE.EventDispatcher {
 
 		this.arController.addEventListener("getMarker", (event: any) => {
 			// console.log(event.data.type === ARToolkit.BARCODE_MARKER);
-			if (event.data.type === ARToolkit.BARCODE_MARKER) {
+			if (event.data.type === ARToolKit.BARCODE_MARKER) {
 				// console.log(event.data.marker, barcodeMarkerId);
 				if (event.data.marker.idMatrix === barcodeMarkerId) {
 					this.onMarkerFound(event, marker.minConfidence, marker.markerObject);
@@ -403,14 +403,14 @@ export class Controller extends THREE.EventDispatcher {
 	) {
 		// honor his.parameters.minConfidence
 		if (
-			event.data.type === ARToolkit.PATTERN_MARKER &&
+			event.data.type === ARToolKit.PATTERN_MARKER &&
 			event.data.marker.cfPatt < minConfidence
 		) {
 			return;
 		}
 
 		if (
-			event.data.type === ARToolkit.BARCODE_MARKER &&
+			event.data.type === ARToolKit.BARCODE_MARKER &&
 			event.data.marker.cfMatt < minConfidence
 		) {
 			return;
