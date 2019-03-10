@@ -23,14 +23,14 @@ export interface ControllerParameters {
 	patternRatio: number;
 	imageSmoothingEnabled: boolean;
 }
-declare const enum Statuses {
-	UNINITIALIZED = "UNINITIALIZED",
-	INITIALIZING = "INITIALIZING",
-	INITIALIZED = "INITIALIZED"
-}
+/**
+ * The controller is returned from THREE ARs initialize method, in the returned promise.
+ * It provides methods for controlling AR state such as add markers to track and updating
+ * to check for markers in the current provided source (i.e. webcam, video, image).
+ * @param parameters parameters for determining things like detection mode and smoothing
+ */
 export declare class Controller extends THREE.EventDispatcher {
-	status: Statuses;
-	ready: Promise<any>;
+	postInit: Promise<any>;
 	private parameters;
 	private arController;
 	private smoothMatrices;

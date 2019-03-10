@@ -8,7 +8,7 @@ function initialize(parameters: ControllerParameters) {
 	if (!controller) {
 		controller = new Controller(parameters);
 	}
-	return controller.ready;
+	return controller.postInit;
 }
 
 export { Source, initialize, PatternMarker, BarcodeMarker };

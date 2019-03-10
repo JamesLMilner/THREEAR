@@ -9,8 +9,12 @@ interface SourceParameters {
 	displayWidth: number;
 	displayHeight: number;
 }
+/**
+ * Source describes how and where THREE AR should accept imagery to
+ * track markers for. Images, Video and the Webcam can be used as sources.
+ * @param parameters parameters for determining if it should come from a webcam or a video
+ */
 export declare class Source {
-	ready: boolean;
 	private domElement;
 	private parameters;
 	private currentTorchStatus;
@@ -18,13 +22,7 @@ export declare class Source {
 	setParameters(parameters: any): void;
 	readonly renderer: import("three").WebGLRenderer | null;
 	readonly camera: import("three").Camera | null;
-	init(onReady: () => any, onError: (error: any) => any): this;
-	_initSourceImage(onReady: () => any): HTMLImageElement;
-	_initSourceVideo(onReady: () => any): HTMLVideoElement;
-	_initSourceWebcam(
-		onReady: () => any,
-		onError: (err: any) => any
-	): HTMLVideoElement | null;
+	initialize(): Promise<{}>;
 	hasMobileTorch(domElement: any): boolean;
 	/**
 	 * toggle the flash/torch of the mobile fun if applicable.
@@ -33,5 +31,8 @@ export declare class Source {
 	toggleMobileTorch(domElement: any): void;
 	onResizeElement(): void;
 	copyElementSizeTo(otherElement: any): void;
+	private _initSourceImage;
+	private _initSourceVideo;
+	private _initSourceWebcam;
 }
 export default Source;

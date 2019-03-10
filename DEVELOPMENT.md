@@ -18,10 +18,10 @@ THREE AR uses npm to manage dependencies. You can install the dependencies for t
 
 #### Building THREE AR
 
-You can do a production build by running
+You can do a production build, which will also generate the docs using [TypeDoc](https://typedoc.org/), by running
 
 ```
-npm run build
+npm run build:prod
 ```
 
 You can do a development build by running:

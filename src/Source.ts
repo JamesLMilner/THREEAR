@@ -10,15 +10,17 @@ interface SourceParameters {
 	displayHeight: number;
 }
 
+/**
+ * Source describes how and where THREE AR should accept imagery to
+ * track markers for. Images, Video and the Webcam can be used as sources.
+ * @param parameters parameters for determining if it should come from a webcam or a video
+ */
 export class Source {
-	public ready: boolean;
 	private domElement: any;
 	private parameters: SourceParameters;
 	private currentTorchStatus: any;
 
 	constructor(parameters: SourceParameters) {
-		this.ready = false;
-
 		if (!parameters.renderer) {
 			throw Error("ThreeJS Renderer is required");
 		}
@@ -84,186 +86,36 @@ export class Source {
 		return this.parameters.camera;
 	}
 
-	public init(onReady: () => any, onError: (error: any) => any) {
-		const onSourceReady = () => {
-			this.onResizeElement();
-			document.body.appendChild(this.domElement);
+	public initialize() {
+		return new Promise((resolve, reject) => {
+			const onReady = () => {
+				this.onResizeElement();
+				document.body.appendChild(this.domElement);
+				resolve();
+			};
 
-			this.ready = true;
+			const onError = (message: Error | string) => {
+				reject(message);
+			};
 
-			if (onReady) {
-				onReady();
-			}
-		};
-
-		if (this.parameters.sourceType === "image") {
-			this.domElement = this._initSourceImage(onSourceReady);
-		} else if (this.parameters.sourceType === "video") {
-			this.domElement = this._initSourceVideo(onSourceReady);
-		} else if (this.parameters.sourceType === "webcam") {
-			this.domElement = this._initSourceWebcam(onSourceReady, onError);
-		} else {
-			throw Error(
-				"Source type not recognised. Try: 'image', 'video', 'webcam'"
-			);
-		}
-
-		// attach
-		this.domElement.style.position = "absolute";
-		this.domElement.style.top = "0px";
-		this.domElement.style.left = "0px";
-		this.domElement.style.zIndex = "-2";
-
-		return this;
-	}
-
-	public _initSourceImage(onReady: () => any) {
-		if (!this.parameters.sourceUrl) {
-			throw Error("No source URL provided");
-		}
-
-		const domElement = document.createElement("img");
-		domElement.src = this.parameters.sourceUrl;
-
-		domElement.width = this.parameters.sourceWidth;
-		domElement.height = this.parameters.sourceHeight;
-		domElement.style.width = this.parameters.displayWidth + "px";
-		domElement.style.height = this.parameters.displayHeight + "px";
-
-		domElement.onload = () => onReady();
-
-		return domElement;
-	}
-
-	public _initSourceVideo(onReady: () => any) {
-		const domElement = document.createElement("video");
-		domElement.src = this.parameters.sourceUrl;
-
-		domElement.style.objectFit = "initial";
-
-		domElement.autoplay = true;
-		(domElement as any).webkitPlaysinline = true;
-		domElement.controls = false;
-		domElement.loop = true;
-		domElement.muted = true;
-
-		// trick to trigger the video on android
-		document.body.addEventListener("click", function onClick() {
-			document.body.removeEventListener("click", onClick);
-			domElement.play();
-		});
-
-		domElement.width = this.parameters.sourceWidth;
-		domElement.height = this.parameters.sourceHeight;
-		domElement.style.width = this.parameters.displayWidth + "px";
-		domElement.style.height = this.parameters.displayHeight + "px";
-
-		// wait until the video stream is ready
-		domElement.addEventListener(
-			"loadeddata",
-			() => {
-				onReady();
-			},
-			false
-		);
-		return domElement;
-	}
-
-	public _initSourceWebcam(onReady: () => any, onError: (err: any) => any) {
-		// init default value
-		const fallbackError = (error: any) => {
-			alert(
-				"Webcam Error\nName: " + error.name + "\nMessage: " + error.message
-			);
-		};
-		onError = onError || fallbackError;
-
-		const domElement = document.createElement("video");
-		domElement.setAttribute("autoplay", "");
-		domElement.setAttribute("muted", "");
-		domElement.setAttribute("playsinline", "");
-		domElement.style.width = this.parameters.displayWidth + "px";
-		domElement.style.height = this.parameters.displayHeight + "px";
-
-		// check API is available
-		if (
-			navigator.mediaDevices === undefined ||
-			navigator.mediaDevices.enumerateDevices === undefined ||
-			navigator.mediaDevices.getUserMedia === undefined
-		) {
-			let fctName = "";
-			if (navigator.mediaDevices === undefined) {
-				fctName = "navigator.mediaDevices";
-			} else if (navigator.mediaDevices.enumerateDevices === undefined) {
-				fctName = "navigator.mediaDevices.enumerateDevices";
-			} else if (navigator.mediaDevices.getUserMedia === undefined) {
-				fctName = "navigator.mediaDevices.getUserMedia";
+			if (this.parameters.sourceType === "image") {
+				this.domElement = this._initSourceImage(onReady, onError);
+			} else if (this.parameters.sourceType === "video") {
+				this.domElement = this._initSourceVideo(onReady, onError);
+			} else if (this.parameters.sourceType === "webcam") {
+				this.domElement = this._initSourceWebcam(onReady, onError);
 			} else {
-				console.assert(false);
+				reject("Source type not recognised. Try: 'image', 'video', 'webcam'");
 			}
-			onError({
-				name: "",
-				message: "WebRTC issue-! " + fctName + " not present in your browser"
-			});
-			return null;
-		}
 
-		// get available devices
-		navigator.mediaDevices
-			.enumerateDevices()
-			.then(devices => {
-				const userMediaConstraints = {
-					audio: false,
-					video: {
-						facingMode: "environment",
-						width: {
-							ideal: this.parameters.sourceWidth
-							// min: 1024,
-							// max: 1920
-						},
-						height: {
-							ideal: this.parameters.sourceHeight
-							// min: 776,
-							// max: 1080
-						}
-					}
-				};
+			// attach
+			this.domElement.style.position = "absolute";
+			this.domElement.style.top = "0px";
+			this.domElement.style.left = "0px";
+			this.domElement.style.zIndex = "-2";
 
-				if (null !== this.parameters.deviceId) {
-					(userMediaConstraints as any).video.deviceId = {
-						exact: this.parameters.deviceId
-					};
-				}
-
-				// get a device which satisfy the constraints
-				navigator.mediaDevices
-					.getUserMedia(userMediaConstraints)
-					.then(function success(stream) {
-						// set the .src of the domElement
-						domElement.srcObject = stream;
-						// to start the video, when it is possible to start it only on userevent. like in android
-						document.body.addEventListener("click", () => {
-							domElement.play();
-						});
-
-						domElement.addEventListener("loadedmetadata", event => {
-							onReady();
-						});
-					})
-					.catch(error => {
-						onError({
-							name: error.name,
-							message: error.message
-						});
-					});
-			})
-			.catch(error => {
-				onError({
-					message: error.message
-				});
-			});
-
-		return domElement;
+			return this;
+		});
 	}
 
 	public hasMobileTorch(domElement: any) {
@@ -391,6 +243,146 @@ export class Source {
 				(window.innerWidth - parseInt(otherElement.style.width, 10)) / 2 + "px";
 			otherElement.style.marginTop = 0;
 		}
+	}
+
+	private _initSourceImage(
+		onReady: () => any,
+		onError: (message: string) => any
+	) {
+		if (!this.parameters.sourceUrl) {
+			throw Error("No source URL provided");
+		}
+
+		const domElement = document.createElement("img");
+		domElement.src = this.parameters.sourceUrl;
+
+		domElement.width = this.parameters.sourceWidth;
+		domElement.height = this.parameters.sourceHeight;
+		domElement.style.width = this.parameters.displayWidth + "px";
+		domElement.style.height = this.parameters.displayHeight + "px";
+
+		domElement.onload = () => onReady();
+
+		return domElement;
+	}
+
+	private _initSourceVideo(
+		onReady: () => any,
+		onError: (message: string) => any
+	) {
+		const domElement = document.createElement("video");
+		domElement.src = this.parameters.sourceUrl;
+
+		domElement.style.objectFit = "initial";
+
+		domElement.autoplay = true;
+		(domElement as any).webkitPlaysinline = true;
+		domElement.controls = false;
+		domElement.loop = true;
+		domElement.muted = true;
+
+		// trick to trigger the video on android
+		document.body.addEventListener("click", function onClick() {
+			document.body.removeEventListener("click", onClick);
+			domElement.play();
+		});
+
+		domElement.width = this.parameters.sourceWidth;
+		domElement.height = this.parameters.sourceHeight;
+		domElement.style.width = this.parameters.displayWidth + "px";
+		domElement.style.height = this.parameters.displayHeight + "px";
+
+		// wait until the video stream is ready
+		domElement.addEventListener(
+			"loadeddata",
+			() => {
+				onReady();
+			},
+			false
+		);
+		return domElement;
+	}
+
+	private _initSourceWebcam(
+		onReady: () => any,
+		onError: (message: string) => any
+	) {
+		const domElement = document.createElement("video");
+		domElement.setAttribute("autoplay", "");
+		domElement.setAttribute("muted", "");
+		domElement.setAttribute("playsinline", "");
+		domElement.style.width = this.parameters.displayWidth + "px";
+		domElement.style.height = this.parameters.displayHeight + "px";
+
+		// check API is available
+		if (
+			navigator.mediaDevices === undefined ||
+			navigator.mediaDevices.enumerateDevices === undefined ||
+			navigator.mediaDevices.getUserMedia === undefined
+		) {
+			let fctName = "";
+			if (navigator.mediaDevices === undefined) {
+				fctName = "navigator.mediaDevices";
+			} else if (navigator.mediaDevices.enumerateDevices === undefined) {
+				fctName = "navigator.mediaDevices.enumerateDevices";
+			} else if (navigator.mediaDevices.getUserMedia === undefined) {
+				fctName = "navigator.mediaDevices.getUserMedia";
+			}
+			onError("WebRTC issue-! " + fctName + " not present in your browser");
+			return;
+		}
+
+		// get available devices
+		navigator.mediaDevices
+			.enumerateDevices()
+			.then(devices => {
+				const userMediaConstraints = {
+					audio: false,
+					video: {
+						facingMode: "environment",
+						width: {
+							ideal: this.parameters.sourceWidth
+							// min: 1024,
+							// max: 1920
+						},
+						height: {
+							ideal: this.parameters.sourceHeight
+							// min: 776,
+							// max: 1080
+						}
+					}
+				};
+
+				if (null !== this.parameters.deviceId) {
+					(userMediaConstraints as any).video.deviceId = {
+						exact: this.parameters.deviceId
+					};
+				}
+
+				// get a device which satisfy the constraints
+				navigator.mediaDevices
+					.getUserMedia(userMediaConstraints)
+					.then(function success(stream) {
+						// set the .src of the domElement
+						domElement.srcObject = stream;
+						// to start the video, when it is possible to start it only on userevent. like in android
+						document.body.addEventListener("click", () => {
+							domElement.play();
+						});
+
+						domElement.addEventListener("loadedmetadata", event => {
+							onReady();
+						});
+					})
+					.catch(error => {
+						onError(error);
+					});
+			})
+			.catch(error => {
+				onError(error);
+			});
+
+		return domElement;
 	}
 }
 
