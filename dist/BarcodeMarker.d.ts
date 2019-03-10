@@ -8,12 +8,12 @@ import { Object3D } from "three";
  * @param parameters parameters for determing things like the barcode number and the minimum confidence
  */
 export declare class BarcodeMarker {
-    static markerCount: number;
-    id: number;
-    size: number;
-    minConfidence: number;
-    barcodeValue: number;
-    markerObject: Object3D;
-    constructor(parameters: any);
+	static markerCount: number;
+	id: number;
+	size: number;
+	minConfidence: number;
+	barcodeValue: number;
+	markerObject: Object3D;
+	constructor(parameters: any);
 }
 export default BarcodeMarker;

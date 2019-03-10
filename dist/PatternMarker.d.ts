@@ -5,12 +5,12 @@ import { Object3D } from "three";
  * @param parameters parameters for determining things the pattern URL and minimum confidence
  */
 export declare class PatternMarker {
-    static markerCount: number;
-    id: number;
-    size: number;
-    minConfidence: number;
-    patternUrl: string;
-    markerObject: Object3D;
-    constructor(parameters: any);
+	static markerCount: number;
+	id: number;
+	size: number;
+	minConfidence: number;
+	patternUrl: string;
+	markerObject: Object3D;
+	constructor(parameters: any);
 }
 export default PatternMarker;
