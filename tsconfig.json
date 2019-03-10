@@ -16,5 +16,11 @@
     },
     "include": [
       "src/THREEAR.ts"
-    ]
+    ],
+    "typedocOptions": {
+      "mode": "file",
+      "out": "docs",
+      "externalPattern": "src/**/**.ts",
+      "exclude": "src/artoolkit/**/**.ts"
+    }
 }

@@ -30,27 +30,25 @@ export interface ControllerParameters {
 	imageSmoothingEnabled: boolean;
 }
 
-const enum Statuses {
-	UNINITIALIZED = "UNINITIALIZED",
-	INITIALIZING = "INITIALIZING",
-	INITIALIZED = "INITIALIZED"
-}
-
 interface Markers {
 	pattern: PatternMarker[];
 	barcode: BarcodeMarker[];
 }
 
+/**
+ * The controller is returned from THREE ARs initialize method, in the returned promise.
+ * It provides methods for controlling AR state such as add markers to track and updating
+ * to check for markers in the current provided source (i.e. webcam, video, image).
+ * @param parameters parameters for determining things like detection mode and smoothing
+ */
 export class Controller extends THREE.EventDispatcher {
-	public status: Statuses;
-	public ready: Promise<any>;
+	public postInit: Promise<any>;
 	private parameters: ControllerParameters;
 	private arController: ARToolKitController | null;
 	private smoothMatrices: any[];
 	private _updatedAt: any;
 	private _artoolkitProjectionAxisTransformMatrix: any;
 	private _markers: Markers;
-	// private contextError = "Canvas 2D Context was not available";
 
 	constructor(parameters: ControllerParameters) {
 		if (!parameters.source) {
@@ -112,12 +110,11 @@ export class Controller extends THREE.EventDispatcher {
 		};
 
 		this.smoothMatrices = []; // last DEBOUNCE_COUNT modelViewMatrix
-		this.status = Statuses.UNINITIALIZED;
 		this.arController = null;
 		this._updatedAt = null;
 		this.setParameters(parameters);
 
-		this.ready = this.initialize();
+		this.postInit = this.initialize();
 	}
 
 	public setParameters(parameters: any) {
@@ -190,16 +187,10 @@ export class Controller extends THREE.EventDispatcher {
 	}
 
 	private initialize() {
-		if (this.status !== Statuses.UNINITIALIZED) {
-			console.warn("Controller was already initialised");
-			return Promise.resolve();
-		}
-
-		this.status = Statuses.INITIALIZING;
-
 		return new Promise((resolve, reject) => {
-			this.parameters.source.init(
-				() => {
+			this.parameters.source
+				.initialize()
+				.then(() => {
 					this._initArtoolkit(() => {
 						const { camera, renderer } = this.parameters.source;
 
@@ -224,14 +215,12 @@ export class Controller extends THREE.EventDispatcher {
 							type: "initialized"
 						});
 
-						this.status = Statuses.INITIALIZED;
 						resolve(this);
 					});
-				},
-				error => {
+				})
+				.catch(error => {
 					throw error;
-				}
-			);
+				});
 		});
 	}
 
