@@ -3,6 +3,7 @@ interface SourceParameters {
 	renderer: THREE.WebGLRenderer | null;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
+	facingMode: "user" | "environment";
 	deviceId: any;
 	sourceWidth: number;
 	sourceHeight: number;
@@ -40,6 +41,8 @@ export class Source {
 
 			// Device id of the camera to use (optional)
 			deviceId: null,
+
+			facingMode: "environment",
 
 			// resolution of at which we initialize in the source image
 			sourceWidth: 640,
@@ -339,7 +342,7 @@ export class Source {
 				const userMediaConstraints = {
 					audio: false,
 					video: {
-						facingMode: "environment",
+						facingMode: this.parameters.facingMode,
 						width: {
 							ideal: this.parameters.sourceWidth
 							// min: 1024,

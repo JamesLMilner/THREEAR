@@ -3,6 +3,7 @@ interface SourceParameters {
 	renderer: THREE.WebGLRenderer | null;
 	sourceType: "webcam" | "image" | "video";
 	sourceUrl: string;
+	facingMode: "user" | "environment";
 	deviceId: any;
 	sourceWidth: number;
 	sourceHeight: number;
