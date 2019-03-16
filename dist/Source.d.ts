@@ -24,7 +24,7 @@ export declare class Source {
 	setParameters(parameters: any): void;
 	readonly renderer: import("three").WebGLRenderer | null;
 	readonly camera: import("three").Camera | null;
-	destroy(): void;
+	dispose(): void;
 	initialize(): Promise<{}>;
 	/**
 	 * Determine if the device supports torch capability

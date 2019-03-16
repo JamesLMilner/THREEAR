@@ -23,6 +23,10 @@ export interface ControllerParameters {
 	patternRatio: number;
 	imageSmoothingEnabled: boolean;
 }
+interface Markers {
+	pattern: PatternMarker[];
+	barcode: BarcodeMarker[];
+}
 /**
  * The controller is returned from THREE ARs initialize method, in the returned promise.
  * It provides methods for controlling AR state such as add markers to track and updating
@@ -31,17 +35,19 @@ export interface ControllerParameters {
  */
 export declare class Controller extends THREE.EventDispatcher {
 	postInit: Promise<any>;
+	disposed: boolean;
+	markers: Markers;
 	private parameters;
 	private arController;
 	private smoothMatrices;
 	private _updatedAt;
 	private _artoolkitProjectionAxisTransformMatrix;
-	private _markers;
 	constructor(parameters: ControllerParameters);
 	setParameters(parameters: any): void;
 	onResize(renderer: WebGLRenderer): void;
 	update(srcElement: any): boolean;
 	trackMarker(marker: PatternMarker | BarcodeMarker): void;
+	dispose(): void;
 	private initialize;
 	private _initArtoolkit;
 	private getProjectionMatrix;
