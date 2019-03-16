@@ -21,6 +21,6 @@
       "mode": "file",
       "out": "docs",
       "externalPattern": "src/**/**.ts",
-      "exclude": "src/artoolkit/**/**.ts"
+      "exclude": ["src/artoolkit/**/**.ts", "src/BaseMarker.ts"]
     }
 }

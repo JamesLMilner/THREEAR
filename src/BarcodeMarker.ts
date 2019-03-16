@@ -1,4 +1,5 @@
 import { Object3D } from "three";
+import { BaseMarker } from "./BaseMarker";
 
 /**
  * BarcodeMarker take a given predtermined barcode as the pattern to detect. Each barcode has
@@ -8,15 +9,14 @@ import { Object3D } from "three";
  * the barcode marker.
  * @param parameters parameters for determing things like the barcode number and the minimum confidence
  */
-export class BarcodeMarker {
-	public static markerCount = 0;
-	public id: number;
-	public size: number;
-	public minConfidence: number;
+export class BarcodeMarker extends BaseMarker {
+	public static count = 0;
 	public barcodeValue: number;
 	public markerObject: Object3D;
 
 	constructor(parameters: any) {
+		super(BarcodeMarker.count++, parameters);
+
 		if (parameters.barcodeValue === undefined) {
 			throw Error("Barcode Marker requires a barcodeValue to be passed");
 		}
@@ -25,9 +25,6 @@ export class BarcodeMarker {
 			throw Error("Barcode Marker requires a markerObject to be passed");
 		}
 
-		this.id = BarcodeMarker.markerCount++;
-		this.size = parameters.size || 1;
-		this.minConfidence = parameters.size || 0.6;
 		this.barcodeValue = parameters.barcodeValue;
 		this.markerObject = parameters.markerObject;
 

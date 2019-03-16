@@ -1,4 +1,5 @@
 import { Object3D } from "three";
+import { BaseMarker } from "./BaseMarker";
 /**
  * BarcodeMarker take a given predtermined barcode as the pattern to detect. Each barcode has
  * a predetermined number, for example the 3x3 matrix has 64 possible markers. You can find copies
@@ -7,11 +8,8 @@ import { Object3D } from "three";
  * the barcode marker.
  * @param parameters parameters for determing things like the barcode number and the minimum confidence
  */
-export declare class BarcodeMarker {
-	static markerCount: number;
-	id: number;
-	size: number;
-	minConfidence: number;
+export declare class BarcodeMarker extends BaseMarker {
+	static count: number;
 	barcodeValue: number;
 	markerObject: Object3D;
 	constructor(parameters: any);

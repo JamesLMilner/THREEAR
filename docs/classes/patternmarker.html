@@ -83,7 +83,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">PatternMarker</span>
+						<span class="tsd-signature-type">BaseMarker</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">PatternMarker</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -94,18 +99,18 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external"><a href="patternmarker.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="patternmarker.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#markerobject" class="tsd-kind-icon">marker<wbr>Object</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="patternmarker.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#patternurl" class="tsd-kind-icon">pattern<wbr>Url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="patternmarker.html#size" class="tsd-kind-icon">size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static tsd-is-external"><a href="patternmarker.html#markercount" class="tsd-kind-icon">marker<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="patternmarker.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static tsd-is-external"><a href="patternmarker.html#count" class="tsd-kind-icon">count</a></li>
 							</ul>
 						</section>
 					</div>
@@ -113,17 +118,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Pattern<wbr>Marker<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="patternmarker.html" class="tsd-signature-type">PatternMarker</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides BaseMarker.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L14">PatternMarker.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/PatternMarker.ts#L12">PatternMarker.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -139,13 +145,14 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from BaseMarker.id</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L10">PatternMarker.ts:10</a></li>
+							<li>Defined in BaseMarker.ts:2</li>
 						</ul>
 					</aside>
 				</section>
@@ -155,17 +162,18 @@
 					<div class="tsd-signature tsd-kind-icon">marker<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object3D</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L14">PatternMarker.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/PatternMarker.ts#L12">PatternMarker.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="minconfidence" class="tsd-anchor"></a>
 					<h3>min<wbr>Confidence</h3>
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from BaseMarker.minConfidence</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L12">PatternMarker.ts:12</a></li>
+							<li>Defined in BaseMarker.ts:4</li>
 						</ul>
 					</aside>
 				</section>
@@ -175,27 +183,28 @@
 					<div class="tsd-signature tsd-kind-icon">pattern<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L13">PatternMarker.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/PatternMarker.ts#L11">PatternMarker.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="size" class="tsd-anchor"></a>
 					<h3>size</h3>
 					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from BaseMarker.size</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L11">PatternMarker.ts:11</a></li>
+							<li>Defined in BaseMarker.ts:3</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static tsd-is-external">
-					<a name="markercount" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> marker<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">marker<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
+					<a name="count" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> count</h3>
+					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/bb8396b/src/PatternMarker.ts#L9">PatternMarker.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/PatternMarker.ts#L10">PatternMarker.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,26 +231,26 @@
 					<li class="current tsd-kind-class tsd-is-external">
 						<a href="patternmarker.html" class="tsd-kind-icon">Pattern<wbr>Marker</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external">
 								<a href="patternmarker.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="patternmarker.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="patternmarker.html#markerobject" class="tsd-kind-icon">marker<wbr>Object</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="patternmarker.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="patternmarker.html#patternurl" class="tsd-kind-icon">pattern<wbr>Url</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="patternmarker.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static tsd-is-external">
-								<a href="patternmarker.html#markercount" class="tsd-kind-icon">marker<wbr>Count</a>
+								<a href="patternmarker.html#count" class="tsd-kind-icon">count</a>
 							</li>
 						</ul>
 					</li>
