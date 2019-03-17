@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+		<script src="vendor/three.101.min.js"></script>
+		<script src="../dist/THREEAR.js"></script>
+		<title>THREE AR Basic Barcode Marker Demo</title>
+		<!-- Bind window error for error handling -->
+		<script>
+			// window.addEventListener('error', function(event) {
+			// 	alert("ERROR: " + event.message + " at " + event.filename + " : " + event.lineno + " : " + event.colno);
+			// });
+		</script>
+	</head>
+
+	<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+		<script>
+		
+			var renderer = new THREE.WebGLRenderer({
+				alpha: true
+			});
+			renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap
+            renderer.shadowMap.enabled = true;
+
+			renderer.domElement.style.position = 'absolute'
+			renderer.domElement.style.top = '0px'
+			renderer.domElement.style.left = '0px'
+            document.body.appendChild( renderer.domElement );
+            
+
+                    
+			// init scene and camera
+			var scene = new THREE.Scene();
+            var camera = new THREE.Camera();
+            scene.add(camera);
+
+            var ambient = new THREE.AmbientLight( 0x666666 );
+            scene.add(ambient);
+
+            var directionalLight = new THREE.DirectionalLight('white');
+            directionalLight.position.set(1, 2, 0.3).setLength(2)
+            directionalLight.shadow.mapSize.set(128,128)
+            directionalLight.shadow.camera.bottom = -0.6
+            directionalLight.shadow.camera.top = 0.6
+            directionalLight.shadow.camera.right = 0.6
+            directionalLight.shadow.camera.left = -0.6
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+			var markerGroup = new THREE.Group();
+			scene.add(markerGroup);
+		
+			var source = new THREEAR.Source({ renderer, camera });
+
+			THREEAR.initialize({
+				source: source,
+				detectionMode: 'mono_and_matrix'
+			}).then((controller) => {
+
+				// add a torus knot		
+				var geometry = new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+				var material = new THREE.MeshLambertMaterial();
+				var torus = new THREE.Mesh( geometry, material );
+				torus.position.y = 0.5
+                torus.castShadow = true;
+                torus.receiveShadow = true;
+                markerGroup.add(torus);
+
+                directionalLight.target = torus
+
+                var planeMaterial = new THREE.ShadowMaterial({ opacity: 0.7 });
+                var planeGeometry = new THREE.PlaneGeometry(3, 3)
+                var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+                planeMesh.receiveShadow = true;
+                planeMesh.depthWrite = false;
+                planeMesh.rotation.x = -Math.PI/2
+                markerGroup.add(planeMesh);
+
+                var patternMarker = new THREEAR.PatternMarker({
+					patternUrl: '../data/patt.hiro',
+                    markerObject: markerGroup,
+                    minConfidence: 0.2
+				});
+
+				controller.trackMarker(patternMarker);
+
+				// run the rendering loop
+				var lastTimeMsec = 0;
+				requestAnimationFrame(function animate(nowMsec){
+					// keep looping
+					requestAnimationFrame( animate );
+					// measure time
+					lastTimeMsec = lastTimeMsec || nowMsec-1000/60;
+					var deltaMsec = Math.min(200, nowMsec - lastTimeMsec);
+					lastTimeMsec = nowMsec;
+					// call each update function
+					controller.update( source.domElement );
+					// cube.rotation.x += deltaMsec/10000 * Math.PI
+					torus.rotation.y += deltaMsec/5000 * Math.PI
+					torus.rotation.z += deltaMsec/5000 * Math.PI
+					renderer.render( scene, camera );
+				});
+
+			});
+		</script>
+	</body>
+	
+</html>
