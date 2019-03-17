@@ -1,6 +1,6 @@
 {
   "name": "threear",
-  "version": "v1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "A AR library for the web",
   "main": "dist/THREEAR.js",
   "scripts": {
