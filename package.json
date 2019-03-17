@@ -1,6 +1,6 @@
 {
   "name": "threear",
-  "version": "v1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "A AR library for the web",
   "main": "dist/THREEAR.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "lint": "tslint src/**/*.ts && prettier **/*.ts --check",
     "lint:fix": "tslint --fix src/**/*.ts && prettier **/*.ts --write",
     "docs": "typedoc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "author": "James Milner",
   "license": "MIT and LGPLv3",
