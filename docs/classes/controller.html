@@ -107,9 +107,10 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#_artoolkitprojectionaxistransformmatrix" class="tsd-kind-icon">_artoolkit<wbr>Projection<wbr>Axis<wbr>Transform<wbr>Matrix</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#_markers" class="tsd-kind-icon">_markers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#_updatedat" class="tsd-kind-icon">_updated<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#arcontroller" class="tsd-kind-icon">ar<wbr>Controller</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="controller.html#disposed" class="tsd-kind-icon">disposed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="controller.html#markers" class="tsd-kind-icon">markers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#parameters" class="tsd-kind-icon">parameters</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="controller.html#postinit" class="tsd-kind-icon">post<wbr>Init</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#smoothmatrices" class="tsd-kind-icon">smooth<wbr>Matrices</a></li>
@@ -121,6 +122,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#_initartoolkit" class="tsd-kind-icon">_init<wbr>Artoolkit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="controller.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="controller.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="controller.html#dispose" class="tsd-kind-icon">dispose</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#getprojectionmatrix" class="tsd-kind-icon">get<wbr>Projection<wbr>Matrix</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="controller.html#haseventlistener" class="tsd-kind-icon">has<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="controller.html#initialize" class="tsd-kind-icon">initialize</a></li>
@@ -151,7 +153,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventDispatcher.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L51">Controller.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L53">Controller.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -173,17 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">_artoolkit<wbr>Projection<wbr>Axis<wbr>Transform<wbr>Matrix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L50">Controller.ts:50</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_markers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _markers</h3>
-					<div class="tsd-signature tsd-kind-icon">_markers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/markers.html" class="tsd-signature-type">Markers</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L51">Controller.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L53">Controller.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">_updated<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L49">Controller.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L52">Controller.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +195,27 @@
 					<div class="tsd-signature tsd-kind-icon">ar<wbr>Controller<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ARToolKitController</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L47">Controller.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L50">Controller.ts:50</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="disposed" class="tsd-anchor"></a>
+					<h3>disposed</h3>
+					<div class="tsd-signature tsd-kind-icon">disposed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L46">Controller.ts:46</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="markers" class="tsd-anchor"></a>
+					<h3>markers</h3>
+					<div class="tsd-signature tsd-kind-icon">markers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/markers.html" class="tsd-signature-type">Markers</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L47">Controller.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +225,7 @@
 					<div class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">:</span> <a href="../interfaces/controllerparameters.html" class="tsd-signature-type">ControllerParameters</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L46">Controller.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L49">Controller.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +235,7 @@
 					<div class="tsd-signature tsd-kind-icon">post<wbr>Init<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L45">Controller.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L45">Controller.ts:45</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">smooth<wbr>Matrices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L48">Controller.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L51">Controller.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -250,7 +262,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L227">Controller.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L238">Controller.ts:238</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -368,6 +380,23 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="dispose" class="tsd-anchor"></a>
+					<h3>dispose</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L192">Controller.ts:192</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
 					<a name="getprojectionmatrix" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Projection<wbr>Matrix</h3>
@@ -378,7 +407,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L315">Controller.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L326">Controller.ts:326</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Matrix4</span></h4>
@@ -451,7 +480,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L189">Controller.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L200">Controller.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -468,7 +497,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L388">Controller.ts:388</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L399">Controller.ts:399</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -497,7 +526,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L146">Controller.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L149">Controller.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -576,7 +605,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L120">Controller.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L123">Controller.ts:123</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -599,7 +628,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L361">Controller.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L372">Controller.ts:372</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -622,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L181">Controller.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L184">Controller.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -645,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L328">Controller.ts:328</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L339">Controller.ts:339</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -668,7 +697,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L154">Controller.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L157">Controller.ts:157</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -691,7 +720,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/b9f3ef9/src/Controller.ts#L416">Controller.ts:416</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/01e7d0c/src/Controller.ts#L427">Controller.ts:427</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -740,13 +769,16 @@
 								<a href="controller.html#_artoolkitprojectionaxistransformmatrix" class="tsd-kind-icon">_artoolkit<wbr>Projection<wbr>Axis<wbr>Transform<wbr>Matrix</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="controller.html#_markers" class="tsd-kind-icon">_markers</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="controller.html#_updatedat" class="tsd-kind-icon">_updated<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="controller.html#arcontroller" class="tsd-kind-icon">ar<wbr>Controller</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="controller.html#disposed" class="tsd-kind-icon">disposed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="controller.html#markers" class="tsd-kind-icon">markers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="controller.html#parameters" class="tsd-kind-icon">parameters</a>
@@ -765,6 +797,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="controller.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="controller.html#dispose" class="tsd-kind-icon">dispose</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="controller.html#getprojectionmatrix" class="tsd-kind-icon">get<wbr>Projection<wbr>Matrix</a>

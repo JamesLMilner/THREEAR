@@ -43,12 +43,14 @@ interface Markers {
  */
 export class Controller extends THREE.EventDispatcher {
 	public postInit: Promise<any>;
+	public disposed: boolean;
+	public markers: Markers;
+
 	private parameters: ControllerParameters;
 	private arController: ARToolKitController | null;
 	private smoothMatrices: any[];
 	private _updatedAt: any;
 	private _artoolkitProjectionAxisTransformMatrix: any;
-	private _markers: Markers;
 
 	constructor(parameters: ControllerParameters) {
 		if (!parameters.source) {
@@ -104,7 +106,7 @@ export class Controller extends THREE.EventDispatcher {
 		// create the marker Root
 		// this.parameters.group.matrixAutoUpdate = false;
 		// this.parameters.group.visible = false;
-		this._markers = {
+		this.markers = {
 			pattern: [],
 			barcode: []
 		};
@@ -114,6 +116,7 @@ export class Controller extends THREE.EventDispatcher {
 		this._updatedAt = null;
 		this.setParameters(parameters);
 
+		this.disposed = false;
 		this.postInit = this.initialize();
 	}
 
@@ -168,8 +171,8 @@ export class Controller extends THREE.EventDispatcher {
 		this._updatedAt = present;
 
 		// mark all markers to invisible before processing this frame
-		this._markers.pattern.forEach(m => (m.markerObject.visible = false));
-		this._markers.barcode.forEach(m => (m.markerObject.visible = false));
+		this.markers.pattern.forEach(m => (m.markerObject.visible = false));
+		this.markers.barcode.forEach(m => (m.markerObject.visible = false));
 
 		// process this frame
 		this.arController.process(srcElement);
@@ -183,6 +186,14 @@ export class Controller extends THREE.EventDispatcher {
 			this.trackPatternMarker(marker);
 		} else if (marker instanceof BarcodeMarker) {
 			this.trackBarcode(marker);
+		}
+	}
+
+	public dispose() {
+		if (this.arController) {
+			this.arController.dispose();
+			this.arController = null;
+			this.disposed = true;
 		}
 	}
 
@@ -330,7 +341,7 @@ export class Controller extends THREE.EventDispatcher {
 			return;
 		}
 
-		this._markers.pattern.push(marker);
+		this.markers.pattern.push(marker);
 
 		let patternMarkerId: number | null = null;
 
@@ -363,7 +374,7 @@ export class Controller extends THREE.EventDispatcher {
 			return;
 		}
 
-		this._markers.barcode.push(marker);
+		this.markers.barcode.push(marker);
 
 		let barcodeMarkerId: number | null = null;
 

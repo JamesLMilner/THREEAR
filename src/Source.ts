@@ -93,7 +93,7 @@ export class Source {
 		return this.parameters.camera;
 	}
 
-	public destroy() {
+	public dispose() {
 		if (this.parameters.parent && this.domElement) {
 			this.parameters.parent.removeChild(this.domElement);
 		}

@@ -5,7 +5,7 @@ import { Controller, ControllerParameters } from "./Controller";
 
 let controller: Controller;
 function initialize(parameters: ControllerParameters) {
-	if (!controller) {
+	if (controller === undefined || controller.disposed === true) {
 		controller = new Controller(parameters);
 	}
 	return controller.postInit;
