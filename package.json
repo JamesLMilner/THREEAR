@@ -1,8 +1,13 @@
 {
   "name": "threear",
   "version": "1.0.0-alpha.2",
-  "description": "A AR library for the web",
-  "main": "dist/THREEAR.js",
+  "description": "A marker based Augmented Reality library for Three.js",
+  "keywords": ["AR", "Augmented Reality", "three.js", "Marker Based", "artoolkit"],
+  "browser": "dist/THREEAR.js",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/JamesMilnerUK/THREEAR.git"
+  },
   "scripts": {
     "serve": "live-server --cors",
     "build:ci": "webpack --mode=production --config webpack.config.js",
