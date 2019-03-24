@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+		<script src="vendor/three.101.min.js"></script>	
+		<script src="../dist/THREEAR.js"></script>
+		<title>THREE AR No Webcam</title>
+		<!-- Bind window error for error handling -->
+		<script>
+			// window.addEventListener('error', function(event) {
+			// 	alert("ERROR: " + event.message + " at " + event.filename + " : " + event.lineno + " : " + event.colno);
+			// });
+		</script>
+	</head>
+	<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+		<script>		
+			var renderer = new THREE.WebGLRenderer({
+				// antialias: true,
+				alpha: true
+			});
+			renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+			// renderer.setPixelRatio( 2 );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.domElement.style.position = 'absolute'
+			renderer.domElement.style.top = '0px'
+			renderer.domElement.style.left = '0px'
+			document.body.appendChild( renderer.domElement );
+
+            var scene = new THREE.Scene();
+            var clock = new THREE.Clock();
+			var camera = new THREE.Camera();
+			scene.add(camera);
+
+			var markerGroup = new THREE.Group();
+			scene.add(markerGroup);
+
+            var geometry = new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+            var material = new THREE.MeshNormalMaterial(); 
+            var torus = new THREE.Mesh( geometry, material );
+            torus.position.y = 0.5
+            markerGroup.add(torus);
+
+            var geometry = new THREE.CubeGeometry(1,1,1);
+            var material = new THREE.MeshNormalMaterial({
+                transparent : true,
+                opacity: 0.5,
+                side: THREE.DoubleSide
+            }); 
+            var cube = new THREE.Mesh( geometry, material );
+            cube.position.y	= geometry.parameters.height / 2;
+            markerGroup.add(cube)
+
+            var source = new THREEAR.Source({ renderer, camera });
+
+            var controller;
+
+            THREEAR.initialize({ source: source, rejectError: true }).then((arcontroller) => {
+                controller = arcontroller;
+                var patternMarker = new THREEAR.PatternMarker({
+                    patternUrl: '../data/patt.hiro',
+                    markerObject: markerGroup
+                });
+
+                controller.trackMarker( patternMarker );
+
+                requestAnimationFrame( animate );
+            })
+            .catch( error => {
+                // Here the magic happens:
+                // If an error is thrown at the initialization,
+                // the catch block will be executed and show a 
+                // normal threejs scene
+                // don't forget to set the rejectError flag to true at THREEAR.initialize
+                console.info( error );
+
+                camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
+                camera.position.set( 2, 2, 2 );
+                camera.lookAt( scene.position );
+
+                requestAnimationFrame( animate );
+            });
+  
+            function animate() {
+                requestAnimationFrame( animate );
+                var delta = clock.getDelta();
+
+                if(controller) {
+                    controller.update( source.domElement );
+                }
+
+                torus.rotation.y += 0.2 * delta;
+                torus.rotation.z += 0.2 * delta;
+                renderer.render( scene, camera );
+            }
+		</script>
+	</body>
+</html>
