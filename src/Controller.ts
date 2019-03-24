@@ -18,6 +18,7 @@ export interface MarkerPositioningParameters {
 export interface ControllerParameters {
 	source: Source;
 	positioning: MarkerPositioningParameters;
+	rejectError: boolean;
 	debug: boolean;
 	changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 	detectionMode: "color" | "color_and_matrix" | "mono" | "mono_and_matrix";
@@ -79,6 +80,8 @@ export class Controller extends THREE.EventDispatcher {
 
 			// debug - true if one should display artoolkit debug canvas, false otherwise
 			debug: false,
+			// rejectError - true - the error will be rejected, false - the error will be thrown
+			rejectError: false,
 			// the mode of detection - ['color', 'color_and_matrix', 'mono', 'mono_and_matrix']
 			detectionMode: "mono",
 			// type of matrix code - valid iif detectionMode end with 'matrix' -
@@ -230,7 +233,11 @@ export class Controller extends THREE.EventDispatcher {
 					});
 				})
 				.catch(error => {
-					throw error;
+					if (this.parameters.rejectError) {
+						reject(error);
+					} else {
+						throw new Error(error);
+					}
 				});
 		});
 	}

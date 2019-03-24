@@ -386,6 +386,9 @@ export class Source {
 				navigator.mediaDevices
 					.getUserMedia(userMediaConstraints)
 					.then(function success(stream) {
+						if (!stream) {
+							onError("Webcam stream could not be established");
+						}
 						// set the .src of the domElement
 						domElement.srcObject = stream;
 						// to start the video, when it is possible to start it only on userevent. like in android
