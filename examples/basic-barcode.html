@@ -63,7 +63,8 @@
 
 				var barcodeMarker = new THREEAR.BarcodeMarker({
 					barcodeValue: 10,
-					markerObject: markerGroup
+					markerObject: markerGroup,
+					minConfidence: 0.2
 				});
 
 				controller.trackMarker(barcodeMarker);

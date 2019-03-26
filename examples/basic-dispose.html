@@ -59,8 +59,6 @@
 					detectionMode: 'mono_and_matrix'
 				}).then((controller) => {
 
-					console.log("controller", controller);
-
 					// add a torus knot		
 					var geometry = new THREE.TorusKnotGeometry(0.3,0.1,64,16);
 					var material = new THREE.MeshNormalMaterial(); 
@@ -120,7 +118,6 @@
 			}
 
 			create.addEventListener("click", function() {
-				console.log("click");
 				initTHREEAR();
 			});
 			

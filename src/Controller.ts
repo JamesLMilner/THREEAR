@@ -18,6 +18,7 @@ export interface MarkerPositioningParameters {
 export interface ControllerParameters {
 	source: Source;
 	positioning: MarkerPositioningParameters;
+	lostTimeout: number;
 	debug: boolean;
 	changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 	detectionMode: "color" | "color_and_matrix" | "mono" | "mono_and_matrix";
@@ -64,6 +65,8 @@ export class Controller extends THREE.EventDispatcher {
 			source: parameters.source,
 
 			changeMatrixMode: "modelViewMatrix",
+
+			lostTimeout: 1000,
 
 			// handle default parameters
 			positioning: {
@@ -311,6 +314,10 @@ export class Controller extends THREE.EventDispatcher {
 				// check if arController is init
 				this.arController.setLogLevel(1);
 
+				this.arController.addEventListener("getMarker", (event: any) => {
+					this.handleMarkerDetection(event);
+				});
+
 				// notify
 				onCompleted();
 			},
@@ -321,6 +328,33 @@ export class Controller extends THREE.EventDispatcher {
 		);
 
 		return this;
+	}
+
+	private handleMarkerDetection(event: any) {
+		if (event.data.type === ARToolKit.BARCODE_MARKER) {
+			this.markers.barcode.forEach(barcodeMarker => {
+				if (event.data.marker.idMatrix === barcodeMarker.barcodeValue) {
+					this.onMarkerFound(event, barcodeMarker);
+				}
+			});
+		} else if (event.data.type === ARToolKit.PATTERN_MARKER) {
+			this.markers.pattern.forEach(patternMarker => {
+				if (event.data.marker.idMatrix === patternMarker.id) {
+					this.onMarkerFound(event, patternMarker);
+				}
+			});
+		}
+
+		[...this.markers.pattern, ...this.markers.barcode].forEach(marker => {
+			if (
+				marker.lastDetected &&
+				marker.found &&
+				new Date().getTime() - marker.lastDetected.getTime() >
+					this.parameters.lostTimeout
+			) {
+				this.onMarkerLost(event, marker);
+			}
+		});
 	}
 
 	private getProjectionMatrix() {
@@ -343,11 +377,8 @@ export class Controller extends THREE.EventDispatcher {
 
 		this.markers.pattern.push(marker);
 
-		let patternMarkerId: number | null = null;
-
 		// start tracking this pattern
 		const onSuccess = (markerId: number) => {
-			patternMarkerId = markerId;
 			(this.arController as any).trackPatternMarkerId(markerId, marker.size);
 		};
 		const onError = (err: any) => {
@@ -358,15 +389,6 @@ export class Controller extends THREE.EventDispatcher {
 		} else {
 			throw Error("No patternUrl defined in parameters");
 		}
-
-		// listen to the event
-		this.arController.addEventListener("getMarker", (event: any) => {
-			if (event.data.type === ARToolKit.PATTERN_MARKER) {
-				if (event.data.marker.idPatt === patternMarkerId) {
-					this.onMarkerFound(event, marker.minConfidence, marker.markerObject);
-				}
-			}
-		});
 	}
 
 	private trackBarcode(marker: BarcodeMarker) {
@@ -384,40 +406,42 @@ export class Controller extends THREE.EventDispatcher {
 		} else {
 			throw Error("No barcodeValue defined in parameters");
 		}
-
-		this.arController.addEventListener("getMarker", (event: any) => {
-			// console.log(event.data.type === ARToolkit.BARCODE_MARKER);
-			if (event.data.type === ARToolKit.BARCODE_MARKER) {
-				// console.log(event.data.marker, barcodeMarkerId);
-				if (event.data.marker.idMatrix === barcodeMarkerId) {
-					this.onMarkerFound(event, marker.minConfidence, marker.markerObject);
-				}
-			}
-		});
 	}
 
-	private onMarkerFound(
-		event: any,
-		minConfidence: number,
-		markerObject: Object3D
-	) {
-		// honor his.parameters.minConfidence
+	private onMarkerFound(event: any, marker: BarcodeMarker | PatternMarker) {
+		// Check to make sure that the minimum confidence is met
 		if (
 			event.data.type === ARToolKit.PATTERN_MARKER &&
-			event.data.marker.cfPatt < minConfidence
+			event.data.marker.cfPatt < marker.minConfidence
 		) {
 			return;
 		}
 
 		if (
 			event.data.type === ARToolKit.BARCODE_MARKER &&
-			event.data.marker.cfMatt < minConfidence
+			event.data.marker.cfMatt < marker.minConfidence
 		) {
 			return;
 		}
 
+		marker.found = true;
+		marker.lastDetected = new Date();
+
 		const modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix);
-		this.updateWithModelViewMatrix(modelViewMatrix, markerObject);
+		this.updateWithModelViewMatrix(modelViewMatrix, marker.markerObject);
+
+		this.dispatchEvent({
+			type: "markerFound",
+			marker: { type: event.data.type, object: marker.markerObject }
+		});
+	}
+
+	private onMarkerLost(event: any, marker: BarcodeMarker | PatternMarker) {
+		marker.found = false;
+		this.dispatchEvent({
+			type: "markerLost",
+			marker: { type: event.data.type, object: marker.markerObject }
+		});
 	}
 
 	/**
@@ -511,9 +535,6 @@ export class Controller extends THREE.EventDispatcher {
 			markerObject.quaternion,
 			markerObject.scale
 		);
-
-		// dispatchEvent
-		this.dispatchEvent({ type: "markerFound" });
 
 		return renderRequired;
 	}
