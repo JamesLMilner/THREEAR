@@ -12,6 +12,7 @@ export interface MarkerPositioningParameters {
 export interface ControllerParameters {
 	source: Source;
 	positioning: MarkerPositioningParameters;
+	lostTimeout: number;
 	debug: boolean;
 	changeMatrixMode: "modelViewMatrix" | "cameraTransformMatrix";
 	detectionMode: "color" | "color_and_matrix" | "mono" | "mono_and_matrix";
@@ -50,10 +51,12 @@ export declare class Controller extends THREE.EventDispatcher {
 	dispose(): void;
 	private initialize;
 	private _initArtoolkit;
+	private handleMarkerDetection;
 	private getProjectionMatrix;
 	private trackPatternMarker;
 	private trackBarcode;
 	private onMarkerFound;
+	private onMarkerLost;
 	/**
 	 * When you actually got a new modelViewMatrix, you need to perfom a whole bunch
 	 * of things. it is done here.
