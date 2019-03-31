@@ -43,5 +43,6 @@
     "hooks": {
       "pre-commit": "npm run lint:fix"
     }
-  }
+  },
+  "types": "src/THREEAR.ts"
 }
