@@ -29,7 +29,7 @@ export interface ControllerParameters {
 	canvasHeight: number;
 	patternRatio: number;
 	imageSmoothingEnabled: boolean;
-  rejectError: boolean;
+	rejectError: boolean;
 }
 
 interface Markers {
