@@ -233,7 +233,9 @@ export class Controller extends THREE.EventDispatcher {
 					});
 				})
 				.catch(error => {
-					throw error;
+					// Make sure the error is passed on to
+					// the returned  promise
+					reject(error);
 				});
 		});
 	}
