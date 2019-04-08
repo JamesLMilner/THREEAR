@@ -29,7 +29,6 @@ export interface ControllerParameters {
 	canvasHeight: number;
 	patternRatio: number;
 	imageSmoothingEnabled: boolean;
-	rejectError: boolean;
 }
 
 interface Markers {
@@ -104,10 +103,7 @@ export class Controller extends THREE.EventDispatcher {
 
 			// enable image smoothing or not for canvas copy - default to true
 			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
-			imageSmoothingEnabled: false,
-
-			// rejectError - true - the error will be rejected, false - the error will be thrown
-			rejectError: false
+			imageSmoothingEnabled: false
 		};
 
 		// create the marker Root
@@ -237,11 +233,7 @@ export class Controller extends THREE.EventDispatcher {
 					});
 				})
 				.catch(error => {
-					if (this.parameters.rejectError) {
-						reject(error);
-					} else {
-						throw new Error(error);
-					}
+					reject(error);
 				});
 		});
 	}

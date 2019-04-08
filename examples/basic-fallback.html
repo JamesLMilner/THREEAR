@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-		<script src="vendor/three.101.min.js"></script>	
+		<script src="vendor/three.101.min.js"></script>
 		<script src="../dist/THREEAR.js"></script>
 		<title>THREE AR No Webcam</title>
 		<!-- Bind window error for error handling -->
@@ -13,7 +13,7 @@
 		</script>
 	</head>
 	<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
-		<script>		
+		<script>
 			var renderer = new THREE.WebGLRenderer({
 				// antialias: true,
 				alpha: true
@@ -35,7 +35,7 @@
 			scene.add(markerGroup);
 
             var geometry = new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-            var material = new THREE.MeshNormalMaterial(); 
+            var material = new THREE.MeshNormalMaterial();
             var torus = new THREE.Mesh( geometry, material );
             torus.position.y = 0.5
             markerGroup.add(torus);
@@ -45,7 +45,7 @@
                 transparent : true,
                 opacity: 0.5,
                 side: THREE.DoubleSide
-            }); 
+            });
             var cube = new THREE.Mesh( geometry, material );
             cube.position.y	= geometry.parameters.height / 2;
             markerGroup.add(cube)
@@ -66,20 +66,15 @@
                 requestAnimationFrame( animate );
             })
             .catch( error => {
-                // Here the magic happens:
-                // If an error is thrown at the initialization,
-                // the catch block will be executed and show a 
-                // normal threejs scene
-                // don't forget to set the rejectError flag to true at THREEAR.initialize
-                console.info( error );
-
+                // Provide a fallback
+                console.error(error);
                 camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
                 camera.position.set( 2, 2, 2 );
                 camera.lookAt( scene.position );
 
                 requestAnimationFrame( animate );
             });
-  
+
             function animate() {
                 requestAnimationFrame( animate );
                 var delta = clock.getDelta();
