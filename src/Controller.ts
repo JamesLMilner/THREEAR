@@ -233,7 +233,7 @@ export class Controller extends THREE.EventDispatcher {
 					});
 				})
 				.catch(error => {
-					throw error;
+					reject(error);
 				});
 		});
 	}
