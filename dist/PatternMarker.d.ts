@@ -6,9 +6,9 @@ import { BaseMarker } from "./BaseMarker";
  * @param parameters parameters for determining things the pattern URL and minimum confidence
  */
 export declare class PatternMarker extends BaseMarker {
-    static count: number;
-    patternUrl: string;
-    markerObject: Object3D;
-    constructor(parameters: any);
+	static count: number;
+	patternUrl: string;
+	markerObject: Object3D;
+	constructor(parameters: any);
 }
 export default PatternMarker;
