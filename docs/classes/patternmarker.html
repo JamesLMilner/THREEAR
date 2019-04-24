@@ -66,19 +66,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>PatternMarker takes a given image (as a URL) and use this as the pattern to detect to place
-						a given marker from three.js, in this case an given Object3D</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>param</dt>
-						<dd><p>parameters for determining things the pattern URL and minimum confidence</p>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -124,20 +111,20 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Pattern<wbr>Marker<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="patternmarker.html" class="tsd-signature-type">PatternMarker</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Pattern<wbr>Marker<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/patternmarkerparameters.html" class="tsd-signature-type">PatternMarkerParameters</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="patternmarker.html" class="tsd-signature-type">PatternMarker</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides BaseMarker.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/PatternMarker.ts#L12">PatternMarker.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/PatternMarker.ts#L20">PatternMarker.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>parameters: <span class="tsd-signature-type">any</span></h5>
+									<h5>parameters: <a href="../interfaces/patternmarkerparameters.html" class="tsd-signature-type">PatternMarkerParameters</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="patternmarker.html" class="tsd-signature-type">PatternMarker</a></h4>
@@ -154,18 +141,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseMarker.found</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/BaseMarker.ts#L5">BaseMarker.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BaseMarker.ts#L10">BaseMarker.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from BaseMarker.id</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/BaseMarker.ts#L2">BaseMarker.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BaseMarker.ts#L7">BaseMarker.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,7 +163,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseMarker.lastDetected</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/BaseMarker.ts#L6">BaseMarker.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BaseMarker.ts#L11">BaseMarker.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -186,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">marker<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object3D</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/PatternMarker.ts#L12">PatternMarker.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/PatternMarker.ts#L20">PatternMarker.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -197,7 +184,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseMarker.minConfidence</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/BaseMarker.ts#L4">BaseMarker.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BaseMarker.ts#L9">BaseMarker.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,7 +194,7 @@
 					<div class="tsd-signature tsd-kind-icon">pattern<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/PatternMarker.ts#L11">PatternMarker.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/PatternMarker.ts#L19">PatternMarker.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -218,7 +205,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseMarker.size</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/BaseMarker.ts#L3">BaseMarker.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BaseMarker.ts#L8">BaseMarker.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/058ed77/src/PatternMarker.ts#L10">PatternMarker.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/PatternMarker.ts#L18">PatternMarker.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -289,6 +276,9 @@
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="source.html" class="tsd-kind-icon">Source</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+						<a href="../interfaces/barcodemarkerparameters.html" class="tsd-kind-icon">Barcode<wbr>Marker<wbr>Parameters</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="../interfaces/controllerparameters.html" class="tsd-kind-icon">Controller<wbr>Parameters</a>
 					</li>
@@ -297,6 +287,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
 						<a href="../interfaces/markers.html" class="tsd-kind-icon">Markers</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+						<a href="../interfaces/patternmarkerparameters.html" class="tsd-kind-icon">Pattern<wbr>Marker<wbr>Parameters</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
 						<a href="../interfaces/sourceparameters.html" class="tsd-kind-icon">Source<wbr>Parameters</a>
