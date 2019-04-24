@@ -10,9 +10,9 @@ import cameraParametersData from "./artoolkit/CameraParameters";
 
 export interface MarkerPositioningParameters {
 	smooth: boolean;
-	smoothCount: 5;
-	smoothTolerance: 0.01;
-	smoothThreshold: 2;
+	smoothCount: number;
+	smoothTolerance: number;
+	smoothThreshold: number;
 }
 
 export interface ControllerParameters {
@@ -53,7 +53,7 @@ export class Controller extends THREE.EventDispatcher {
 	private _updatedAt: any;
 	private _artoolkitProjectionAxisTransformMatrix: any;
 
-	constructor(parameters: ControllerParameters) {
+	constructor(parameters: Partial<ControllerParameters>) {
 		if (!parameters.source) {
 			throw Error("Source must be provided");
 		}

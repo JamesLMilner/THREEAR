@@ -1,3 +1,8 @@
+interface BaseMarkerParameters {
+	size?: number;
+	minConfidence?: number;
+}
+
 export abstract class BaseMarker {
 	public id: number;
 	public size: number;
@@ -5,7 +10,7 @@ export abstract class BaseMarker {
 	public found: boolean;
 	public lastDetected?: Date;
 
-	constructor(id: number, parameters: any) {
+	constructor(id: number, parameters: BaseMarkerParameters) {
 		this.id = id;
 		this.size = parameters.size || 1;
 		this.minConfidence = parameters.minConfidence || 0.6;
