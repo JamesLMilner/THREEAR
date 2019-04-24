@@ -1,8 +1,13 @@
+interface BaseMarkerParameters {
+	size?: number;
+	minConfidence?: number;
+}
 export abstract class BaseMarker {
-	id: number;
+	id?: number;
 	size: number;
 	minConfidence: number;
 	found: boolean;
 	lastDetected?: Date;
-	constructor(id: number, parameters: any);
+	constructor(parameters: BaseMarkerParameters);
 }
+export {};

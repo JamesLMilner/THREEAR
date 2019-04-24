@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>threear</title>
+	<title>BarcodeMarkerParameters | threear</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">threear</a>
+					<a href="../index.html" class="title">threear</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,92 +53,166 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="barcodemarkerparameters.html">BarcodeMarkerParameters</a>
 				</li>
 			</ul>
-			<h1> threear</h1>
+			<h1>Interface BarcodeMarkerParameters</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="three-ar">THREE AR</h1>
-				<h2 id="introduction">Introduction</h2>
-				<p>THREE AR aims to provide a simple to use Augmented Reality API for the web, leveraging three.js&#39;s 3D capabilities. THREE AR is written in <a href="https://www.typescriptlang.org/">TypeScript</a>. You can see a description of the aims of THREE AR <a href="./AIMS.md">here</a>.</p>
-				<h2 id="usage">Usage</h2>
-				<p>THREE AR works with npm and also as a CDN. For npm you can install in the following manner:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> threear</code></pre><p>using a CDN you can include a script tag from unpkg like so:</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/threear"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<h2 id="demo">Demo</h2>
-				<p>The examples folder features <a href="https://jamesmilneruk.github.io/THREEAR/examples/basic.html">a basic demo</a>, you can open it on a mobile device and point your camera at the following marker:</p>
-				<p align="center">
-					<img width="400px" alt="Hiro Marker" src="./data/hiro.jpg"/>
-				</p>
-				<h2 id="documentation-and-examples">Documentation and Examples</h2>
-				<ul>
-					<li><a href="https://jamesmilneruk.github.io/THREEAR/docs">Docs</a></li>
-					<li><a href="https://jamesmilneruk.github.io/THREEAR/">Examples (Source)</a></li>
-					<li><a href="https://jamesmilneruk.github.io/THREEAR/">Examples (Live)</a></li>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>BarcodeMarker take a given predtermined barcode as the pattern to detect. Each barcode has
+							a predetermined number, for example the 3x3 matrix has 64 possible markers. You can find copies
+							of these markers in the artoolkit GitHub repository. This approach is faster than using
+							PatternMarker. The barcodes can be used to place a three.js Object3D and pin it to
+						the barcode marker.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>param</dt>
+						<dd><p>parameters for determing things like the barcode number and the minimum confidence</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">BarcodeMarkerParameters</span>
+					</li>
 				</ul>
-				<h2 id="development-and-contribution">Development and Contribution</h2>
-				<p>Please see the <a href="./DEVELOPMENT.md">development guide</a>. If you are interested in contributing, it may be a good starting point to see the list of open issues on our <a href="https://github.com/JamesMilnerUK/THREEAR/issues">GitHub issues page</a>. Please take a moment to read the <a href="./CODE_OF_CONDUCT.md">code of conduct</a>.</p>
-				<h2 id="acknowledgements">Acknowledgements</h2>
-				<ul>
-					<li><a href="https://github.com/jeromeetienne/AR.js">ar.js</a> on which this library is based</li>
-					<li><a href="https://github.com/artoolkitx/jsartoolkit5">jsartoolkit</a> the Emscripten library from the C code for artoolkit, on which this library is underpinned</li>
-				</ul>
-				<h2 id="license">License</h2>
-				<p>All files within the <code>src/artoolkit</code> folder are licensed LGPLv3</p>
-				<p>All other files are MIT Licensed and are adapted from the <a href="https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt">work of Jerome Etienne</a> </p>
-			</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section tsd-is-external tsd-is-not-exported">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="barcodemarkerparameters.html#barcodevalue" class="tsd-kind-icon">barcode<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="barcodemarkerparameters.html#markerobject" class="tsd-kind-icon">marker<wbr>Object</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="barcodemarkerparameters.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="barcodemarkerparameters.html#size" class="tsd-kind-icon">size</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-external tsd-is-not-exported">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="barcodevalue" class="tsd-anchor"></a>
+					<h3>barcode<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">barcode<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BarcodeMarker.ts#L14">BarcodeMarker.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="markerobject" class="tsd-anchor"></a>
+					<h3>marker<wbr>Object</h3>
+					<div class="tsd-signature tsd-kind-icon">marker<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object3D</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BarcodeMarker.ts#L15">BarcodeMarker.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="minconfidence" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> min<wbr>Confidence</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BarcodeMarker.ts#L17">BarcodeMarker.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="size" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> size</h3>
+					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JamesMilnerUK/THREEAR/blob/15f897a/src/BarcodeMarker.ts#L16">BarcodeMarker.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-is-external">
-						<a href="classes/barcodemarker.html" class="tsd-kind-icon">Barcode<wbr>Marker</a>
+						<a href="../classes/barcodemarker.html" class="tsd-kind-icon">Barcode<wbr>Marker</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
-						<a href="classes/controller.html" class="tsd-kind-icon">Controller</a>
+						<a href="../classes/controller.html" class="tsd-kind-icon">Controller</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
-						<a href="classes/patternmarker.html" class="tsd-kind-icon">Pattern<wbr>Marker</a>
+						<a href="../classes/patternmarker.html" class="tsd-kind-icon">Pattern<wbr>Marker</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
-						<a href="classes/source.html" class="tsd-kind-icon">Source</a>
+						<a href="../classes/source.html" class="tsd-kind-icon">Source</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="interfaces/barcodemarkerparameters.html" class="tsd-kind-icon">Barcode<wbr>Marker<wbr>Parameters</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-is-external tsd-is-not-exported">
+						<a href="barcodemarkerparameters.html" class="tsd-kind-icon">Barcode<wbr>Marker<wbr>Parameters</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="barcodemarkerparameters.html#barcodevalue" class="tsd-kind-icon">barcode<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="barcodemarkerparameters.html#markerobject" class="tsd-kind-icon">marker<wbr>Object</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="barcodemarkerparameters.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="barcodemarkerparameters.html#size" class="tsd-kind-icon">size</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="controllerparameters.html" class="tsd-kind-icon">Controller<wbr>Parameters</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="interfaces/controllerparameters.html" class="tsd-kind-icon">Controller<wbr>Parameters</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="interfaces/markerpositioningparameters.html" class="tsd-kind-icon">Marker<wbr>Positioning<wbr>Parameters</a>
+						<a href="markerpositioningparameters.html" class="tsd-kind-icon">Marker<wbr>Positioning<wbr>Parameters</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="interfaces/markers.html" class="tsd-kind-icon">Markers</a>
+						<a href="markers.html" class="tsd-kind-icon">Markers</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="interfaces/patternmarkerparameters.html" class="tsd-kind-icon">Pattern<wbr>Marker<wbr>Parameters</a>
+						<a href="patternmarkerparameters.html" class="tsd-kind-icon">Pattern<wbr>Marker<wbr>Parameters</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="interfaces/sourceparameters.html" class="tsd-kind-icon">Source<wbr>Parameters</a>
+						<a href="sourceparameters.html" class="tsd-kind-icon">Source<wbr>Parameters</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-external tsd-is-not-exported">
-						<a href="globals.html#controller" class="tsd-kind-icon">controller</a>
+						<a href="../globals.html#controller" class="tsd-kind-icon">controller</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external tsd-is-not-exported">
-						<a href="globals.html#initialize" class="tsd-kind-icon">initialize</a>
+						<a href="../globals.html#initialize" class="tsd-kind-icon">initialize</a>
 					</li>
 				</ul>
 			</nav>
@@ -208,7 +282,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

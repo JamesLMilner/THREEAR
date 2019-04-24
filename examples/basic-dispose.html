@@ -78,7 +78,8 @@
 
 					var patternMarker = new THREEAR.PatternMarker({
 						patternUrl: '../data/patt.hiro',
-						markerObject: markerGroup
+						markerObject: markerGroup,
+						minConfidence: 0.2
 					});
 
 					controller.trackMarker(patternMarker);

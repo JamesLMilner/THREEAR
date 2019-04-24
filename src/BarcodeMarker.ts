@@ -23,7 +23,7 @@ export class BarcodeMarker extends BaseMarker {
 	public markerObject: Object3D;
 
 	constructor(parameters: BarcodeMarkerParameters) {
-		super(BarcodeMarker.count++, parameters);
+		super(parameters);
 
 		if (parameters.barcodeValue === undefined) {
 			throw Error("Barcode Marker requires a barcodeValue to be passed");

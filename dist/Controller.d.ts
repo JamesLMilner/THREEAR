@@ -5,9 +5,9 @@ import { PatternMarker } from "./PatternMarker";
 import { BarcodeMarker } from "./BarcodeMarker";
 export interface MarkerPositioningParameters {
 	smooth: boolean;
-	smoothCount: 5;
-	smoothTolerance: 0.01;
-	smoothThreshold: 2;
+	smoothCount: number;
+	smoothTolerance: number;
+	smoothThreshold: number;
 }
 export interface ControllerParameters {
 	source: Source;
@@ -43,7 +43,7 @@ export declare class Controller extends THREE.EventDispatcher {
 	private smoothMatrices;
 	private _updatedAt;
 	private _artoolkitProjectionAxisTransformMatrix;
-	constructor(parameters: ControllerParameters);
+	constructor(parameters: Partial<ControllerParameters>);
 	setParameters(parameters: any): void;
 	onResize(renderer: WebGLRenderer): void;
 	update(srcElement: any): boolean;

@@ -20,7 +20,7 @@ export class PatternMarker extends BaseMarker {
 	public markerObject: Object3D;
 
 	constructor(parameters: PatternMarkerParameters) {
-		super(PatternMarker.count++, parameters);
+		super(parameters);
 
 		if (!parameters.patternUrl) {
 			throw Error("Pattern Marker requires a patternUrl to be passed");
