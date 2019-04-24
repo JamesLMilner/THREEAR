@@ -197,6 +197,10 @@ export class Controller extends THREE.EventDispatcher {
 			this.arController.dispose();
 			this.arController = null;
 			this.disposed = true;
+			this.markers = {
+				pattern: [],
+				barcode: []
+			};
 		}
 	}
 
@@ -339,7 +343,7 @@ export class Controller extends THREE.EventDispatcher {
 			});
 		} else if (event.data.type === ARToolKit.PATTERN_MARKER) {
 			this.markers.pattern.forEach(patternMarker => {
-				if (event.data.marker.idMatrix === patternMarker.id) {
+				if (event.data.marker.idPatt === patternMarker.id) {
 					this.onMarkerFound(event, patternMarker);
 				}
 			});
@@ -379,6 +383,7 @@ export class Controller extends THREE.EventDispatcher {
 
 		// start tracking this pattern
 		const onSuccess = (markerId: number) => {
+			marker.id = markerId;
 			(this.arController as any).trackPatternMarkerId(markerId, marker.size);
 		};
 		const onError = (err: any) => {
@@ -402,6 +407,7 @@ export class Controller extends THREE.EventDispatcher {
 
 		if (marker.barcodeValue !== undefined) {
 			barcodeMarkerId = marker.barcodeValue;
+			marker.id = barcodeMarkerId;
 			this.arController.trackBarcodeMarkerId(barcodeMarkerId, marker.size);
 		} else {
 			throw Error("No barcodeValue defined in parameters");
