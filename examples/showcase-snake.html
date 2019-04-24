@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+		/>
+		<script src="vendor/three.101.min.js"></script>
+		<script src="../dist/THREEAR.js"></script>
+		<title>Snake THREE AR</title>
+		<!-- Thanks to straker & dehuachen for the code on with this ar-demo is based on -->
+		<!-- https://gist.github.com/straker, https://gist.github.com/dehuachen -->
+		<!-- See https://gist.github.com/straker/ff00b4b49669ad3dec890306d348adc4#gistcomment-2600063 -->
+		<!-- 0x4d/0b01001101 - https://gist.github.com/0b01001101 -->
+		<script>
+			// Bind window error for error handling
+			// window.addEventListener('error', function(event) {
+			// 	alert("ERROR: " + event.message + " at " + event.filename + " : " + event.lineno + " : " + event.colno);
+			// });
+		</script>
+	</head>
+	<body style="margin : 0px; overflow: hidden; font-family: Monospace;">
+		<script>
+			var renderer = new THREE.WebGLRenderer({
+				alpha: true
+			});
+			renderer.setClearColor(new THREE.Color("lightgrey"), 0);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+			renderer.domElement.style.position = "absolute";
+			renderer.domElement.style.top = "0px";
+			renderer.domElement.style.left = "0px";
+			document.body.appendChild(renderer.domElement);
+
+			var scene = new THREE.Scene();
+			var clock = new THREE.Clock();
+			var camera = new THREE.Camera();
+			scene.add(camera);
+
+			var light = new THREE.AmbientLight(0x404040);
+			scene.add(light);
+
+			var markerGroup = new THREE.Group();
+			scene.add(markerGroup);
+
+			var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+			directionalLight.target = markerGroup;
+			markerGroup.add(directionalLight);
+
+			var controller;
+			var source = new THREEAR.Source({ renderer, camera });
+
+			var gridXY = 16;
+
+			var geometry = new THREE.CubeGeometry(1, 1, 1);
+
+			var materialRed = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+			var materialGreen = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+			var materialBlue = new THREE.MeshLambertMaterial({ color: 0x0000ff });
+
+			let s = 1 / gridXY;
+
+			var createCube = (i, j, s, mat, group) => {
+				var cube = new THREE.Mesh(geometry, mat);
+				cube.scale.multiplyScalar(s);
+				cube.position.x = i;
+				cube.position.y = s;
+				cube.position.z = j;
+				group.add(cube);
+			};
+
+			borderGroup = new THREE.Group(); // Static objs
+			borderGroup.position.set(-0.5, 0, -0.5);
+
+			for (var i = 0; i < gridXY + 2; i++) {
+				let o = 1 / gridXY;
+				let p = i / gridXY;
+				let m = materialGreen;
+				createCube(p, -o, s, m, borderGroup);
+				createCube(1 - p, 1 + o, s, m, borderGroup);
+				createCube(-o, 1 - p, s, m, borderGroup);
+				createCube(1 + o, p, s, m, borderGroup);
+			}
+
+			var snakeGroup = new THREE.Group(); // Dynamic objs
+			snakeGroup.position.set(-0.5, 0, -0.5);
+
+			markerGroup.add(borderGroup);
+			markerGroup.add(snakeGroup);
+
+			const snakeDefault = {
+				x: 0,
+				y: 2,
+				dx: 1,
+				dy: 0,
+				cells: [],
+				maxCells: 3,
+				speed: 10
+			};
+
+			var count = 0;
+			var snake = snakeDefault;
+			var apple = { x: 8, y: 8 };
+
+			spawnApple(apple);
+			addEventListener(snake);
+
+			THREEAR.initialize({ source: source, positioning: { smooth: false } })
+				.then(arcontroller => {
+					controller = arcontroller;
+					var patternMarker = new THREEAR.PatternMarker({
+						patternUrl: "../data/patt.hiro",
+						markerObject: markerGroup
+					});
+
+					let near = 0.1;
+					let far = 1000;
+					let m = camera.projectionMatrix;
+					m.elements[10] = -(far + near) / (far - near);
+					m.elements[14] = -(2 * far * near) / (far - near);
+
+					controller.trackMarker(patternMarker);
+
+					requestAnimationFrame(animate);
+				})
+				.catch(error => {
+					// Provide a fallback
+					console.error(error);
+					camera = new THREE.PerspectiveCamera(
+						50,
+						window.innerWidth / window.innerHeight,
+						1,
+						2000
+					);
+					camera.position.set(0, 2, 2);
+					camera.lookAt(scene.position);
+
+					requestAnimationFrame(animate);
+				});
+
+			function animate() {
+				requestAnimationFrame(animate);
+				var delta = clock.getDelta();
+
+				if (controller) {
+					controller.update(source.domElement);
+				}
+
+				count += delta;
+				if (count > 1 / snake.speed && markerGroup.visible) {
+					process(snake, apple);
+					render(snake, apple);
+					count = 0;
+				}
+				renderer.render(scene, camera);
+			}
+
+			function process(snake, apple) {
+				// move the snake
+				snake.x += snake.dx;
+				snake.y += snake.dy;
+
+				// wrap snake position on edge of screen
+				if (snake.x < 0) {
+					snake.x = gridXY;
+				} else if (snake.x > gridXY) {
+					snake.x = 0;
+				}
+
+				if (snake.y < 0) {
+					snake.y = gridXY;
+				} else if (snake.y > gridXY) {
+					snake.y = 0;
+				}
+
+				// keep track of where snake has been. front of the array is always the head
+				snake.cells.unshift({ x: snake.x, y: snake.y });
+
+				// remove cells as we move away from them
+				if (snake.cells.length > snake.maxCells) {
+					snake.cells.pop();
+				}
+
+				snake.cells.forEach(function(cell, index) {
+					// snake ate apple
+					if (cell.x === apple.x && cell.y === apple.y) {
+						snake.maxCells++;
+						snake.speed += 0.1;
+						spawnApple(apple);
+					}
+
+					// check collision with all cells after this one (modified bubble sort)
+					for (var i = index + 1; i < snake.cells.length; i++) {
+						// collision. reset game
+						if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+							snake.x = 0;
+							snake.y = 2;
+							snake.dx = 1;
+							snake.dy = 0;
+							snake.cells = [];
+							snake.maxCells = 3;
+							snake.speed = 10;
+							spawnApple(apple);
+						}
+					}
+				});
+			}
+
+			function render(snake, apple) {
+				// Remove snake and apple
+				snakeGroup.children = [];
+
+				// Render the apple
+				createCube(
+					apple.x / gridXY,
+					apple.y / gridXY,
+					s,
+					materialRed,
+					snakeGroup
+				);
+
+				// Render the snake
+				snake.cells.forEach(function(cell, index) {
+					createCube(
+						cell.x / gridXY,
+						cell.y / gridXY,
+						s,
+						materialBlue,
+						snakeGroup
+					);
+				});
+			}
+
+			function spawnApple(apple) {
+				apple.x = getRandomInt(0, gridXY);
+				apple.y = getRandomInt(0, gridXY);
+			}
+
+			function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			function addEventListener(snake) {
+				var allowedTime = 200;
+				var startX = 0;
+				var startY = 0;
+
+				// Touch listener
+				document.addEventListener(
+					"touchstart",
+					function(e) {
+						var touch = e.changedTouches[0];
+						startX = touch.pageX;
+						startY = touch.pageY;
+						startTime = new Date().getTime();
+						e.preventDefault();
+					},
+					false
+				);
+
+				document.addEventListener(
+					"touchmove",
+					function(e) {
+						e.preventDefault();
+					},
+					false
+				);
+
+				document.addEventListener(
+					"touchend",
+					function(e) {
+						var touch = e.changedTouches[0];
+						distX = touch.pageX - startX;
+						distY = touch.pageY - startY;
+
+						if (Math.abs(distX) > Math.abs(distY)) {
+							if (distX > 0 && snake.dx === 0) {
+								snake.dx = 1;
+								snake.dy = 0;
+							} else if (distX < 0 && snake.dx === 0) {
+								snake.dx = -1;
+								snake.dy = 0;
+							}
+						} else {
+							if (distY > 0 && snake.dy === 0) {
+								snake.dy = 1;
+								snake.dx = 0;
+							} else if (distY < 0 && snake.dy === 0) {
+								snake.dy = -1;
+								snake.dx = 0;
+							}
+						}
+						e.preventDefault();
+					},
+					false
+				);
+
+				// Keyboard listener
+				document.addEventListener("keydown", function(e) {
+					if (e.which === 37 && snake.dx === 0) {
+						snake.dx = -1;
+						snake.dy = 0;
+					} else if (e.which === 38 && snake.dy === 0) {
+						snake.dy = -1;
+						snake.dx = 0;
+					} else if (e.which === 39 && snake.dx === 0) {
+						snake.dx = 1;
+						snake.dy = 0;
+					} else if (e.which === 40 && snake.dy === 0) {
+						snake.dy = 1;
+						snake.dx = 0;
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
