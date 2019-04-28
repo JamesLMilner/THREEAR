@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+		/>
+		<script src="vendor/three.101.min.js"></script>
+		<script src="../dist/THREEAR.js"></script>
+		<title>Cutout Demo THREEAR</title>
+		<!-- This example is based on https://github.com/stemkoski/AR-Examples/blob/master/hole-plane.html -->
+		<!-- It uses a plane geometry with a hole to mask the hidden parts -->
+		<script>
+			// Bind window error for error handling
+			// window.addEventListener('error', function(event) {
+			// 	alert("ERROR: " + event.message + " at " + event.filename + " : " + event.lineno + " : " + event.colno);
+			// });
+		</script>
+	</head>
+
+	<body style="margin : 0px; overflow: hidden; font-family: Monospace;">
+		<div
+			style="position: absolute; top:10px; left:10px; right: 10px; z-index: 100;"
+		>
+			<div>
+				This example is based on
+				<a href="https://github.com/stemkoski/AR-Examples"
+					>https://github.com/stemkoski/AR-Examples</a
+				>
+			</div>
+			<div id="button" style="background-color:rgba(201, 76, 76, 0.3);">
+				Show/Hide invisibility cloak [plane with a hole]
+			</div>
+		</div>
+		<script>
+			var renderer = new THREE.WebGLRenderer({
+				// antialias: true,
+				alpha: true
+			});
+			renderer.setClearColor(new THREE.Color("lightgrey"), 0);
+			// renderer.setPixelRatio(2);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.domElement.style.position = "absolute";
+			renderer.domElement.style.top = "0px";
+			renderer.domElement.style.left = "0px";
+			document.body.appendChild(renderer.domElement);
+
+			var clock = new THREE.Clock();
+			var scene = new THREE.Scene();
+			var camera = new THREE.Camera();
+			scene.add(camera);
+
+			var ambientLight = new THREE.AmbientLight(0xcccccc, 1.0);
+			scene.add(ambientLight);
+
+			var markerGroup = new THREE.Group();
+			scene.add(markerGroup);
+
+			var source = new THREEAR.Source({ renderer, camera });
+
+			THREEAR.initialize({ source: source }).then(controller => {
+				var scale = 1.1;
+
+				var texture = new THREE.TextureLoader().load(
+					"https://threejs.org/examples/textures/UV_Grid_Sm.jpg"
+				);
+
+				var geometry = new THREE.CubeGeometry(scale, scale, scale);
+				var material = new THREE.MeshLambertMaterial({
+					map: texture,
+					transparent: true,
+					map: texture,
+					side: THREE.BackSide
+				});
+				var cube = new THREE.Mesh(geometry, material);
+				cube.position.y = -scale / 2;
+				markerGroup.add(cube);
+
+				var scloak = 9 * scale;
+				var cutoutGeometry = new THREE.PlaneGeometry(scloak, scloak, 9, 9);
+				cutoutGeometry.faces.splice(80, 2);
+				cutoutGeometry.faceVertexUvs[0].splice(80, 2);
+
+				var cutoutMaterial = new THREE.MeshBasicMaterial({
+					transparent: false,
+					opacity: 0.6,
+					color: 0xff0000,
+					colorWrite: false
+				});
+
+				var cutout = new THREE.Mesh(cutoutGeometry, cutoutMaterial);
+
+				cutout.rotation.x = -Math.PI / 2;
+				markerGroup.add(cutout);
+
+				document.getElementById("button").addEventListener("click", () => {
+					var visible = !cutoutMaterial.colorWrite;
+					cutoutMaterial.colorWrite = visible;
+					cutoutMaterial.transparent = visible;
+				});
+
+				var patternMarker = new THREEAR.PatternMarker({
+					patternUrl: "../data/patt.hiro",
+					markerObject: markerGroup
+				});
+
+				controller.trackMarker(patternMarker);
+
+				requestAnimationFrame(function animate() {
+					requestAnimationFrame(animate);
+					var delta = clock.getDelta();
+					controller.update(source.domElement);
+					renderer.render(scene, camera);
+				});
+			});
+		</script>
+	</body>
+</html>
