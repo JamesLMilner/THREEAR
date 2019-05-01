@@ -22,7 +22,7 @@ export class Source {
 	private currentTorchStatus: boolean;
 	private parameters: SourceParameters;
 
-	constructor(parameters: SourceParameters) {
+	constructor(parameters: Partial<SourceParameters>) {
 		if (!parameters.renderer) {
 			throw Error("ThreeJS Renderer is required");
 		}

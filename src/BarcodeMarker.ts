@@ -9,13 +9,21 @@ import { BaseMarker } from "./BaseMarker";
  * the barcode marker.
  * @param parameters parameters for determing things like the barcode number and the minimum confidence
  */
+
+interface BarcodeMarkerParameters {
+	barcodeValue: number;
+	markerObject: Object3D;
+	size?: number;
+	minConfidence?: number;
+}
+
 export class BarcodeMarker extends BaseMarker {
 	public static count = 0;
 	public barcodeValue: number;
 	public markerObject: Object3D;
 
-	constructor(parameters: any) {
-		super(BarcodeMarker.count++, parameters);
+	constructor(parameters: BarcodeMarkerParameters) {
+		super(parameters);
 
 		if (parameters.barcodeValue === undefined) {
 			throw Error("Barcode Marker requires a barcodeValue to be passed");

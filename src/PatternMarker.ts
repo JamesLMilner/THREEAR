@@ -6,13 +6,21 @@ import { BaseMarker } from "./BaseMarker";
  * a given marker from three.js, in this case an given Object3D
  * @param parameters parameters for determining things the pattern URL and minimum confidence
  */
+
+interface PatternMarkerParameters {
+	patternUrl: string;
+	markerObject: Object3D;
+	size?: number;
+	minConfidence?: number;
+}
+
 export class PatternMarker extends BaseMarker {
 	public static count = 0;
 	public patternUrl: string;
 	public markerObject: Object3D;
 
-	constructor(parameters: any) {
-		super(PatternMarker.count++, parameters);
+	constructor(parameters: PatternMarkerParameters) {
+		super(parameters);
 
 		if (!parameters.patternUrl) {
 			throw Error("Pattern Marker requires a patternUrl to be passed");

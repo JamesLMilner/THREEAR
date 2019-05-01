@@ -20,7 +20,7 @@ export declare class Source {
 	domElement: HTMLImageElement | HTMLVideoElement | undefined;
 	private currentTorchStatus;
 	private parameters;
-	constructor(parameters: SourceParameters);
+	constructor(parameters: Partial<SourceParameters>);
 	setParameters(parameters: any): void;
 	readonly renderer: import("three").WebGLRenderer | null;
 	readonly camera: import("three").Camera | null;

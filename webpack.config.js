@@ -22,6 +22,9 @@ module.exports = {
     filename: 'THREEAR.js',
     path: __dirname + '/dist'
   },
+  externals: {
+		three: 'THREE',
+	},
   plugins: [
     new PrettierPlugin()
   ]
