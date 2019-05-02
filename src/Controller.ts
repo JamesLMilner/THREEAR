@@ -370,6 +370,13 @@ export class Controller extends THREE.EventDispatcher {
 		// apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
 		projectionMatrix.multiply(this._artoolkitProjectionAxisTransformMatrix);
 
+		// Hotfix for z-fighting bug
+		// somehow ARToolKitController.ts L1031 & L1032 don't work
+		const near = 0.1;
+		const far = 1000;
+		projectionMatrix.elements[10] = -(far + near) / (far - near);
+		projectionMatrix.elements[14] = -(2 * far * near) / (far - near);
+
 		// return the result
 		return projectionMatrix;
 	}
