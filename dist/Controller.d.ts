@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { WebGLRenderer } from "three";
 import { Source } from "./THREEAR";
 import { PatternMarker } from "./PatternMarker";
 import { BarcodeMarker } from "./BarcodeMarker";
@@ -45,7 +44,7 @@ export declare class Controller extends THREE.EventDispatcher {
 	private _artoolkitProjectionAxisTransformMatrix;
 	constructor(parameters: Partial<ControllerParameters>);
 	setParameters(parameters: any): void;
-	onResize(renderer: WebGLRenderer): void;
+	onResize(renderer: THREE.WebGLRenderer): void;
 	update(srcElement: any): boolean;
 	trackMarker(marker: PatternMarker | BarcodeMarker): void;
 	dispose(): void;

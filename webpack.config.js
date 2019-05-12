@@ -23,8 +23,13 @@ module.exports = {
     path: __dirname + '/dist'
   },
   externals: {
-		three: 'THREE',
-	},
+    three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+    }
+  },
   plugins: [
     new PrettierPlugin()
   ]

@@ -1,8 +1,7 @@
 import ARToolKit from "./artoolkit/ARToolKit";
-import * as THREE from "three";
 import ARToolKitCameraParam from "./artoolkit/ARToolKitCameraParam";
 import { ARToolKitController } from "./artoolkit/ARToolKitController";
-import { WebGLRenderer, Object3D } from "three";
+import * as THREE from "three";
 import { Source } from "./THREEAR";
 import { PatternMarker } from "./PatternMarker";
 import { BarcodeMarker } from "./BarcodeMarker";
@@ -149,7 +148,7 @@ export class Controller extends THREE.EventDispatcher {
 		}
 	}
 
-	public onResize(renderer: WebGLRenderer) {
+	public onResize(renderer: THREE.WebGLRenderer) {
 		this.parameters.source.onResizeElement();
 		this.parameters.source.copyElementSizeTo(renderer.domElement);
 		if (this.arController !== null) {
@@ -463,7 +462,7 @@ export class Controller extends THREE.EventDispatcher {
 	 */
 	private updateWithModelViewMatrix(
 		modelViewMatrix: THREE.Matrix4,
-		markerObject: Object3D
+		markerObject: THREE.Object3D
 	): boolean {
 		// mark object as visible
 		// this.parameters.group.visible = true;
