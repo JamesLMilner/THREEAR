@@ -1,4 +1,4 @@
-import Module = require("./lib/arjs.artoolkit.debug.js");
+import Module = require("./lib/arjs.artoolkit.min.js");
 
 export class ARToolKit {
 	public static AR_DEBUG_DISABLE: number = 0;
