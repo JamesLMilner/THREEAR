@@ -31,7 +31,7 @@ The examples folder features [a basic demo](https://jamesmilneruk.github.io/THRE
 * [Docs](https://jamesmilneruk.github.io/THREEAR/docs)
 * [Examples (Source)](https://jamesmilneruk.github.io/THREEAR/)
 * [Examples (Live)](https://jamesmilneruk.github.io/THREEAR/)
-* [Change Log](./CHANGELOG.MD)
+* [Change Log](./CHANGELOG.md)
 
 ## Development and Contribution
 
