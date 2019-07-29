@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/three": "^0.93.21",
+    "auto-changelog": "^1.14.1",
     "husky": "^3.0.0",
     "live-server": "^1.2.1",
     "prettier": "^1.18.2",
