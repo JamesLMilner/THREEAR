@@ -1,6 +1,6 @@
 {
   "name": "threear",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "A marker based Augmented Reality library for Three.js",
   "keywords": [
     "AR",
