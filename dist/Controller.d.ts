@@ -51,6 +51,7 @@ export declare class Controller extends THREE.EventDispatcher {
 	private initialize;
 	private _initArtoolkit;
 	private handleMarkerDetection;
+	private checkForLostMarkers;
 	private getProjectionMatrix;
 	private trackPatternMarker;
 	private trackBarcode;

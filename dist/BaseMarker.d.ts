@@ -2,7 +2,7 @@ interface BaseMarkerParameters {
 	size?: number;
 	minConfidence?: number;
 }
-export abstract class BaseMarker {
+export declare abstract class BaseMarker {
 	id?: number;
 	size: number;
 	minConfidence: number;

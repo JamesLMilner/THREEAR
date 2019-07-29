@@ -179,6 +179,9 @@ export class Controller extends THREE.EventDispatcher {
 		// process this frame
 		this.arController.process(srcElement);
 
+		// Check if any markers have been lost after processing
+		this.checkForLostMarkers();
+
 		// return true as we processed the frame
 		return true;
 	}
@@ -347,7 +350,9 @@ export class Controller extends THREE.EventDispatcher {
 				}
 			});
 		}
+	}
 
+	private checkForLostMarkers() {
 		[...this.markers.pattern, ...this.markers.barcode].forEach(marker => {
 			if (
 				marker.lastDetected &&
@@ -355,7 +360,7 @@ export class Controller extends THREE.EventDispatcher {
 				new Date().getTime() - marker.lastDetected.getTime() >
 					this.parameters.lostTimeout
 			) {
-				this.onMarkerLost(event, marker);
+				this.onMarkerLost(marker);
 			}
 		});
 	}
@@ -444,15 +449,15 @@ export class Controller extends THREE.EventDispatcher {
 
 		this.dispatchEvent({
 			type: "markerFound",
-			marker: { type: event.data.type, object: marker.markerObject }
+			marker
 		});
 	}
 
-	private onMarkerLost(event: any, marker: BarcodeMarker | PatternMarker) {
+	private onMarkerLost(marker: BarcodeMarker | PatternMarker) {
 		marker.found = false;
 		this.dispatchEvent({
 			type: "markerLost",
-			marker: { type: event.data.type, object: marker.markerObject }
+			marker
 		});
 	}
 
