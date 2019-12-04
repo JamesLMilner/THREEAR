@@ -5,7 +5,7 @@
 First, you are going to want to install git. Once you have done this you can clone the repository to a folder of your choice using the following command:
 
 ```
-git clone git@github.com:JamesMilnerUK/THREEAR.git
+git clone git@github.com:JamesLMilner/THREEAR.git
 ```
 
 #### Install Dependencies

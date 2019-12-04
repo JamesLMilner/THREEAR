@@ -12,7 +12,7 @@
   "browser": "dist/THREEAR.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JamesMilnerUK/THREEAR.git"
+    "url": "https://github.com/JamesLMilner/THREEAR.git"
   },
   "scripts": {
     "serve": "live-server --cors",

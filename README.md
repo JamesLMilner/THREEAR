@@ -35,7 +35,7 @@ The examples folder features [a basic demo](https://jamesmilneruk.github.io/THRE
 
 ## Development and Contribution
 
-Please see the [development guide](./DEVELOPMENT.md). If you are interested in contributing, it may be a good starting point to see the list of open issues on our [GitHub issues page](https://github.com/JamesMilnerUK/THREEAR/issues). Please take a moment to read the [code of conduct](./CODE_OF_CONDUCT.md).
+Please see the [development guide](./DEVELOPMENT.md). If you are interested in contributing, it may be a good starting point to see the list of open issues on our [GitHub issues page](https://github.com/JamesLMilner/THREEAR/issues). Please take a moment to read the [code of conduct](./CODE_OF_CONDUCT.md).
 
 
 ## Acknowledgements
