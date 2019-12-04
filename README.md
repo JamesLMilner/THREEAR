@@ -20,7 +20,7 @@ using a CDN you can include a script tag from unpkg like so:
 
 ## Demo 
 
-The examples folder features [a basic demo](https://jamesmilneruk.github.io/THREEAR/examples/basic.html), you can open it on a mobile device and point your camera at the following marker:
+The examples folder features [a basic demo](https://JamesLMilner.github.io/THREEAR/examples/basic.html), you can open it on a mobile device and point your camera at the following marker:
 
 <p align="center">
   <img width="400px" alt="Hiro Marker" src="./data/hiro.jpg"/>
@@ -28,9 +28,9 @@ The examples folder features [a basic demo](https://jamesmilneruk.github.io/THRE
 
 ## Documentation and Examples
 
-* [Docs](https://jamesmilneruk.github.io/THREEAR/docs)
-* [Examples (Source)](https://jamesmilneruk.github.io/THREEAR/)
-* [Examples (Live)](https://jamesmilneruk.github.io/THREEAR/)
+* [Docs](https://JamesLMilner.github.io/THREEAR/docs)
+* [Examples (Source)](https://JamesLMilner.github.io/THREEAR/)
+* [Examples (Live)](https://JamesLMilner.github.io/THREEAR/)
 * [Change Log](./CHANGELOG.md)
 
 ## Development and Contribution
