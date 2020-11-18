@@ -22,10 +22,10 @@ export declare class Source {
 	private parameters;
 	constructor(parameters: Partial<SourceParameters>);
 	setParameters(parameters: any): void;
-	readonly renderer: import("three").WebGLRenderer | null;
-	readonly camera: import("three").Camera | null;
+	get renderer(): import("three").WebGLRenderer | null;
+	get camera(): import("three").Camera | null;
 	dispose(): void;
-	initialize(): Promise<{}>;
+	initialize(): Promise<unknown>;
 	/**
 	 * Determine if the device supports torch capability
 	 */

@@ -100,7 +100,7 @@ export declare class ARToolKit {
     static getFrameMalloc(): any;
     static addMarker(arId: number, url: string, callback: (id: number) => any, onError: (err: any) => any): void;
     static addNFTMarker(arId: number, url: string, callback: (id: number) => any, onError: () => any): void;
-    static bytesToString(array: Uint8Array): any;
+    static bytesToString(array: Uint8Array): string;
     static parseMultiFile(bytes: Uint8Array): any[];
     static addMultiMarker(arId: number, url: string, callback: (id: number, markerNum: any) => any, onError: () => any): void;
     static writeStringToFS(filename: string, string: string, callback: () => any): void;
