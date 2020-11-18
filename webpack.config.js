@@ -31,6 +31,8 @@ module.exports = {
     }
   },
   plugins: [
-    new PrettierPlugin()
+    new PrettierPlugin({
+      extensions: ['.ts']
+    })
   ]
 };

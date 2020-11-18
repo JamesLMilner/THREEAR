@@ -16,8 +16,8 @@
   },
   "scripts": {
     "serve": "live-server --cors",
-    "build:ci": "webpack --mode=production --config webpack.config.js",
-    "build:prod": "webpack --mode=production --config webpack.config.js && npm run docs",
+    "build:ci": "webpack --mode=production --config webpack.config.js && npm run lint:fix",
+    "build:prod": "webpack --mode=production --config webpack.config.js && npm run docs && npm run lint:fix",
     "build:dev": "webpack --mode=development --config webpack.config.js",
     "build:watch": "webpack --mode=development --config webpack.config.js --watch",
     "lint": "tslint src/**/*.ts && prettier **/*.ts --check",
