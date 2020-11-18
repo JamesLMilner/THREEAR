@@ -218,7 +218,7 @@ export class ARToolKit {
 	}
 
 	public static bytesToString(array: Uint8Array) {
-		return String.fromCharCode.apply(String, array);
+		return String.fromCharCode.apply(String, Array.from(array));
 	}
 
 	public static parseMultiFile(bytes: Uint8Array) {
@@ -278,11 +278,8 @@ export class ARToolKit {
 				return ok();
 			}
 
-			const path = url
-				.split("/")
-				.slice(0, -1)
-				.join("/");
-			files = files.map(file => {
+			const path = url.split("/").slice(0, -1).join("/");
+			files = files.map((file) => {
 				return [path + "/" + file, file];
 			});
 

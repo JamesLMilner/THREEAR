@@ -174,5 +174,5 @@ export default new Uint8Array([
 	58,
 	164,
 	15,
-	46
+	46,
 ]);

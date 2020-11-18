@@ -200,8 +200,8 @@ export class ARToolKitController {
 					index: i,
 					type: markerType,
 					marker: markerInfo,
-					matrix: this.transformMat
-				}
+					matrix: this.transformMat,
+				},
 			});
 		}
 
@@ -222,8 +222,8 @@ export class ARToolKitController {
 						target: this,
 						data: {
 							multiMarkerId: i,
-							matrix: this.transformMat
-						}
+							matrix: this.transformMat,
+						},
 					});
 					break;
 				}
@@ -239,8 +239,8 @@ export class ARToolKitController {
 							multiMarkerId: i,
 							markerIndex: j,
 							marker: multiEachMarkerInfo,
-							matrix: this.transformMat
-						}
+							matrix: this.transformMat,
+						},
 					});
 				}
 			}
@@ -267,7 +267,7 @@ export class ARToolKitController {
 				inPrevious: false,
 				inCurrent: false,
 				matrix: new Float32Array(12),
-				markerWidth: markerWidth || this.defaultMarkerWidth
+				markerWidth: markerWidth || this.defaultMarkerWidth,
 			};
 		}
 		if (markerWidth) {
@@ -293,7 +293,7 @@ export class ARToolKitController {
 				inPrevious: false,
 				inCurrent: false,
 				matrix: new Float32Array(12),
-				markerWidth: markerWidth || this.defaultMarkerWidth
+				markerWidth: markerWidth || this.defaultMarkerWidth,
 			};
 		}
 		if (markerWidth) {
@@ -1037,7 +1037,7 @@ export class ARToolKitController {
 			}
 			this.dispatchEvent({
 				name: "load",
-				target: this
+				target: this,
 			});
 		}, 0);
 	}
