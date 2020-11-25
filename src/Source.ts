@@ -53,7 +53,7 @@ export class Source {
 			sourceHeight: 480,
 			// resolution displayed for the source
 			displayWidth: 640,
-			displayHeight: 480
+			displayHeight: 480,
 		};
 
 		this.setParameters(parameters);
@@ -190,7 +190,7 @@ export class Source {
 
 			videoTrack
 				.applyConstraints({
-					advanced: [{ torch: this.currentTorchStatus } as any]
+					advanced: [{ torch: this.currentTorchStatus } as any],
 				})
 				.catch((error: any) => {
 					throw error;
@@ -362,23 +362,23 @@ export class Source {
 		// get available devices
 		navigator.mediaDevices
 			.enumerateDevices()
-			.then(devices => {
+			.then((devices) => {
 				const userMediaConstraints = {
 					audio: false,
 					video: {
 						facingMode: this.parameters.facingMode,
 						width: {
-							ideal: this.parameters.sourceWidth
+							ideal: this.parameters.sourceWidth,
 						},
 						height: {
-							ideal: this.parameters.sourceHeight
-						}
-					}
+							ideal: this.parameters.sourceHeight,
+						},
+					},
 				};
 
 				if (null !== this.parameters.deviceId) {
 					(userMediaConstraints as any).video.deviceId = {
-						exact: this.parameters.deviceId
+						exact: this.parameters.deviceId,
 					};
 				}
 
@@ -393,15 +393,15 @@ export class Source {
 							domElement.play();
 						});
 
-						domElement.addEventListener("loadedmetadata", event => {
+						domElement.addEventListener("loadedmetadata", (event) => {
 							onReady();
 						});
 					})
-					.catch(error => {
+					.catch((error) => {
 						onError(error);
 					});
 			})
-			.catch(error => {
+			.catch((error) => {
 				onError(error);
 			});
 

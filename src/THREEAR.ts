@@ -11,5 +11,4 @@ function initialize(parameters: Partial<ControllerParameters>) {
 	return controller.postInit;
 }
 
-export type Controller = typeof controller;
-export { Source, initialize, PatternMarker, BarcodeMarker };
+export { Controller, Source, initialize, PatternMarker, BarcodeMarker };

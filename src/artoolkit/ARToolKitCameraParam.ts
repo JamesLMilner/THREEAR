@@ -50,7 +50,7 @@ export class ARToolKitCameraParam {
 		if (src) {
 			ARToolKit.loadCamera(
 				src,
-				id => {
+				(id) => {
 					this.id = id;
 					this.complete = true;
 
@@ -60,7 +60,7 @@ export class ARToolKitCameraParam {
 						this.onload();
 					});
 				},
-				err => {
+				(err) => {
 					this.onerror(err);
 				}
 			);

@@ -26,7 +26,8 @@ export declare class ARToolKitCameraParam {
      * @param {string} src URL to load.
      */
     load(src: string | Uint8Array): void;
-    src: string | Uint8Array;
+    get src(): string | Uint8Array;
+    set src(src: string | Uint8Array);
     /**
      * Destroys the camera parameter and frees associated Emscripten resources.
      */

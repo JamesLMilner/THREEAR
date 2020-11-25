@@ -76,7 +76,7 @@ export class Controller extends THREE.EventDispatcher {
 				// distance tolerance for smoothing, if smoothThreshold # of matrices are under tolerance, tracking will stay still
 				smoothTolerance: 0.01,
 				// threshold for smoothing, will keep still unless enough matrices are over tolerance
-				smoothThreshold: 2
+				smoothThreshold: 2,
 			},
 
 			// debug - true if one should display artoolkit debug canvas, false otherwise
@@ -102,7 +102,7 @@ export class Controller extends THREE.EventDispatcher {
 
 			// enable image smoothing or not for canvas copy - default to true
 			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
-			imageSmoothingEnabled: false
+			imageSmoothingEnabled: false,
 		};
 
 		// create the marker Root
@@ -110,7 +110,7 @@ export class Controller extends THREE.EventDispatcher {
 		// this.parameters.group.visible = false;
 		this.markers = {
 			pattern: [],
-			barcode: []
+			barcode: [],
 		};
 
 		this.smoothMatrices = []; // last DEBOUNCE_COUNT modelViewMatrix
@@ -173,8 +173,8 @@ export class Controller extends THREE.EventDispatcher {
 		this._updatedAt = present;
 
 		// mark all markers to invisible before processing this frame
-		this.markers.pattern.forEach(m => (m.markerObject.visible = false));
-		this.markers.barcode.forEach(m => (m.markerObject.visible = false));
+		this.markers.pattern.forEach((m) => (m.markerObject.visible = false));
+		this.markers.barcode.forEach((m) => (m.markerObject.visible = false));
 
 		// process this frame
 		this.arController.process(srcElement);
@@ -201,7 +201,7 @@ export class Controller extends THREE.EventDispatcher {
 			this.disposed = true;
 			this.markers = {
 				pattern: [],
-				barcode: []
+				barcode: [],
 			};
 		}
 	}
@@ -232,13 +232,13 @@ export class Controller extends THREE.EventDispatcher {
 
 						// dispatch event
 						this.dispatchEvent({
-							type: "initialized"
+							type: "initialized",
 						});
 
 						resolve(this);
 					});
 				})
-				.catch(error => {
+				.catch((error) => {
 					reject(error);
 				});
 		});
@@ -290,7 +290,7 @@ export class Controller extends THREE.EventDispatcher {
 					color: ARToolKit.AR_TEMPLATE_MATCHING_COLOR,
 					color_and_matrix: ARToolKit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
 					mono: ARToolKit.AR_TEMPLATE_MATCHING_MONO,
-					mono_and_matrix: ARToolKit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
+					mono_and_matrix: ARToolKit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
 				};
 				const detectionMode = detectionModes[this.parameters.detectionMode];
 				this.arController.setPatternDetectionMode(detectionMode);
@@ -302,7 +302,7 @@ export class Controller extends THREE.EventDispatcher {
 					"3x3_PARITY65": ARToolKit.AR_MATRIX_CODE_3x3_PARITY65,
 					"4x4": ARToolKit.AR_MATRIX_CODE_4x4,
 					"4x4_BCH_13_9_3": ARToolKit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-					"4x4_BCH_13_5_5": ARToolKit.AR_MATRIX_CODE_4x4_BCH_13_5_5
+					"4x4_BCH_13_5_5": ARToolKit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
 				};
 				const matrixCodeType = matrixCodeTypes[this.parameters.matrixCodeType];
 				this.arController.setMatrixCodeType(matrixCodeType);
@@ -338,13 +338,13 @@ export class Controller extends THREE.EventDispatcher {
 
 	private handleMarkerDetection(event: any) {
 		if (event.data.type === ARToolKit.BARCODE_MARKER) {
-			this.markers.barcode.forEach(barcodeMarker => {
+			this.markers.barcode.forEach((barcodeMarker) => {
 				if (event.data.marker.idMatrix === barcodeMarker.barcodeValue) {
 					this.onMarkerFound(event, barcodeMarker);
 				}
 			});
 		} else if (event.data.type === ARToolKit.PATTERN_MARKER) {
-			this.markers.pattern.forEach(patternMarker => {
+			this.markers.pattern.forEach((patternMarker) => {
 				if (event.data.marker.idPatt === patternMarker.id) {
 					this.onMarkerFound(event, patternMarker);
 				}
@@ -353,7 +353,7 @@ export class Controller extends THREE.EventDispatcher {
 	}
 
 	private checkForLostMarkers() {
-		[...this.markers.pattern, ...this.markers.barcode].forEach(marker => {
+		[...this.markers.pattern, ...this.markers.barcode].forEach((marker) => {
 			if (
 				marker.lastDetected &&
 				marker.found &&
@@ -449,7 +449,7 @@ export class Controller extends THREE.EventDispatcher {
 
 		this.dispatchEvent({
 			type: "markerFound",
-			marker
+			marker,
 		});
 	}
 
@@ -457,7 +457,7 @@ export class Controller extends THREE.EventDispatcher {
 		marker.found = false;
 		this.dispatchEvent({
 			type: "markerLost",
-			marker
+			marker,
 		});
 	}
 
