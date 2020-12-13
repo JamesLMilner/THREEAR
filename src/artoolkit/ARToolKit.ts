@@ -68,7 +68,7 @@ export class ARToolKit {
 	public static setLogLevel: (mode: any) => any = Module.setLogLevel;
 	public static getLogLevel: () => any = Module.getLogLevel;
 	public static setDebugMode: (id: number, mode: number) => any =
-		Module.getLogLevel;
+		Module.setDebugMode;
 	public static getDebugMode: (id: number) => any = Module.getDebugMode;
 	public static getProcessingImage: (id: number) => any =
 		Module.getProcessingImage;
